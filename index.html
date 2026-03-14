@@ -5,95 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Et Si... - Physique & Chimie</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --light: #ecf0f1;
-        }
+    :root {
+        --primary: #2c3e50;
+        --accent: #3498db;
+        --light: #ecf0f1;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: #f9f9f9;
-            color: var(--primary);
-        }
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        margin: 0;
+        background-color: #f9f9f9;
+        color: var(--primary);
+    }
 
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    header {
+        background: var(--primary);
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+    }
 
-        /* Barre de Navigation */
+    /* Navigation Adaptative */
+    nav {
+        background: #34495e;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap; /* Permet aux onglets de passer à la ligne sur mobile */
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .menu-item {
+        position: relative;
+        padding: 15px 20px;
+        color: white;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background 0.3s;
+    }
+
+    .menu-item:hover { background: var(--accent); }
+
+    /* Menu déroulant */
+    .dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        min-width: 180px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .dropdown a {
+        color: var(--primary);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* MOBILE : Changement de comportement */
+    @media (max-width: 768px) {
         nav {
-            background: #34495e;
-            display: flex;
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            flex-direction: column; /* Onglets les uns sous les autres */
+            align-items: stretch;
         }
 
-        /* Structure des Onglets */
         .menu-item {
-            position: relative;
-            padding: 15px 25px;
-            color: white;
-            cursor: pointer;
-            transition: background 0.3s;
+            border-bottom: 1px solid #455a64;
+            text-align: left;
         }
 
-        .menu-item:hover {
-            background: var(--accent);
-        }
-
-        /* Le contenu déroulant (caché par défaut) */
         .dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            border-radius: 0 0 5px 5px;
+            position: static; /* Le menu pousse le reste au lieu de flotter */
+            width: 100%;
+            box-shadow: none;
+            background: #f1f1f1;
         }
 
-        .dropdown a {
-            color: var(--primary);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #eee;
-            font-size: 0.9rem;
-        }
-
-        .dropdown a:hover {
-            background-color: #f1f1f1;
-            color: var(--accent);
-        }
-
-        /* Affichage au survol */
+        /* Sur mobile, on clique pour ouvrir (ou on simule l'ouverture) */
+        .menu-item:active .dropdown, 
+        .menu-item:focus .dropdown,
         .menu-item:hover .dropdown {
             display: block;
         }
+    }
 
-        .hero {
-            padding: 100px 20px;
-            text-align: center;
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000');
-            background-size: cover;
-            color: white;
-        }
+    /* Le reste du style */
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+        background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000');
+        background-size: cover;
+        color: white;
+    }
     </style>
 </head>
 <body>
 
 <header>
     <h1>ET SI...</h1>
-    <p>Physique & Chimie</p>
+    <p>je comprends mieux avec des animations ?</p>
 </header>
 
 <nav>
