@@ -5,61 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Et Si... - Physique & Chimie</title>
     <style>
-        :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --neon: #58a6ff;
-            --text: #c9d1d9;
-            --nav-bg: #21262d;
-        }
-        body { font-family: 'Segoe UI', monospace; margin: 0; background: var(--bg); color: var(--text); }
-        header { background: #000; border-bottom: 2px solid var(--neon); padding: 3rem 1rem; text-align: center; }
-        header h1 { color: var(--neon); text-shadow: 0 0 15px rgba(88, 166, 255, 0.4); margin: 0; font-size: 2.5rem; }
-        header p { opacity: 0.8; font-style: italic; }
+        :root { --main: #273c75; --accent: #487eb0; --bg: #f5f6fa; }
+        body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; background: var(--bg); color: #2f3640; }
+        header { background: white; padding: 2.5rem; text-align: center; border-bottom: 4px solid var(--main); }
+        header h1 { margin: 0; color: var(--main); font-weight: 800; }
         
-        nav { background: var(--nav-bg); display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #30363d; }
-        .menu-item { position: relative; padding: 15px 25px; color: var(--text); cursor: pointer; transition: 0.3s; border-right: 1px solid #30363d; }
-        .menu-item:hover { background: #30363d; color: var(--neon); }
+        nav { background: var(--main); display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; }
+        .menu-item { position: relative; padding: 16px 24px; color: white; cursor: pointer; font-weight: 500; }
+        .menu-item:hover { background: var(--accent); }
         
-        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: var(--card); min-width: 220px; border: 1px solid var(--neon); box-shadow: 0 8px 16px rgba(0,0,0,0.5); }
-        .dropdown a { color: var(--text); padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #30363d; }
-        .dropdown a:hover { background: #0d1117; color: var(--neon); }
+        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; min-width: 200px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; }
+        .dropdown a { color: var(--main); padding: 12px 20px; text-decoration: none; display: block; border-bottom: 1px solid #eee; }
+        .dropdown a:hover { background: #f1f2f6; color: var(--accent); }
         .menu-item:hover .dropdown { display: block; }
 
         @media (max-width: 768px) {
             nav { flex-direction: column; }
-            .dropdown { position: static; width: 100%; }
+            .dropdown { position: static; width: 100%; box-shadow: none; }
         }
 
-        .hero { padding: 80px 20px; text-align: center; background: radial-gradient(circle at center, #1c2128 0%, #0d1117 100%); border-top: 1px solid #30363d; }
+        .hero { padding: 100px 20px; text-align: center; background: white; border-bottom: 1px solid #dcdde1; }
     </style>
 </head>
 <body>
 <header>
     <h1>ET SI...</h1>
-    <p>je comprends mieux avec des animations ?</p>
+    <p>Comprendre la physique par l'expérimentation numérique</p>
 </header>
 <nav>
-    <div class="menu-item" tabindex="0">Système solaire
+    <div class="menu-item">Système solaire
         <div class="dropdown">
             <a href="animations/saisons/index.html">Origine des saisons</a>
             <a href="animations/systeme_solaire/index.html">Dezoom depuis le Soleil</a>
         </div>
     </div>
-    <div class="menu-item" tabindex="0">Signaux
+    <div class="menu-item">Signaux
         <div class="dropdown">
             <a href="animations/ondes_sonores/index.html">Ondes Sonores</a>
         </div>
     </div>
-    <div class="menu-item" tabindex="0">Matière
+    <div class="menu-item">Matière
         <div class="dropdown">
             <a href="animations/ph/index.html">Echelle de pH et ions H+ et HO-</a>
         </div>
     </div>
 </nav>
 <div class="hero">
-    <h2>Explorez les lois de l'Univers</h2>
-    <p>Sélectionnez une thématique pour démarrer l'expérience.</p>
+    <h2>Laboratoire Virtuel</h2>
+    <p>Choisissez une simulation dans le menu ci-dessus.</p>
 </div>
 </body>
 </html>
