@@ -5,32 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Et Si... - Physique & Chimie</title>
     <style>
-        :root { --main: #273c75; --accent: #487eb0; --bg: #f5f6fa; }
-        body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; background: var(--bg); color: #2f3640; }
-        header { background: white; padding: 2.5rem; text-align: center; border-bottom: 4px solid var(--main); }
-        header h1 { margin: 0; color: var(--main); font-weight: 800; }
+        body { font-family: 'Quicksand', sans-serif; margin: 0; background: #eef2f7; color: #333; }
+        header { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 3rem 1rem; text-align: center; border-radius: 0 0 40px 40px; }
         
-        nav { background: var(--main); display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 1000; }
-        .menu-item { position: relative; padding: 16px 24px; color: white; cursor: pointer; font-weight: 500; }
-        .menu-item:hover { background: var(--accent); }
+        nav { margin: -25px 20px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-radius: 20px; display: flex; justify-content: center; flex-wrap: wrap; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: visible; }
+        .menu-item { position: relative; padding: 18px 25px; color: #444; cursor: pointer; font-weight: 600; }
+        .menu-item:hover { color: #6c5ce7; }
         
-        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; min-width: 200px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; }
-        .dropdown a { color: var(--main); padding: 12px 20px; text-decoration: none; display: block; border-bottom: 1px solid #eee; }
-        .dropdown a:hover { background: #f1f2f6; color: var(--accent); }
+        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; min-width: 220px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 10px 0; }
+        .dropdown a { color: #555; padding: 12px 20px; text-decoration: none; display: block; border-radius: 10px; margin: 0 10px; transition: 0.2s; }
+        .dropdown a:hover { background: #f0edff; color: #6c5ce7; }
         .menu-item:hover .dropdown { display: block; }
 
         @media (max-width: 768px) {
-            nav { flex-direction: column; }
-            .dropdown { position: static; width: 100%; box-shadow: none; }
+            nav { flex-direction: column; margin: 10px; }
+            .dropdown { position: static; box-shadow: none; border: 1px solid #eee; }
         }
 
-        .hero { padding: 100px 20px; text-align: center; background: white; border-bottom: 1px solid #dcdde1; }
+        .hero { padding: 100px 20px; text-align: center; }
     </style>
 </head>
 <body>
 <header>
     <h1>ET SI...</h1>
-    <p>Comprendre la physique par l'expérimentation numérique</p>
+    <p>je comprends mieux avec des animations ?</p>
 </header>
 <nav>
     <div class="menu-item">Système solaire
@@ -47,12 +45,13 @@
     <div class="menu-item">Matière
         <div class="dropdown">
             <a href="animations/ph/index.html">Echelle de pH et ions H+ et HO-</a>
+            <a href="animations/atome/index.html">Construire un atome</a>   
         </div>
     </div>
 </nav>
 <div class="hero">
-    <h2>Laboratoire Virtuel</h2>
-    <p>Choisissez une simulation dans le menu ci-dessus.</p>
+    <h2>Bienvenue sur votre plateforme</h2>
+    <p>Explorez les modules de physique-chimie interactive.</p>
 </div>
 </body>
 </html>
