@@ -2,37 +2,154 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Et Si - Animations de Physique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Et Si... - Physique & Simulations</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f4f4f4; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; }
-        .animation-link { 
-            display: inline-block; 
-            margin: 10px; 
-            padding: 15px 25px; 
-            background: #3498db; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 5px; 
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            color: var(--primary);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Barre de Navigation */
+        nav {
+            background: #34495e;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Structure des Onglets */
+        .menu-item {
+            position: relative;
+            padding: 15px 25px;
+            color: white;
+            cursor: pointer;
             transition: background 0.3s;
         }
-        .animation-link:hover { background: #2980b9; }
+
+        .menu-item:hover {
+            background: var(--accent);
+        }
+
+        /* Le contenu déroulant (caché par défaut) */
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .dropdown a {
+            color: var(--primary);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .dropdown a:hover {
+            background-color: #f1f1f1;
+            color: var(--accent);
+        }
+
+        /* Affichage au survol */
+        .menu-item:hover .dropdown {
+            display: block;
+        }
+
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000');
+            background-size: cover;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Mes Expériences de Physique</h1>
-        <p>Cliquez sur une animation pour explorer les concepts :</p>
-        
-        <a href="animations/atome/index.html" class="animation-link">Construire un atome</a>
-        <a href="animations/pH/index.html" class="animation-link">Le pH, les ions hydrogène et hydroxyde</a>
-        <a href="animations/ondes_sonores/index.html" class="animation-link">Les ondes sonores</a>
-        <a href="animations/saisons/index.html" class="animation-link">L'origine des saisons</a>
-        <a href="animations/systeme_solaire/index.html" class="animation-link">Le système solaire</a>
+<header>
+    <h1>ET SI...</h1>
+    <p>Simulations numériques & Expériences de Physique</p>
+</header>
 
+<nav>
+    <div class="menu-item">
+        Système solaire
+        <div class="dropdown">
+            <a href="animations/planetes/index.html">Orbites</a>
+            <a href="animations/gravitation/index.html">Loi de Newton</a>
+        </div>
     </div>
+
+    <div class="menu-item">
+        Signaux
+        <div class="dropdown">
+            <a href="animations/ondes/index.html">Ondes Sonores</a>
+            <a href="animations/optique/index.html">Optique géométrique</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
+        Energie
+        <div class="dropdown">
+            <a href="animations/cinetique/index.html">Énergie Cinétique</a>
+            <a href="animations/conservation/index.html">Conservation</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
+        Matière
+        <div class="dropdown">
+            <a href="animations/atome/index.html">Atome Lab Pro</a>
+            <a href="animations/etats-matiere/index.html">Solide/Liquide/Gaz</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
+        Mouvements
+        <div class="dropdown">
+            <a href="animations/chute-libre/index.html">Chute libre</a>
+            <a href="animations/pendule/index.html">Le Pendule</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
+        Électricité
+        <div class="dropdown">
+            <a href="animations/circuit/index.html">Loi d'Ohm</a>
+            <a href="animations/electrons/index.html">Courant continu</a>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <h2>Explorez les lois de l'Univers</h2>
+    <p>Utilisez le menu ci-dessus pour lancer une simulation interactive.</p>
+</div>
 
 </body>
 </html>
