@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur Saisons - Physique Pure</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; font-family: 'Segoe UI', sans-serif; }
+        
+        #ui-header { 
+            position: absolute; top: 20px; width: 100%; text-align: center; 
+            color: white; pointer-events: none; z-index: 10;
+        }
+        h1 { color: #ffcc00; text-transform: uppercase; margin: 0; letter-spacing: 2px; }
+
+        #ui-footer { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; z-index: 10; }
+        .controls { 
+            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; 
+            background: rgba(0, 0, 0, 0.6); padding: 15px; border-radius: 15px; backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        button { 
+            padding: 12px 18px; cursor: pointer; border: none; border-radius: 8px; 
+            font-weight: bold; font-size: 13px; text-transform: uppercase; transition: 0.2s;
+        }
+
+        #pauseBtn { background: #ffcc00; box-shadow: 0 4px 0 #ccaa00; }
+        #addHourBtn { background: #00ccff; color: white; box-shadow: 0 4px 0 #0099cc; }
+        #addDayBtn { background: #28a745; color: white; box-shadow: 0 4px 0 #1e7e34; }
+        .jump-btn { background: #ffffff; color: #333; box-shadow: 0 4px 0 #bbb; }
+
+        button:active { transform: translateY(2px); box-shadow: 0 2px 0 #444; }
+        button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div id="ui-header">
+        <h1>Cycle des Saisons</h1>
+    </div>
+
+    <div id="ui-footer">
+        <div class="controls">
+            <button id="pauseBtn">Pause / Lecture</button>
+            <button id="addHourBtn">+1 Heure</button>
+            <button id="addDayBtn">+1 Jour</button>
+            <button id="winterBtn" class="jump-btn">Solstice d'Hiver</button>
+            <button id="summerBtn" class="jump-btn">Solstice d'Été</button>
+        </div>
+    </div>
+
+    <script type="importmap">
+        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+    </script>
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>

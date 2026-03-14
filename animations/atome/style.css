@@ -1,0 +1,83 @@
+body {
+    background-color: #0a0f1e;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+#main-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#periodic-table {
+    width: 25%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+    padding: 15px;
+}
+
+.element-box {
+    aspect-ratio: 1;
+    border: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    background: rgba(255,255,255,0.02);
+}
+
+.element-box.active {
+    background-color: #38bdf8;
+    color: #0f172a;
+    box-shadow: 0 0 15px #38bdf8;
+    transform: scale(1.1);
+}
+
+#builder-zone {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#controls button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+#info-zone { width: 25%; display: flex; flex-direction: column; align-items: center; }
+
+#atom-name-title { margin-bottom: 10px; font-size: 1.8rem; color: #38bdf8; }
+
+#notation-container { 
+    font-family: 'Times New Roman', serif; 
+    font-size: 5rem; 
+    display: flex; 
+    align-items: center; 
+    height: 120px;
+}
+
+.indices { 
+    display: flex; flex-direction: column; font-size: 1.8rem; 
+    text-align: right; margin-right: 10px; line-height: 1;
+    color: #94a3b8;
+}
+
+.charge-exposant { 
+    font-size: 2rem; align-self: flex-start; 
+    margin-left: 5px; color: #fbbf24; font-weight: bold;
+    min-width: 40px;
+}

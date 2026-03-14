@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation Acoustique - Particules</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="controls-container">
+        <label>Fréquence sonore</label>
+        <div class="slider-wrapper">
+            <span class="freq-label">Bas</span>
+            <input type="range" id="freqRange" min="20" max="140" value="80" step="1" style="direction: rtl;">
+            <span class="freq-label">Haut</span>
+        </div>
+    </div>
+    <canvas id="canvasOndes"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
