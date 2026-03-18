@@ -3,67 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Et Si... - Physique & Chimie</title>
+    <title>Et Si... - Lab Pro Edition</title>
     
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="favicon.png?v=2">
 
     <style>
-        body { font-family: 'Quicksand', sans-serif; margin: 0; background: #eef2f7; color: #333; }
-        header { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 3rem 1rem; text-align: center; border-radius: 0 0 40px 40px; }
+        /* Base sombre Lab Pro */
+        body { 
+            font-family: 'Segoe UI', 'Quicksand', sans-serif; 
+            margin: 0; 
+            background: #0a0f1e; 
+            color: #f8fafc; 
+            min-height: 100vh;
+        }
+
+        header { 
+            background: rgba(30, 41, 59, 0.5); 
+            color: white; 
+            padding: 4rem 1rem; 
+            text-align: center; 
+            border-bottom: 1px solid #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        header h1 { font-size: 3rem; margin: 0; color: #38bdf8; }
+        header p { color: #94a3b8; font-weight: 300; }
         
-        nav { margin: -25px 20px 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-radius: 20px; display: flex; justify-content: center; flex-wrap: wrap; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: visible; }
-        .menu-item { position: relative; padding: 18px 25px; color: #444; cursor: pointer; font-weight: 600; }
-        .menu-item:hover { color: #6c5ce7; }
+        /* Navigation Lab Pro */
+        nav { 
+            margin: -30px 40px 0; 
+            background: rgba(15, 23, 42, 0.9); 
+            backdrop-filter: blur(15px); 
+            border-radius: 12px; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            border: 1px solid #1e293b;
+            overflow: visible; 
+        }
+
+        .menu-item { 
+            position: relative; 
+            padding: 20px 30px; 
+            color: #94a3b8; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: 0.3s;
+        }
+
+        .menu-item:hover { color: #38bdf8; }
         
-        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; min-width: 220px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); padding: 10px 0; }
-        .dropdown a { color: #555; padding: 12px 20px; text-decoration: none; display: block; border-radius: 10px; margin: 0 10px; transition: 0.2s; }
-        .dropdown a:hover { background: #f0edff; color: #6c5ce7; }
+        /* Dropdowns stylisés */
+        .dropdown { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background: #1e293b; 
+            min-width: 250px; 
+            border-radius: 8px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+            padding: 10px 0; 
+            border: 1px solid #334155;
+            z-index: 100;
+        }
+
+        .dropdown a { 
+            color: #cbd5e1; 
+            padding: 12px 20px; 
+            text-decoration: none; 
+            display: block; 
+            transition: 0.2s; 
+            font-size: 0.9rem;
+        }
+
+        .dropdown a:hover { 
+            background: rgba(56, 189, 248, 0.1); 
+            color: #38bdf8; 
+            padding-left: 25px;
+        }
+
         .menu-item:hover .dropdown { display: block; }
+
+        /* Section Hero */
+        .hero { 
+            padding: 120px 20px; 
+            text-align: center; 
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
+        }
+
+        .hero h2 { font-size: 2.5rem; color: #f8fafc; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto; }
 
         @media (max-width: 768px) {
             nav { flex-direction: column; margin: 10px; }
-            .dropdown { position: static; box-shadow: none; border: 1px solid #eee; }
+            .dropdown { position: static; box-shadow: none; background: transparent; border: none; }
+            .menu-item { padding: 15px; border-bottom: 1px solid #1e293b; }
         }
-
-        .hero { padding: 100px 20px; text-align: center; }
     </style>
 </head>
 <body>
+
 <header>
     <h1>ET SI...</h1>
-    <p>je comprends mieux avec des animations ?</p>
+    <p>La science devient interactive au niveau moléculaire</p>
 </header>
+
 <nav>
-    <div class="menu-item">Système solaire
+    <div class="menu-item">SYSTÈME SOLAIRE
         <div class="dropdown">
             <a href="animations/saisons/index.html">Origine des saisons</a>
             <a href="animations/systeme_solaire/index.html">Dezoom depuis le Soleil</a>
-            <a href="animations/taille_planetes/index.html">La taille des astres du système solaire</a>
-
+            <a href="animations/taille_planetes/index.html">Taille des astres</a>
         </div>
     </div>
-    <div class="menu-item">Signaux
+    <div class="menu-item">SIGNAUX
         <div class="dropdown">
             <a href="animations/ondes_sonores/index.html">Ondes Sonores</a>
         </div>
     </div>
-    <div class="menu-item">Matière
+    <div class="menu-item">MATIÈRE
         <div class="dropdown">
             <a href="animations/eprouvette_volume/index.html">Mesure d'un volume</a>
-            <a href="animations/ph/index.html">Echelle de pH et ions H+ / HO-</a>
-            <a href="animations/atome/index.html">Construire un atome</a>   
+            <a href="animations/ph/index.html">Échelle de pH</a>
+            <a href="animations/atome/index.html">Structure de l'atome</a>   
         </div>
     </div>
-    <div class="menu-item">Energie
+    <div class="menu-item">ÉNERGIE
         <div class="dropdown">
             <a href="animations/conservation_energie/index.html">Conservation de l'énergie</a> 
         </div>
     </div>
 </nav>
+
 <div class="hero">
-    <h2>Bienvenue sur Et SI...</h2>
-    <p>Explorez les modules de physique-chimie interactive.</p>
+    <h2>Explorez le Laboratoire Virtuel</h2>
+    <p>Viisualisez les phénomènes physiques avec des animations interactives.</p>
 </div>
+
 </body>
 </html>
