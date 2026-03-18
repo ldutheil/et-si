@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conservation de l'énergie</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <h1>ET si on étudiait la conservation de l'énergie ?</h1>
+    </header>
+
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>PARAMÈTRES</h3>
+                <label>Coefficient de Frottement</label>
+                <input type="range" id="mu-range" min="0" max="0.1" step="0.005" value="0">
+                <div id="mu-value">0.000</div>
+            </div>
+            <div class="instruction-box">
+                L'énergie mécanique E<sub>m</sub> se conserve si les frottements sont nuls.
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <canvas id="mainCanvas" width="800" height="400"></canvas>
+            <div id="controls">
+                <button id="btn-start" style="background: #27ae60;">▶ DÉMARRER</button>
+                <button id="btn-pause" style="background: #e67e22;">❚❚ PAUSE</button>
+                <button id="btn-reset" style="background: #64748b;">↺ RESET</button>
+            </div>
+        </div>
+
+        <div id="info-zone">
+            <h1 id="info-title">BILAN ÉNERGÉTIQUE</h1>
+            <div class="energy-gauges">
+                <div class="gauge-container">
+                    <div class="bar-bg"><div id="pot-f" class="bar-fill"></div></div>
+                    <span class="label">Ep</span>
+                    <span class="val" id="pot-v">0J</span>
+                </div>
+                <div class="gauge-container">
+                    <div class="bar-bg"><div id="kin-f" class="bar-fill"></div></div>
+                    <span class="label">Ec</span>
+                    <span class="val" id="kin-v">0J</span>
+                </div>
+                <div class="gauge-container">
+                    <div class="bar-bg"><div id="mec-f" class="bar-fill"></div></div>
+                    <span class="label">Em</span>
+                    <span class="val" id="mec-v">0J</span>
+                </div>
+                <div class="gauge-container">
+                    <div class="bar-bg"><div id="th-f" class="bar-fill"></div></div>
+                    <span class="label">Eth</span>
+                    <span class="val" id="th-v">0J</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

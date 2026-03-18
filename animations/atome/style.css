@@ -5,13 +5,32 @@ body {
     margin: 0;
     height: 100vh;
     display: flex;
-    overflow: hidden;
+    flex-direction: column;
+    overflow: hidden; /* Empêche tout scroll */
+}
+
+#main-header {
+    width: 100%;
+    padding: 10px 0; /* Réduit pour gagner de la place */
+    text-align: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.8rem; /* Légèrement plus petit */
+    letter-spacing: 4px;
+    color: #f8fafc;
+    text-transform: uppercase;
 }
 
 #main-container {
     display: flex;
     width: 100%;
+    flex: 1; 
     align-items: center;
+    min-height: 0; /* Important pour le flexbox */
 }
 
 #periodic-table {
@@ -20,7 +39,7 @@ body {
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 5px;
-    padding: 15px;
+    padding: 10px;
 }
 
 .element-box {
@@ -38,46 +57,71 @@ body {
     background-color: #38bdf8;
     color: #0f172a;
     box-shadow: 0 0 15px #38bdf8;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 #builder-zone {
     width: 50%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+#atomCanvas {
+    max-height: 65vh; /* Le secret : le canvas ne dépassera jamais 65% de l'écran */
+    max-width: 100%;
+    height: auto;
+}
+
+#controls {
+    margin-top: 10px;
 }
 
 #controls button {
-    padding: 10px 15px;
-    margin: 5px;
+    padding: 8px 12px;
+    margin: 2px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
     color: white;
+    font-size: 0.8rem;
 }
 
-#info-zone { width: 25%; display: flex; flex-direction: column; align-items: center; }
+#info-zone { 
+    width: 25%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: space-evenly; /* Répartit l'espace verticalement */
+    height: 100%;
+}
 
-#atom-name-title { margin-bottom: 10px; font-size: 1.8rem; color: #38bdf8; }
+#atom-name-title { margin: 0; font-size: 1.5rem; color: #38bdf8; }
 
 #notation-container { 
     font-family: 'Times New Roman', serif; 
-    font-size: 5rem; 
+    font-size: 4rem; 
     display: flex; 
     align-items: center; 
-    height: 120px;
+    height: auto;
 }
 
 .indices { 
-    display: flex; flex-direction: column; font-size: 1.8rem; 
+    display: flex; flex-direction: column; font-size: 1.5rem; 
     text-align: right; margin-right: 10px; line-height: 1;
     color: #94a3b8;
 }
 
 .charge-exposant { 
-    font-size: 2rem; align-self: flex-start; 
+    font-size: 1.8rem; align-self: flex-start; 
     margin-left: 5px; color: #fbbf24; font-weight: bold;
-    min-width: 40px;
+    min-width: 30px;
+}
+
+#gauge-canvas {
+    max-height: max-content;
+    width: auto;
 }

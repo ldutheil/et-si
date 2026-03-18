@@ -2,199 +2,164 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Échelles du Système Solaire</title>
+    <title>Système Solaire - Alignement</title>
     <style>
-        :root {
-            --bg-color: #05070a;
-            --ui-bg: rgba(15, 20, 30, 0.95);
-            --accent: #00d2ff;
+        body { 
+            font-family: 'Segoe UI', sans-serif; background: #2c3e50; color: white; 
+            margin: 0; height: 100vh; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; overflow: hidden; 
         }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-color);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            align-items: center;
+        #app-container { 
+            display: flex; background: #34495e; padding: 20px; border-radius: 15px; gap: 20px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8); 
+            width: 1200px; height: 480px; box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        #view-frame {
-            position: relative;
-            width: 95%;
-            max-width: 900px;
-            height: 70vh;
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end; 
-            padding-bottom: 40px; 
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        #viewport { 
+            background: radial-gradient(circle at center, #111 0%, #000 100%); 
+            border-radius: 10px; flex: 1; 
+            position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; /* Alignement sur la ligne de base */
+            padding-bottom: 60px;
         }
 
-        #astro-stage {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
+        #ui-panel { width: 260px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+
+        .control-group { 
+            background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; 
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        input[type=range][orient=vertical] {
+            appearance: slider-vertical; width: 30px; height: 100%; cursor: pointer; accent-color: #00d2ff;
         }
 
         .astro-object {
-            position: absolute;
-            border-radius: 50%;
-            transition: width 0.1s linear, height 0.1s linear;
-            box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.15);
-            display: flex;
-            justify-content: center;
+            position: absolute; border-radius: 50%;
+            transition: width 0.1s linear, height 0.1s linear, left 0.1s linear;
+            box-sizing: border-box; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
+            /* On enlève le centrage absolu pour permettre l'alignement côte à côte */
+            bottom: 60px; 
         }
 
+        /* Textures (identiques à précédemment) */
         .mercure-style { background: radial-gradient(circle at 30% 30%, #a5a5a5, #444); z-index: 10; }
         .mars-style { background: radial-gradient(circle at 30% 30%, #e27b58, #722b18); z-index: 9; }
         .venus-style { background: radial-gradient(circle at 30% 30%, #e3bb76, #835b26); z-index: 8; }
         .terre-style { background: radial-gradient(circle at 30% 30%, #44ccff, #124183); z-index: 7; }
         .neptune-style { background: radial-gradient(circle at 30% 30%, #6081ff, #10216f); z-index: 6; }
         .uranus-style { background: radial-gradient(circle at 30% 30%, #b5e1e2, #457172); z-index: 5; }
-        .saturne-style { background: radial-gradient(circle at 30% 30%, #c5ab6e, #654b1e); z-index: 4; }
-        .jupiter-style { background: radial-gradient(circle at 30% 30%, #d39c7e, #733c2e); z-index: 3; }
-        .sun-style { 
-            background: radial-gradient(circle, #fff700 0%, #ffaa00 50%, #ff4400 100%);
-            z-index: 2;
-        }
+        .saturne-style { background: repeating-linear-gradient(180deg, #c5ab6e, #a58b4e 10%, #c5ab6e 20%); z-index: 4; }
+        .jupiter-style { background: repeating-linear-gradient(180deg, #d39c7e, #b37c5e 15%, #d39c7e 30%); z-index: 3; }
+        .sun-style { background: radial-gradient(circle, #fff700, #ff4400); z-index: 2; box-shadow: 0 0 50px #ff6600; }
 
-        .label {
-            position: absolute;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px black;
-            text-transform: uppercase;
-            pointer-events: none;
-            white-space: nowrap;
-            letter-spacing: 1px;
-            color: #fff;
-            opacity: 0;
-            transition: opacity 0.2s;
+        .label-container {
+            position: absolute; display: flex; flex-direction: column; align-items: center; 
+            text-align: center; transition: opacity 0.2s; width: 200px;
         }
-
-        .label-external { bottom: 100%; margin-bottom: 8px; }
+        .name-label { font-weight: bold; text-shadow: 2px 2px 4px black; text-transform: uppercase; }
+        .radius-label { font-family: monospace; color: #00d2ff; font-weight: bold; }
         .label-internal { top: 15px; }
+        .label-external { bottom: 105%; }
 
-        .controls {
-            width: 100%;
-            max-width: 900px;
-            background: var(--ui-bg);
-            padding: 20px 40px;
-            border-radius: 15px 15px 0 0;
-            margin-top: auto;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        input[type=range] { width: 100%; cursor: pointer; }
-
-        .info-bar {
-            display: flex;
-            justify-content: center; /* Centré pour la taille seule */
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
+        .card { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; text-align: center; }
+        .value-display { color: #00d2ff; font-weight: bold; font-size: 1.1rem; font-family: monospace; }
     </style>
 </head>
 <body>
 
-    <h1 style="margin: 10px; font-size: 1.4rem;">Comparaison des Diamètres</h1>
+    <h1 style="margin:10px">Et si on comparait les tailles des planètes ?</h1>
 
-    <div id="view-frame">
-        <div id="astro-stage"></div>
-    </div>
+    <div id="app-container">
+        <div id="viewport"></div>
 
-    <div class="controls">
-        <div class="info-bar">
-            <span id="planet-size">4 879 km</span>
+        <div id="ui-panel">
+            <div class="card">
+                <span style="font-size:10px; color:#bdc3c7">FOCUS</span>
+                <div id="planet-size" class="value-display">-</div>
+            </div>
+            <div class="control-group">
+                <input type="range" id="zoom-slider" min="0" max="1000" value="0" orient="vertical">
+            </div>
+            <div class="card"><div style="font-size:9px; opacity:0.5">Rayon des planètes arrondi à 100 km près.</div></div>
         </div>
-        <input type="range" id="zoom-slider" min="0" max="1000" value="0">
-        <p style="text-align: center; font-size: 11px; opacity: 0.6; margin: 10px 0 0 0;">
-            Dézoomez pour comparer. Terre et Uranus (noms dehors), autres planètes (noms dedans).
-        </p>
     </div>
 
-<script>
-    const astros = [
-        { name: "Mercure", d: 4879, class: "mercure-style", external: false },
-        { name: "Mars", d: 6779, class: "mars-style", external: false },
-        { name: "Vénus", d: 12104, class: "venus-style", external: false },
-        { name: "Terre", d: 12742, class: "terre-style", external: true },
-        { name: "Neptune", d: 49244, class: "neptune-style", external: false },
-        { name: "Uranus", d: 50724, class: "uranus-style", external: true },
-        { name: "Saturne", d: 116460, class: "saturne-style", external: false },
-        { name: "Jupiter", d: 139820, class: "jupiter-style", external: false },
-        { name: "Soleil", d: 1392700, class: "sun-style", external: false }
-    ];
+    <script>
+        const astros = [
+            { name: "Mercure", d: 4879, class: "mercure-style", external: false },
+            { name: "Mars", d: 6779, class: "mars-style", external: false },
+            { name: "Vénus", d: 12104, class: "venus-style", external: false },
+            { name: "Terre", d: 12742, class: "terre-style", external: true },
+            { name: "Neptune", d: 49244, class: "neptune-style", external: false },
+            { name: "Uranus", d: 50724, class: "uranus-style", external: true },
+            { name: "Saturne", d: 116460, class: "saturne-style", external: false },
+            { name: "Jupiter", d: 139820, class: "jupiter-style", external: false },
+            { name: "Soleil", d: 1392700, class: "sun-style", external: false }
+        ];
 
-    const stage = document.getElementById('astro-stage');
-    const slider = document.getElementById('zoom-slider');
-    const sizeLabel = document.getElementById('planet-size');
+        const stage = document.getElementById('viewport');
+        const slider = document.getElementById('zoom-slider');
+        const sizeLabel = document.getElementById('planet-size');
 
-    astros.forEach(astro => {
-        const div = document.createElement('div');
-        div.className = 'astro-object ' + astro.class;
-        const label = document.createElement('div');
-        label.className = 'label ' + (astro.external ? 'label-external' : 'label-internal');
-        label.innerText = astro.name;
-        div.appendChild(label);
-        astro.element = div;
-        astro.labelElement = label;
-        stage.appendChild(div);
-    });
-
-    function update() {
-        const val = parseFloat(slider.value);
-        const scaleBase = Math.exp(val / 138); 
-        const viewportMin = document.getElementById('view-frame').clientHeight * 0.65;
-
-        astros.forEach((astro) => {
-            const ratio = astro.d / astros[0].d;
-            const size = (viewportMin * ratio) / scaleBase;
-            astro.element.style.width = size + "px";
-            astro.element.style.height = size + "px";
-
-            if (size > viewportMin * 0.4 && size < viewportMin * 1.6) {
-                sizeLabel.innerText = astro.d.toLocaleString() + " km";
-            }
-
-            if (size > window.innerWidth * 3.5) {
-                astro.element.style.opacity = "0.15";
-            } else if (size < 5) {
-                astro.element.style.opacity = "0";
-            } else {
-                astro.element.style.opacity = "1";
-            }
-
-            const fontSize = Math.max(10, Math.min(size / 12, 24));
-            astro.labelElement.style.fontSize = fontSize + "px";
-            
-            let isVisible = false;
-            if (astro.external) {
-                isVisible = (size > 50 && size < document.getElementById('view-frame').clientHeight * 1.5);
-            } else {
-                isVisible = (size > 80 && size < window.innerWidth * 2);
-            }
-            astro.labelElement.style.opacity = isVisible ? "1" : "0";
+        astros.forEach((astro, index) => {
+            const div = document.createElement('div');
+            div.className = 'astro-object ' + astro.class;
+            const labelCont = document.createElement('div');
+            labelCont.className = 'label-container ' + (astro.external ? 'label-external' : 'label-internal');
+            labelCont.innerHTML = `<div class="name-label">${astro.name}</div><div class="radius-label">R ≈ ${Math.round(astro.d/200)*100} km</div>`;
+            div.appendChild(labelCont);
+            astro.element = div;
+            astro.labelElement = labelCont;
+            stage.appendChild(div);
         });
-    }
 
-    slider.addEventListener('input', update);
-    window.addEventListener('resize', update);
-    update();
-</script>
+        function update() {
+            const val = 1000 - parseFloat(slider.value);
+            const scaleBase = Math.exp(val / 140); 
+            const viewportW = stage.clientWidth;
+            const viewportH = stage.clientHeight;
+            const referenceSize = viewportH * 0.6; 
+
+            // Calcul de l'espacement entre les planètes
+            // On veut qu'elles soient centrées au début, puis qu'elles s'étalent
+            const spacing = 40 / (scaleBase * 0.1 + 1); 
+
+            astros.forEach((astro, i) => {
+                const ratio = astro.d / astros[0].d;
+                const size = (referenceSize * ratio) / scaleBase;
+                
+                astro.element.style.width = size + "px";
+                astro.element.style.height = size + "px";
+
+                // Calcul de la position X pour éviter le chevauchement total
+                // On centre la planète i par rapport au milieu du viewport, avec un décalage
+                const centerX = viewportW / 2;
+                const offset = (i - 4) * (size * 0.2 + 20); // Décalage basé sur l'index
+                astro.element.style.left = (centerX + offset - size/2) + "px";
+
+                if (size > viewportH * 0.3 && size < viewportH * 1.5) sizeLabel.innerText = astro.name;
+
+                // Opacité : si la planète est trop grande, elle devient translucide
+                let opacity = 1;
+                if (size > viewportW * 0.8) opacity = 0.2;
+                else if (size < 2) opacity = 0;
+                astro.element.style.opacity = opacity;
+
+                // Visibilité des labels
+                const isVisible = astro.external ? (size > 30 && size < viewportH) : (size > 120 && size < viewportH * 2);
+                astro.labelElement.style.opacity = isVisible ? "1" : "0";
+                astro.labelElement.style.fontSize = Math.max(8, Math.min(size/15, 18)) + "px";
+            });
+        }
+
+        slider.addEventListener('input', update);
+        window.addEventListener('resize', update);
+        update();
+    </script>
 </body>
 </html>

@@ -1,0 +1,174 @@
+body {
+    background-color: #0a0f1e;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-header {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+#main-container {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+}
+
+#left-panel {
+    width: 20%;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border-right: 1px solid #1e293b;
+}
+
+.control-group h3 { color: #38bdf8; font-size: 0.9rem; margin-bottom: 20px; }
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #38bdf8;
+    color: #0f172a;
+    transition: 0.2s;
+}
+
+button:hover { background-color: #7dd3fc; }
+#reset-btn { background-color: #334155; color: white; }
+
+.instruction-box {
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+}
+
+#builder-zone {
+    width: 60%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#figurine {
+    width: 35px; height: 45px;
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+    border: 2px solid #000;
+    border-radius: 4px;
+    cursor: grab;
+    position: absolute;
+    left: 10%; top: 30%;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.cylinder-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cylinder {
+    width: 80px; height: 380px;
+    border: 3px solid #94a3b8;
+    border-top: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0 0 10px 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.base { width: 140px; height: 12px; background: #475569; border-radius: 4px; }
+
+#liquid-body {
+    position: absolute; bottom: 0; width: 100%;
+    background-color: rgba(56, 189, 248, 0.6);
+    transition: height 0.4s ease-out;
+    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+}
+
+#meniscus {
+    position: absolute; left: -25%; width: 150%; height: 50px;
+    background-color: #0a0f1e;
+    border-radius: 50%;
+    border-bottom: 4px solid #38bdf8;
+    transition: bottom 0.4s ease-out;
+    pointer-events: none;
+}
+
+.grad-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.grad { position: absolute; left: 0; background: #94a3b8; height: 1px; }
+.grad.major { width: 30px; height: 2px; }
+
+/* Correction ici : grad-label au lieu de label pour éviter le conflit */
+.grad-label { 
+    position: absolute; 
+    left: 35px; 
+    font-weight: bold; 
+    font-size: 11px; 
+    color: #94a3b8; 
+    line-height: 0; 
+}
+
+#info-zone {
+    width: 20%;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border-left: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#info-title { font-size: 1.2rem; color: #38bdf8; margin-bottom: 40px; }
+
+.data-card {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    border: 1px solid #1e293b;
+}
+
+.data-card .label { 
+    font-size: 0.8rem; 
+    color: #94a3b8; 
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: bold;
+}
+
+.data-card .value { font-size: 1.5rem; font-weight: bold; font-family: monospace; }
+
+.highlight { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+.highlight .value { color: #fbbf24; }
+
+.data-divider { width: 50px; height: 2px; background: #1e293b; margin: 10px 0 25px 0; }

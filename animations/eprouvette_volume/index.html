@@ -3,247 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesure de Volumes avec une éprouvette graduée</title>
-    <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --liquid-color: #74b9ff;
-            --reading-line-color: #0984e3;
-            --glass-border: #2d3436;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-            margin: 0;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        .controls {
-            margin-bottom: 10px;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 20;
-        }
-
-        button { 
-            padding: 8px 16px; 
-            background-color: #0984e3; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        button:active { transform: scale(0.95); background-color: #0773c5; }
-
-        #figurine {
-            width: 35px;
-            height: 45px;
-            background: linear-gradient(135deg, #7f8c8d, #2d3436);
-            border: 2px solid #222;
-            border-radius: 4px;
-            cursor: grab;
-            position: absolute;
-            left: 30px;
-            top: 140px;
-            z-index: 10;
-        }
-
-        .cylinder-container {
-            position: relative;
-            width: 160px;
-            height: 410px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-left: 60px;
-        }
-
-        .cylinder {
-            position: relative;
-            width: 80px;
-            height: 390px; 
-            border: 3px solid var(--glass-border);
-            border-top: none;
-            background: white;
-            border-radius: 0 0 10px 10px;
-            z-index: 2;
-            overflow: hidden; 
-        }
-
-        .base { width: 140px; height: 10px; background: var(--glass-border); border-radius: 3px; }
-
-        /* CORRECTION : On courbe aussi le haut du liquide */
-        #liquid-body {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--liquid-color);
-            transition: height 0.3s ease-out;
-            z-index: 1;
-            /* Cette courbure permet d'épouser celle du ménisque blanc */
-            border-radius: 50% 50% 0 0 / 20px 20px 0 0;
-        }
-
-        #meniscus {
-            position: absolute;
-            left: -25%; 
-            width: 150%;
-            height: 50px; 
-            background-color: white; 
-            border-radius: 50%;
-            border-bottom: 4px solid var(--reading-line-color);
-            transition: bottom 0.3s ease-out;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .grad-container { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            pointer-events: none; 
-            z-index: 4; 
-        }
-
-        .grad { position: absolute; left: 0; background: var(--glass-border); height: 1px; }
-        .grad.major { width: 35px; height: 2px; }
-        .grad.mid { width: 22px; height: 1.5px; }
-        .grad.minor { width: 12px; opacity: 0.7; }
-        .label { position: absolute; left: 42px; font-weight: bold; font-size: 13px; line-height: 0; bottom: 0; }
-
-        .footer-title {
-            margin-top: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #2d3436;
-            text-align: center;
-            cursor: pointer;
-            padding: 5px 15px;
-            transition: all 0.3s;
-        }
-        .footer-title:hover { color: #0984e3; transform: scale(1.02); }
-    </style>
+    <title>Mesure de volumes</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header id="main-header">
+        <h1>Et si on mesurait les volumes précisément ?</h1>
+    </header>
 
-<div class="controls">
-    <button onclick="addOneML()">Ajouter 1 mL d'eau</button>
-</div>
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>ACTIONS</h3>
+                <button id="add-water-btn">AJOUTER 1 mL D'EAU</button>
+                <button id="reset-btn">RÉINITIALISER</button>
+            </div>
+            <div class="instruction-box">
+                <strong>Méthode du déplacement d'eau :</strong><br><br>
+                1. Note le volume initial <strong>V1</strong>.<br>
+                2. Glisse l'objet dans l'éprouvette.<br>
+                3. Note le nouveau volume <strong>V2</strong>.<br>
+                4. Le volume de l'objet est <strong>V2 - V1</strong>.
+            </div>
+        </div>
 
-<div id="figurine"></div>
+        <div id="builder-zone">
+            <div id="figurine"></div>
+            <div class="cylinder-container">
+                <div class="cylinder" id="drop-zone">
+                    <div id="liquid-body"></div>
+                    <div id="meniscus"></div>
+                    <div class="grad-container" id="grad-box"></div>
+                </div>
+                <div class="base"></div>
+            </div>
+        </div>
 
-<div class="cylinder-container">
-    <div class="cylinder" id="drop-zone">
-        <div id="liquid-body"></div>
-        <div id="meniscus"></div>
-        <div class="grad-container" id="grad-box"></div>
+        <div id="info-zone">
+            <h1 id="info-title">RÉSULTATS</h1>
+            
+            <div class="data-card">
+                <span class="label">V1 (Initial)</span>
+                <span class="value" id="v1-val">10.0 mL</span>
+            </div>
+
+            <div class="data-card">
+                <span class="label">V2 (Final)</span>
+                <span class="value" id="v2-val">10.0 mL</span>
+            </div>
+
+            <div class="data-divider"></div>
+
+            <div class="data-card highlight">
+                <span class="label">V<sub>objet</sub></span>
+                <span class="value" id="vobj-val">0.0 mL</span>
+            </div>
+        </div>
     </div>
-    <div class="base"></div>
-</div>
-
-<div class="footer-title" onclick="alert('Méthode : Volume initial V1 → Immersion → Nouveau volume V2. Volume objet = V2 - V1')">
-    Et si je souhaite mesurer le volume d'un objet ?
-</div>
-
-<script>
-    const SCALE = 7.5; 
-    const gradBox = document.getElementById('grad-box');
-    const liquidBody = document.getElementById('liquid-body');
-    const meniscus = document.getElementById('meniscus');
-    const figurine = document.getElementById('figurine');
-    const dropZone = document.getElementById('drop-zone');
-
-    let baseVolume = 10; 
-    let isInside = false;
-
-    for (let i = 0; i <= 50; i++) {
-        const grad = document.createElement('div');
-        const pos = i * SCALE;
-        if (i % 10 === 0) {
-            grad.className = 'grad major';
-            const lbl = document.createElement('div');
-            lbl.className = 'label';
-            lbl.style.bottom = pos + 'px';
-            lbl.innerText = i;
-            gradBox.appendChild(lbl);
-        } else if (i % 5 === 0) {
-            grad.className = 'grad mid';
-        } else {
-            grad.className = 'grad minor';
-        }
-        grad.style.bottom = pos + 'px';
-        gradBox.appendChild(grad);
-    }
-
-    function addOneML() {
-        if (baseVolume < 40) { 
-            baseVolume += 1;
-            updateLevel();
-        }
-    }
-
-    function updateLevel() {
-        // Offset de 1.25 mL inclus
-        let totalVolume = baseVolume + (isInside ? 8 : 0) + 1.25; 
-        let targetHeightPx = totalVolume * SCALE;
-        
-        // On remonte le corps bleu légèrement
-        liquidBody.style.height = (targetHeightPx + 20) + "px"; 
-        
-        // On cale le bas du ménisque (50px de haut) sur la graduation
-        meniscus.style.bottom = (targetHeightPx - 25) + "px"; 
-    }
-
-    // Logique Drag and Drop
-    let isDragging = false;
-    let startX, startY;
-
-    figurine.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX - figurine.offsetLeft;
-        startY = e.clientY - figurine.offsetTop;
-        figurine.style.transition = 'none';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        figurine.style.left = (e.clientX - startX) + 'px';
-        figurine.style.top = (e.clientY - startY) + 'px';
-    });
-
-    document.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        const figRect = figurine.getBoundingClientRect();
-        const zoneRect = dropZone.getBoundingClientRect();
-        if (figRect.left < zoneRect.right && figRect.right > zoneRect.left &&
-            figRect.top < zoneRect.bottom && figRect.bottom > zoneRect.top) {
-            figurine.style.transition = 'all 0.4s ease-in';
-            figurine.style.left = (zoneRect.left + 22) + 'px';
-            figurine.style.top = (zoneRect.bottom - 48) + 'px';
-            isInside = true;
-        } else {
-            isInside = false;
-            figurine.style.transition = 'all 0.4s ease-out';
-            figurine.style.left = '30px';
-            figurine.style.top = '140px';
-        }
-        updateLevel();
-    });
-
-    updateLevel();
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
