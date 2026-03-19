@@ -3,89 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulation pH</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
-        }
-        #phSliderContainer {
-            width: 300px;
-            margin: 20px auto;
-        }
-        #phSlider {
-            width: 100%;
-        }
-        #phScale {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        #phValue {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px;
-        }
-        #solutionExample {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        canvas {
-            border: 1px solid #ccc;
-            background-color: #e6f2ff; /* Fond bleu clair */
-        }
-        #legend {
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-        }
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-    </style>
-    <link rel="icon" type="image/png" href="../../favicon.png">
+    <title>Le pH</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Simulation pH : solution aqueuse - Ions H<sup>+</sup> et HO<sup>-</sup></h1>
-    <div id="phSliderContainer">
-        <input type="range" id="phSlider" min="0" max="14" value="7" step="1">
-        <div id="phScale">
-            <span>0</span><span>7</span><span>14</span>
-        </div>
-        <div id="phValue">pH : 7</div>
-        <div id="solutionExample">Exemple : Eau pure</div>
-    </div>
-    <div class="container">
-        <canvas id="ionsCanvas" width="500" height="400"></canvas>
-        <div id="legend">
-            <h3>Légende</h3>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: rgba(0, 0, 255, 0.7);"></div>
-                <span>Ion H+</span>
+    <header id="main-header">
+        <h1>Et si on pouvait visualiser le pH au niveau moléculaire ?</h1>
+    </header>
+
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>RÉGLAGE DU pH</h3>
+                <div id="phSliderContainer">
+                    <input type="range" id="phSlider" min="0" max="14" value="7" step="1">
+                    <div id="phScale">
+                        <span>0 (Acide)</span>
+                        <span>7</span>
+                        <span>14 (Basique)</span>
+                    </div>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: rgba(255, 0, 0, 0.7);"></div>
-                <span>Ion HO-</span>
+            <div class="instruction-box">
+                <strong>Le saviez-vous ?</strong><br><br>
+                Le pH mesure la concentration en ions H<sup>+</sup>. Dans une solution neutre, il y a autant d'ions H<sup>+</sup> que d'ions HO<sup>-</sup>. Plus le pH diminue, plus la concentration en H<sup>+</sup> augmente. Plus le pH augmente, plus la concentration en HO<sup>-</sup> augmente.
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <canvas id="ionsCanvas"></canvas>
+        </div>
+
+        <div id="info-zone">
+            <h1 id="info-title">MONITORING</h1>
+            
+            <div class="data-card highlight">
+                <span class="label">VALEUR DU pH</span>
+                <span class="value" id="phValue">7</span>
+            </div>
+
+            <div class="data-card">
+                <span class="label">EXEMPLE</span>
+                <span class="value" id="solutionExample" style="font-size: 1rem; color: #38bdf8;">Eau pure</span>
+            </div>
+
+            <div class="data-divider"></div>
+
+            <div id="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(0, 150, 255, 0.8); border: 1px solid #00fbff;"></div>
+                    <span>Ion H<sup>+</sup></span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(255, 50, 50, 0.8); border: 1px solid #ff4444;"></div>
+                    <span>Ion HO<sup>-</sup></span>
+                </div>
             </div>
         </div>
     </div>
