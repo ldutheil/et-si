@@ -3,34 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Système Solaire - Échelle Dynamique</title>
-    <style>
-        body { margin: 0; background-color: #050505; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
-        canvas { display: block; }
-        .controls {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(20, 20, 20, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #333;
-            width: 250px;
-        }
-        input[type=range] { width: 100%; cursor: pointer; accent-color: #6081FF; }
-        label { display: block; margin-bottom: 8px; font-size: 0.9em; font-weight: bold; }
-    </style>
-    <link rel="icon" type="image/png" href="../../favicon.png">
+    <title>Système Solaire - Distances Réelles</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header id="main-header">
+        <h1>ET SI ON REPRÉSENTAIT LE SYSTÈME SOLAIRE AVEC DES DISTANCES RÉELLES ?</h1>
+    </header>
 
-    <div class="controls">
-        <label>Dézoomer vers les confins</label>
-        <input type="range" id="zoomRange" min="5" max="5000" value="100">
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>CONTRÔLES DE VUE</h3>
+                <label for="zoomRange" style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 10px;">
+                    DÉZOOM (Ajuste la distance d'observation)
+                </label>
+                <input type="range" id="zoomRange" min="10" max="1200" value="100" style="width: 100%;">
+            </div>
+
+            <div class="control-group">
+                <h3>CHOIX DE L'UNITÉ</h3>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="unitToggle">
+                    <span class="checkbox-label">Afficher en Kilomètres</span>
+                </label>
+            </div>
+
+            <div class="instruction-box">
+                <b>Échelle :</b> Les distances au Soleil sont fidèles à la réalité. <br><br>
+                1 UA = distance Terre-Soleil ≈ 150 000 000 km.
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <canvas id="solarCanvas"></canvas>
+        </div>
     </div>
-
-    <canvas id="solarCanvas"></canvas>
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,10 +1,14 @@
 const canvas = document.getElementById('solarCanvas');
 const ctx = canvas.getContext('2d');
 const zoomInput = document.getElementById('zoomRange');
+const unitToggle = document.getElementById('unitToggle');
+const container = document.getElementById('builder-zone');
+
+const AU_TO_KM = 149597871;
 
 function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
 }
 window.addEventListener('resize', resize);
 resize();
@@ -21,39 +25,58 @@ const planets = [
     { name: "Neptune", dist: 30.06, color: "#6081FF", size: 9 }
 ];
 
-let pixelsPerAU = 200;
+let pixelsPerAU = 100;
 
 zoomInput.addEventListener('input', (e) => {
-    // Logique de zoom plus fluide (exponentielle)
-    const val = e.target.value;
-    pixelsPerAU = 10000 / val;
+    pixelsPerAU = 15000 / e.target.value;
 });
 
-function drawScaleBar() {
-    const maxWidth = 150; // Largeur max de la barre en pixels
-    
-    // Calcul de la distance UA brute pour cette largeur
-    let rawAU = maxWidth / pixelsPerAU;
-    
-    // On cherche un nombre "rond" (1, 2, 5, 10, 20, 50...)
-    let niceAU;
-    if (rawAU < 0.1) niceAU = 0.05;
-    else if (rawAU < 0.2) niceAU = 0.1;
-    else if (rawAU < 0.5) niceAU = 0.25;
-    else if (rawAU < 1) niceAU = 0.5;
-    else if (rawAU < 2) niceAU = 1;
-    else if (rawAU < 5) niceAU = 2;
-    else if (rawAU < 10) niceAU = 5;
-    else if (rawAU < 25) niceAU = 10;
-    else niceAU = 20;
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
 
-    const barWidthInPixels = niceAU * pixelsPerAU;
-    const x = canvas.width - barWidthInPixels - 30;
+function drawScaleBar() {
+    const maxWidth = 150;
+    const isKm = unitToggle.checked;
+    
+    let displayValue;
+    let label;
+    let barWidthInPixels;
+
+    if (!isKm) {
+        // Logique UA
+        let rawAU = maxWidth / pixelsPerAU;
+        let niceAU;
+        if (rawAU < 0.1) niceAU = 0.05;
+        else if (rawAU < 0.5) niceAU = 0.25;
+        else if (rawAU < 2) niceAU = 1;
+        else if (rawAU < 10) niceAU = 5;
+        else niceAU = 10;
+        
+        displayValue = niceAU;
+        label = niceAU + " UA";
+        barWidthInPixels = niceAU * pixelsPerAU;
+    } else {
+        // Logique Kilomètres
+        let rawKm = (maxWidth / pixelsPerAU) * AU_TO_KM;
+        let niceKm;
+        if (rawKm < 20000000) niceKm = 10000000;
+        else if (rawKm < 100000000) niceKm = 50000000;
+        else if (rawKm < 300000000) niceKm = 100000000;
+        else if (rawKm < 1000000000) niceKm = 500000000;
+        else if (rawKm < 2000000000) niceKm = 1000000000;
+        else niceKm = 5000000000;
+
+        displayValue = niceKm;
+        label = formatNumber(niceKm) + " km";
+        barWidthInPixels = (niceKm / AU_TO_KM) * pixelsPerAU;
+    }
+
+    const x = canvas.width - barWidthInPixels - 40;
     const y = canvas.height - 40;
 
-    // Dessin de la barre
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(255,255,255,0.5)";
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(x, y - 5);
     ctx.lineTo(x, y);
@@ -61,11 +84,10 @@ function drawScaleBar() {
     ctx.lineTo(x + barWidthInPixels, y - 5);
     ctx.stroke();
 
-    // Texte
-    ctx.fillStyle = "white";
-    ctx.font = "bold 14px Arial";
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.font = "12px sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText(`${niceAU} UA`, x + barWidthInPixels / 2, y - 10);
+    ctx.fillText(label, x + barWidthInPixels / 2, y - 10);
 }
 
 function draw() {
@@ -76,30 +98,29 @@ function draw() {
     planets.forEach(planet => {
         const xPos = centerX + (planet.dist * pixelsPerAU);
 
-        // Orbite
         if (planet.dist > 0) {
             ctx.beginPath();
             ctx.arc(centerX, centerY, planet.dist * pixelsPerAU, 0, Math.PI * 2);
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
             ctx.stroke();
         }
 
-        // Planète
         ctx.beginPath();
         ctx.arc(xPos, centerY, planet.size, 0, Math.PI * 2);
         ctx.fillStyle = planet.color;
+        
         if(planet.dist === 0) {
-            ctx.shadowBlur = 20;
+            ctx.shadowBlur = 30;
             ctx.shadowColor = planet.color;
         } else {
             ctx.shadowBlur = 0;
         }
         ctx.fill();
 
-        // Label (uniquement si visible et pas trop serré)
-        if (planet.dist === 0 || (planet.dist * pixelsPerAU > 20)) {
-            ctx.fillStyle = "rgba(255,255,255,0.8)";
-            ctx.font = "11px sans-serif";
+        if (planet.dist === 0 || (planet.dist * pixelsPerAU > 30)) {
+            ctx.fillStyle = "rgba(255,255,255,0.6)";
+            ctx.font = "10px sans-serif";
+            ctx.textAlign = "center";
             ctx.fillText(planet.name, xPos, centerY + planet.size + 15);
         }
     });

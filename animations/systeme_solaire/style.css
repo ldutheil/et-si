@@ -1,0 +1,93 @@
+body {
+    background-color: #05070a;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-header {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+#main-container {
+    display: flex;
+    width: 100%;
+    flex: 1;
+}
+
+#left-panel {
+    width: 20%;
+    padding: 30px 20px;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+#builder-zone {
+    width: 80%;
+    background: radial-gradient(circle at center, #111827 0%, #000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+canvas { display: block; }
+
+.control-group h3 { 
+    color: #94a3b8; 
+    font-size: 0.75rem; 
+    margin-bottom: 15px; 
+    letter-spacing: 1.5px;
+}
+
+/* STYLE CHECKBOX */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.checkbox-label {
+    font-size: 0.85rem;
+    color: #f8fafc;
+}
+
+input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    accent-color: #38bdf8;
+    cursor: pointer;
+}
+
+.instruction-box {
+    margin-top: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #64748b;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+}
+
+input[type=range] {
+    accent-color: #38bdf8;
+    cursor: pointer;
+}

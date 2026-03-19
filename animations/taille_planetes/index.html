@@ -4,49 +4,51 @@
     <meta charset="UTF-8">
     <title>Système Solaire - Alignement</title>
     <style>
+        /* RESET & BASE */
         body { 
             font-family: 'Segoe UI', sans-serif; background: #2c3e50; color: white; 
-            margin: 0; height: 100vh; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; overflow: hidden; 
+            margin: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; 
         }
 
+        h1 { margin: 15px 0; text-align: center; font-size: 1.5rem; }
+
+        /* STRUCTURE : TITRE EN HAUT / PANNEAU GAUCHE / VIEWPORT DROITE */
         #app-container { 
-            display: flex; background: #34495e; padding: 20px; border-radius: 15px; gap: 20px; 
-            box-shadow: 0 15px 50px rgba(0,0,0,0.8); 
-            width: 1200px; height: 480px; box-sizing: border-box;
-            border: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex: 1; width: 100%; height: calc(100vh - 70px); 
+            box-sizing: border-box; padding: 15px; gap: 15px;
+        }
+
+        #ui-panel { 
+            width: 250px; background: #34495e; padding: 20px; border-radius: 15px;
+            display: flex; flex-direction: column; gap: 15px; flex-shrink: 0;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.2);
         }
 
         #viewport { 
-            background: radial-gradient(circle at center, #111 0%, #000 100%); 
-            border-radius: 10px; flex: 1; 
-            position: relative; overflow: hidden;
-            display: flex; align-items: flex-end; /* Alignement sur la ligne de base */
-            padding-bottom: 60px;
+            flex: 1; background: radial-gradient(circle at center, #111 0%, #000 100%); 
+            border-radius: 15px; position: relative; overflow: hidden;
+            display: flex; align-items: flex-end; padding-bottom: 60px;
         }
 
-        #ui-panel { width: 260px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
-
+        /* CONTRÔLES */
         .control-group { 
-            background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; 
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; 
+            flex: 1; display: flex; flex-direction: column; align-items: center;
         }
 
         input[type=range][orient=vertical] {
-            appearance: slider-vertical; width: 30px; height: 100%; cursor: pointer; accent-color: #00d2ff;
+            appearance: slider-vertical; width: 40px; height: 100%; cursor: pointer; accent-color: #00d2ff;
         }
 
+        /* TES STYLES DE PLANÈTES (INVARIANTS) */
         .astro-object {
             position: absolute; border-radius: 50%;
             transition: width 0.1s linear, height 0.1s linear, left 0.1s linear;
-            box-sizing: border-box; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;
             box-shadow: inset -10px -10px 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
-            /* On enlève le centrage absolu pour permettre l'alignement côte à côte */
             bottom: 60px; 
         }
 
-        /* Textures (identiques à précédemment) */
         .mercure-style { background: radial-gradient(circle at 30% 30%, #a5a5a5, #444); z-index: 10; }
         .mars-style { background: radial-gradient(circle at 30% 30%, #e27b58, #722b18); z-index: 9; }
         .venus-style { background: radial-gradient(circle at 30% 30%, #e3bb76, #835b26); z-index: 8; }
@@ -61,8 +63,8 @@
             position: absolute; display: flex; flex-direction: column; align-items: center; 
             text-align: center; transition: opacity 0.2s; width: 200px;
         }
-        .name-label { font-weight: bold; text-shadow: 2px 2px 4px black; text-transform: uppercase; }
-        .radius-label { font-family: monospace; color: #00d2ff; font-weight: bold; }
+        .name-label { font-weight: bold; text-shadow: 2px 2px 4px black; text-transform: uppercase; font-size: 14px; }
+        .radius-label { font-family: monospace; color: #00d2ff; font-weight: bold; font-size: 11px; }
         .label-internal { top: 15px; }
         .label-external { bottom: 105%; }
 
@@ -72,21 +74,22 @@
 </head>
 <body>
 
-    <h1 style="margin:10px">Et si on comparait les tailles des planètes ?</h1>
+    <h1>Et si on comparait les tailles des planètes ?</h1>
 
     <div id="app-container">
-        <div id="viewport"></div>
-
         <div id="ui-panel">
             <div class="card">
                 <span style="font-size:10px; color:#bdc3c7">FOCUS</span>
                 <div id="planet-size" class="value-display">-</div>
             </div>
             <div class="control-group">
+                <span style="font-size: 11px; margin-bottom: 10px; opacity: 0.7;">ZOOM</span>
                 <input type="range" id="zoom-slider" min="0" max="1000" value="0" orient="vertical">
             </div>
             <div class="card"><div style="font-size:9px; opacity:0.5">Rayon des planètes arrondi à 100 km près.</div></div>
         </div>
+
+        <div id="viewport"></div>
     </div>
 
     <script>
@@ -106,7 +109,7 @@
         const slider = document.getElementById('zoom-slider');
         const sizeLabel = document.getElementById('planet-size');
 
-        astros.forEach((astro, index) => {
+        astros.forEach((astro) => {
             const div = document.createElement('div');
             div.className = 'astro-object ' + astro.class;
             const labelCont = document.createElement('div');
@@ -120,14 +123,11 @@
 
         function update() {
             const val = 1000 - parseFloat(slider.value);
-            const scaleBase = Math.exp(val / 140); 
+            // On ajuste le diviseur (160 au lieu de 140) pour compenser la largeur variable
+            const scaleBase = Math.exp(val / 160); 
             const viewportW = stage.clientWidth;
             const viewportH = stage.clientHeight;
             const referenceSize = viewportH * 0.6; 
-
-            // Calcul de l'espacement entre les planètes
-            // On veut qu'elles soient centrées au début, puis qu'elles s'étalent
-            const spacing = 40 / (scaleBase * 0.1 + 1); 
 
             astros.forEach((astro, i) => {
                 const ratio = astro.d / astros[0].d;
@@ -136,24 +136,21 @@
                 astro.element.style.width = size + "px";
                 astro.element.style.height = size + "px";
 
-                // Calcul de la position X pour éviter le chevauchement total
-                // On centre la planète i par rapport au milieu du viewport, avec un décalage
                 const centerX = viewportW / 2;
-                const offset = (i - 4) * (size * 0.2 + 20); // Décalage basé sur l'index
+                // Ajustement de l'espacement pour que ce soit beau sur tous les écrans
+                const offset = (i - 4) * (size * 0.15 + (viewportW * 0.02)); 
                 astro.element.style.left = (centerX + offset - size/2) + "px";
 
-                if (size > viewportH * 0.3 && size < viewportH * 1.5) sizeLabel.innerText = astro.name;
+                if (size > viewportH * 0.25 && size < viewportH * 1.5) sizeLabel.innerText = astro.name;
 
-                // Opacité : si la planète est trop grande, elle devient translucide
                 let opacity = 1;
-                if (size > viewportW * 0.8) opacity = 0.2;
+                if (size > viewportW * 0.9) opacity = 0.2;
                 else if (size < 2) opacity = 0;
                 astro.element.style.opacity = opacity;
 
-                // Visibilité des labels
-                const isVisible = astro.external ? (size > 30 && size < viewportH) : (size > 120 && size < viewportH * 2);
+                const isVisible = (size > 80 && size < viewportH * 1.5);
                 astro.labelElement.style.opacity = isVisible ? "1" : "0";
-                astro.labelElement.style.fontSize = Math.max(8, Math.min(size/15, 18)) + "px";
+                astro.labelElement.style.fontSize = Math.max(8, Math.min(size/12, 16)) + "px";
             });
         }
 

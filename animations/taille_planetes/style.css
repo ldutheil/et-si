@@ -1,0 +1,125 @@
+body {
+    background-color: #05070a;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-header {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 1px solid #1e293b;
+    z-index: 10;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: #38bdf8;
+    text-transform: uppercase;
+}
+
+#main-container {
+    display: flex;
+    width: 100%;
+    flex: 1;
+}
+
+#left-panel {
+    width: 20%;
+    padding: 30px 20px;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+}
+
+#builder-zone {
+    width: 80%;
+    background: radial-gradient(circle at center, #111827 0%, #000 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#viewport {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.control-group h3 { 
+    color: #94a3b8; 
+    font-size: 0.75rem; 
+    margin-bottom: 20px; 
+    letter-spacing: 1.5px;
+}
+
+.card {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #1e293b;
+    text-align: center;
+}
+
+.value-display {
+    color: #38bdf8;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.label { font-size: 0.65rem; color: #64748b; }
+
+.astro-object {
+    position: absolute;
+    bottom: 10%;
+    border-radius: 50%;
+    box-shadow: inset -10px -10px 30px rgba(0,0,0,0.9), 0 10px 20px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+}
+
+/* Textures */
+.mercure-style { background: radial-gradient(circle at 30% 30%, #a5a5a5, #222); }
+.mars-style { background: radial-gradient(circle at 30% 30%, #e27b58, #4a1d10); }
+.venus-style { background: radial-gradient(circle at 30% 30%, #e3bb76, #5c3e1a); }
+.terre-style { background: radial-gradient(circle at 30% 30%, #38bdf8, #0c4a6e); }
+.neptune-style { background: radial-gradient(circle at 30% 30%, #6081ff, #1e1b4b); }
+.uranus-style { background: radial-gradient(circle at 30% 30%, #b5e1e2, #164e63); }
+.saturne-style { background: repeating-linear-gradient(180deg, #c5ab6e, #78350f 20%); }
+.jupiter-style { background: repeating-linear-gradient(180deg, #d39c7e, #7c2d12 15%); }
+.sun-style { 
+    background: radial-gradient(circle, #fff700, #ea580c); 
+    box-shadow: 0 0 80px rgba(234, 88, 12, 0.4);
+}
+
+.label-container {
+    position: absolute;
+    top: -60px;
+    text-align: center;
+    width: 200px;
+    transition: opacity 0.3s;
+}
+
+.name-label { font-weight: bold; font-size: 1rem; color: #f8fafc; }
+.radius-label { color: #38bdf8; font-family: monospace; font-size: 0.8rem; }
+
+.instruction-box {
+    margin-top: auto;
+    font-size: 0.85rem;
+    color: #64748b;
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+}
+
+input[type=range] { accent-color: #38bdf8; cursor: pointer; }
