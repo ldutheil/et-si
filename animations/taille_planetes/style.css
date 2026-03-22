@@ -1,3 +1,4 @@
+/* BASE & LAYOUT */
 body {
     background-color: #05070a;
     color: #f8fafc;
@@ -18,14 +19,6 @@ body {
     z-index: 10;
 }
 
-#main-header h1 {
-    margin: 0;
-    font-size: 1.3rem;
-    letter-spacing: 2px;
-    color: #38bdf8;
-    text-transform: uppercase;
-}
-
 #main-container {
     display: flex;
     width: 100%;
@@ -33,7 +26,7 @@ body {
 }
 
 #left-panel {
-    width: 20%;
+    width: 250px;
     padding: 30px 20px;
     background: #0f172a;
     border-right: 1px solid #1e293b;
@@ -42,7 +35,7 @@ body {
 }
 
 #builder-zone {
-    width: 80%;
+    flex: 1;
     background: radial-gradient(circle at center, #111827 0%, #000 100%);
     position: relative;
     overflow: hidden;
@@ -54,72 +47,107 @@ body {
     position: relative;
 }
 
-.control-group h3 { 
-    color: #94a3b8; 
-    font-size: 0.75rem; 
-    margin-bottom: 20px; 
-    letter-spacing: 1.5px;
-}
-
-.card {
-    margin-top: 20px;
-    background: rgba(0,0,0,0.3);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #1e293b;
-    text-align: center;
-}
-
-.value-display {
-    color: #38bdf8;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.label { font-size: 0.65rem; color: #64748b; }
-
+/* --- OBJETS CÉLESTES (MODIFIÉ POUR LE RÉALISME) --- */
 .astro-object {
     position: absolute;
-    bottom: 10%;
+    bottom: 20%;
     border-radius: 50%;
-    box-shadow: inset -10px -10px 30px rgba(0,0,0,0.9), 0 10px 20px rgba(0,0,0,0.5);
+    /* L'ombre interne (inset) simule la face non éclairée pour un effet 3D */
+    box-shadow: inset -20px -20px 50px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: width 0.1s ease-out, height 0.1s ease-out, left 0.1s ease-out;
     display: flex;
     justify-content: center;
 }
 
-/* Textures */
-.mercure-style { background: radial-gradient(circle at 30% 30%, #a5a5a5, #222); }
-.mars-style { background: radial-gradient(circle at 30% 30%, #e27b58, #4a1d10); }
-.venus-style { background: radial-gradient(circle at 30% 30%, #e3bb76, #5c3e1a); }
-.terre-style { background: radial-gradient(circle at 30% 30%, #38bdf8, #0c4a6e); }
-.neptune-style { background: radial-gradient(circle at 30% 30%, #6081ff, #1e1b4b); }
-.uranus-style { background: radial-gradient(circle at 30% 30%, #b5e1e2, #164e63); }
-.saturne-style { background: repeating-linear-gradient(180deg, #c5ab6e, #78350f 20%); }
-.jupiter-style { background: repeating-linear-gradient(180deg, #d39c7e, #7c2d12 15%); }
-.sun-style { 
-    background: radial-gradient(circle, #fff700, #ea580c); 
-    box-shadow: 0 0 80px rgba(234, 88, 12, 0.4);
+/* Ajout d'un reflet léger sur le côté éclairé */
+.astro-object::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
 }
 
+/* Textures Réelles NASA/Wikimedia avec fallbacks */
+.mercure-style { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_true_color.jpg');
+    background-color: #888;
+}
+.venus-style   { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/e/e5/Venus-real_color.jpg');
+    background-color: #e3bb76;
+}
+.terre-style   { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/d/db/Blue_Marble_2002.jpg');
+    background-color: #44ccff;
+}
+.mars-style    { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg');
+    background-color: #e27b58;
+}
+.neptune-style { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/6/63/Neptune_Full.jpg');
+    background-color: #6081ff;
+}
+.uranus-style  { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg');
+    background-color: #b5e1e2;
+}
+.saturne-style { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg');
+    background-color: #c5ab6e;
+}
+.jupiter-style { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg');
+    background-color: #d39c7e;
+}
+
+.sun-style { 
+    background-image: 
+        url('https://upload.wikimedia.org/wikipedia/commons/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Obervatory_-_20100819.jpg');
+    background-color: #fff700;
+    box-shadow: 0 0 60px rgba(255, 102, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+/* LABELS */
 .label-container {
     position: absolute;
     top: -60px;
     text-align: center;
     width: 200px;
+    pointer-events: none;
     transition: opacity 0.3s;
 }
 
-.name-label { font-weight: bold; font-size: 1rem; color: #f8fafc; }
-.radius-label { color: #38bdf8; font-family: monospace; font-size: 0.8rem; }
-
-.instruction-box {
-    margin-top: auto;
-    font-size: 0.85rem;
-    color: #64748b;
-    padding: 20px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
+.name-label { 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    text-shadow: 2px 2px 4px #000; 
+    text-transform: uppercase;
 }
 
-input[type=range] { accent-color: #38bdf8; cursor: pointer; }
+.radius-label { 
+    color: #38bdf8; 
+    font-family: monospace; 
+    font-weight: bold;
+}
+
+/* UI CONTROLS */
+.control-group h3 { color: #94a3b8; font-size: 0.75rem; margin-bottom: 20px; letter-spacing: 1.5px; }
+.card { margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid #1e293b; text-align: center; }
+.value-display { color: #38bdf8; font-size: 1.5rem; font-weight: bold; margin-top: 5px; }
+.label { font-size: 0.65rem; color: #64748b; }
+
+input[type=range] { width: 100%; accent-color: #38bdf8; cursor: pointer; }

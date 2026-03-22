@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Système Solaire - Alignement</title>
+    <title>Système Solaire - Taille des astres</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         /* RESET & BASE */
         body { 
@@ -46,18 +47,77 @@
             transition: width 0.1s linear, height 0.1s linear, left 0.1s linear;
             box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center;
             box-shadow: inset -10px -10px 20px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
-            bottom: 60px; 
+            bottom: 60px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .mercure-style { background: radial-gradient(circle at 30% 30%, #a5a5a5, #444); z-index: 10; }
-        .mars-style { background: radial-gradient(circle at 30% 30%, #e27b58, #722b18); z-index: 9; }
-        .venus-style { background: radial-gradient(circle at 30% 30%, #e3bb76, #835b26); z-index: 8; }
-        .terre-style { background: radial-gradient(circle at 30% 30%, #44ccff, #124183); z-index: 7; }
-        .neptune-style { background: radial-gradient(circle at 30% 30%, #6081ff, #10216f); z-index: 6; }
-        .uranus-style { background: radial-gradient(circle at 30% 30%, #b5e1e2, #457172); z-index: 5; }
-        .saturne-style { background: repeating-linear-gradient(180deg, #c5ab6e, #a58b4e 10%, #c5ab6e 20%); z-index: 4; }
-        .jupiter-style { background: repeating-linear-gradient(180deg, #d39c7e, #b37c5e 15%, #d39c7e 30%); z-index: 3; }
-        .sun-style { background: radial-gradient(circle, #fff700, #ff4400); z-index: 2; box-shadow: 0 0 50px #ff6600; }
+        .mercure-style { 
+            background: radial-gradient(circle at 35% 35%, #e8e8e8 0%, #a0a0a0 50%, #606060 100%);
+            z-index: 10; 
+        }
+        .mars-style { 
+            background: radial-gradient(circle at 35% 35%, #e27b58 0%, #c85a38 40%, #8b3a14 100%),
+                        repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(0,0,0,0.1) 40px, rgba(0,0,0,0.1) 80px);
+            background-blend-mode: multiply;
+            z-index: 9; 
+        }
+        .venus-style { 
+            background: radial-gradient(circle at 35% 35%, #ffd89b 0%, #e6b857 40%, #c68642 100%),
+                        repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(200,100,0,0.15) 30px, rgba(200,100,0,0.15) 60px);
+            background-blend-mode: multiply;
+            z-index: 8; 
+        }
+        .terre-style { 
+            background: radial-gradient(circle at 35% 35%, #44ccff 0%, #1e90ff 35%, #0a3d62 100%),
+                        radial-gradient(circle at 60% 40%, #2ecc71 0%, transparent 50%),
+                        radial-gradient(circle at 25% 60%, #228b22 0%, transparent 45%);
+            background-blend-mode: multiply;
+            z-index: 7; 
+        }
+        .neptune-style { 
+            background: radial-gradient(circle at 35% 35%, #6b9eff 0%, #4166f5 40%, #0a1a5e 100%),
+                        repeating-linear-gradient(180deg, transparent, transparent 25px, rgba(255,255,255,0.08) 25px, rgba(255,255,255,0.08) 50px);
+            background-blend-mode: overlay;
+            z-index: 6; 
+        }
+        .uranus-style { 
+            background: radial-gradient(circle at 35% 35%, #b5e1e2 0%, #7dd3c0 40%, #2d6a63 100%),
+                        repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.1) 30px, rgba(255,255,255,0.1) 60px);
+            background-blend-mode: overlay;
+            z-index: 5; 
+        }
+        .saturne-style { 
+            background: repeating-linear-gradient(
+                180deg,
+                #e8d5b7 0%, #e8d5b7 8%,
+                #d4af37 8%, #d4af37 16%,
+                #b8860b 16%, #b8860b 24%,
+                #a68e4e 24%, #a68e4e 32%
+            ),
+            radial-gradient(circle at 35% 35%, #deb887, #8b7355);
+            background-blend-mode: multiply;
+            z-index: 4; 
+        }
+        .jupiter-style { 
+            background: repeating-linear-gradient(
+                180deg,
+                #e8c547 0%, #e8c547 10%,
+                #c88b3a 10%, #c88b3a 20%,
+                #d9a574 20%, #d9a574 30%,
+                #a0632f 30%, #a0632f 40%,
+                #b8860b 40%, #b8860b 50%
+            ),
+            radial-gradient(circle at 35% 35%, #e6a857, #8b4513);
+            background-blend-mode: multiply;
+            z-index: 3; 
+        }
+        .sun-style { 
+            background: radial-gradient(circle at 35% 35%, #ffff99 0%, #ffdd00 20%, #ffaa00 50%, #ff6600 100%);
+            z-index: 2; 
+            box-shadow: 0 0 50px #ff6600, inset -20px -20px 40px rgba(0,0,0,0.2); 
+        }
 
         .label-container {
             position: absolute; display: flex; flex-direction: column; align-items: center; 
@@ -67,6 +127,122 @@
         .radius-label { font-family: monospace; color: #00d2ff; font-weight: bold; font-size: 11px; }
         .label-internal { top: 15px; }
         .label-external { bottom: 105%; }
+
+        /* Styles pour le card et le popup */
+        .card { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; text-align: center; }
+        .value-display { color: #00d2ff; font-weight: bold; font-size: 1.1rem; font-family: monospace; }
+        
+        .type-label {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .btn-planet-data {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-planet-data:hover {
+            background: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
+        }
+
+        .modal-close {
+            color: #38bdf8;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #7dd3fc;
+        }
+
+        .modal h2 {
+            color: #38bdf8;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .planet-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .planet-table th {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #1e293b;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .planet-table td {
+            padding: 12px;
+            border-bottom: 1px solid #1e293b;
+            color: #cbd5e1;
+        }
+
+        .planet-table tr:hover {
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        .planet-table .rocheuse {
+            color: #f97316;
+        }
+
+        .planet-table .gazeuse {
+            color: #06b6d4;
+        }
 
         .card { background: rgba(0,0,0,0.4); padding: 12px; border-radius: 10px; text-align: center; }
         .value-display { color: #00d2ff; font-weight: bold; font-size: 1.1rem; font-family: monospace; }
@@ -78,36 +254,54 @@
 
     <div id="app-container">
         <div id="ui-panel">
-            <div class="card">
-                <span style="font-size:10px; color:#bdc3c7">FOCUS</span>
-                <div id="planet-size" class="value-display">-</div>
-            </div>
             <div class="control-group">
-                <span style="font-size: 11px; margin-bottom: 10px; opacity: 0.7;">ZOOM</span>
+                <span style="font-size: 15px; margin-bottom: 10px; opacity: 0.7;">ZOOM</span>
                 <input type="range" id="zoom-slider" min="0" max="1000" value="0" orient="vertical">
             </div>
-            <div class="card"><div style="font-size:9px; opacity:0.5">Rayon des planètes arrondi à 100 km près.</div></div>
+            <div class="card">
+                <div style="font-size:15px; opacity:0.5">Rayon des planètes arrondi à 100 km près.</div>
+                
+            </div>
+            <button class="btn-planet-data" id="btn-planet-table">📊 Tous les rayons</button>
         </div>
 
         <div id="viewport"></div>
     </div>
 
+    <!-- Modal Popup -->
+    <div id="planetModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Rayons des Planètes</h2>
+            <table class="planet-table">
+                <thead>
+                    <tr>
+                        <th>Planète</th>
+                        <th>Type</th>
+                        <th>Rayon (km)</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
         const astros = [
-            { name: "Mercure", d: 4879, class: "mercure-style", external: false },
-            { name: "Mars", d: 6779, class: "mars-style", external: false },
-            { name: "Vénus", d: 12104, class: "venus-style", external: false },
-            { name: "Terre", d: 12742, class: "terre-style", external: true },
-            { name: "Neptune", d: 49244, class: "neptune-style", external: false },
-            { name: "Uranus", d: 50724, class: "uranus-style", external: true },
-            { name: "Saturne", d: 116460, class: "saturne-style", external: false },
-            { name: "Jupiter", d: 139820, class: "jupiter-style", external: false },
-            { name: "Soleil", d: 1392700, class: "sun-style", external: false }
+            { name: "Mercure", d: 4879, class: "mercure-style", external: false, type: "Rocheuse" },
+            { name: "Mars", d: 6779, class: "mars-style", external: false, type: "Rocheuse" },
+            { name: "Vénus", d: 12104, class: "venus-style", external: false, type: "Rocheuse" },
+            { name: "Terre", d: 12742, class: "terre-style", external: true, type: "Rocheuse" },
+            { name: "Neptune", d: 49244, class: "neptune-style", external: false, type: "Gazeuse" },
+            { name: "Uranus", d: 50724, class: "uranus-style", external: true, type: "Gazeuse" },
+            { name: "Saturne", d: 116460, class: "saturne-style", external: false, type: "Gazeuse" },
+            { name: "Jupiter", d: 139820, class: "jupiter-style", external: false, type: "Gazeuse" },
+            { name: "Soleil", d: 1392700, class: "sun-style", external: false, type: "Étoile" }
         ];
 
         const stage = document.getElementById('viewport');
         const slider = document.getElementById('zoom-slider');
-        const sizeLabel = document.getElementById('planet-size');
 
         astros.forEach((astro) => {
             const div = document.createElement('div');
@@ -141,8 +335,6 @@
                 const offset = (i - 4) * (size * 0.15 + (viewportW * 0.02)); 
                 astro.element.style.left = (centerX + offset - size/2) + "px";
 
-                if (size > viewportH * 0.25 && size < viewportH * 1.5) sizeLabel.innerText = astro.name;
-
                 let opacity = 1;
                 if (size > viewportW * 0.9) opacity = 0.2;
                 else if (size < 2) opacity = 0;
@@ -157,6 +349,60 @@
         slider.addEventListener('input', update);
         window.addEventListener('resize', update);
         update();
+
+        // Remplir la table avec les données des planètes
+        const tableBody = document.getElementById('table-body');
+        astros.forEach((astro) => {
+            const row = document.createElement('tr');
+            const typeClass = astro.type === 'Rocheuse' ? 'rocheuse' : astro.type === 'Gazeuse' ? 'gazeuse' : '';
+            row.innerHTML = `
+                <td>${astro.name}</td>
+                <td class="${typeClass}">${astro.type}</td>
+                <td>${Math.round(astro.d/200)*100}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Gestion du modal
+        const modal = document.getElementById('planetModal');
+        const btn = document.getElementById('btn-planet-table');
+        const closeBtn = document.querySelector('.modal-close');
+
+        btn.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Mettre à jour la mention rocheuse/gazeuse
+        function updatePlanetType() {
+            const val = 1000 - parseFloat(slider.value);
+            const scaleBase = Math.exp(val / 160);
+            const viewportH = stage.clientHeight;
+            const referenceSize = viewportH * 0.6;
+
+            let currentType = '-';
+            astros.forEach((astro, i) => {
+                const ratio = astro.d / astros[0].d;
+                const size = (referenceSize * ratio) / scaleBase;
+                if (size > viewportH * 0.25 && size < viewportH * 1.5) {
+                    currentType = astro.type;
+                }
+            });
+
+            document.getElementById('planet-type').textContent = currentType;
+        }
+
+        slider.addEventListener('input', updatePlanetType);
+        updatePlanetType();
     </script>
 </body>
 </html>

@@ -17,6 +17,7 @@ window.onload = function() {
 
     function resize() {
         const parent = canvas.parentElement;
+        // On adapte la résolution interne du canvas à sa taille d'affichage réelle
         canvas.width = parent.clientWidth;
         canvas.height = parent.clientHeight;
         initIons(parseInt(slider.value));
@@ -55,12 +56,11 @@ window.onload = function() {
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Texte de l'ion
             ctx.fillStyle = 'white';
             ctx.font = 'bold 10px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.shadowBlur = 0; // Pas de flou sur le texte
+            ctx.shadowBlur = 0;
 
             if (this.type === 'H+') {
                 ctx.fillText('H', this.x - 2, this.y);
@@ -84,7 +84,7 @@ window.onload = function() {
 
     function initIons(pH) {
         ions = [];
-        const totalIons = 40; // Augmenté pour mieux remplir l'espace large
+        const totalIons = 40; 
         const hCount = Math.round(totalIons * (14 - pH) / 14);
         const ohCount = totalIons - hCount;
 

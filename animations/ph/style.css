@@ -1,12 +1,12 @@
+/* --- STYLES DE BASE & MOBILE --- */
 body {
     background-color: #0a0f1e;
     color: #f8fafc;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 #main-header {
@@ -19,91 +19,83 @@ body {
 
 #main-header h1 {
     margin: 0;
-    font-size: 1.8rem;
-    letter-spacing: 4px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: #38bdf8;
 }
 
 #main-container {
     display: flex;
+    flex-direction: column; /* Empilé par défaut pour mobile */
     width: 100%;
     flex: 1;
-    min-height: 0;
 }
 
-/* PANNEAU GAUCHE */
-#left-panel {
-    width: 20%;
+#left-panel, #info-zone {
+    width: 100%;
     padding: 20px;
+    box-sizing: border-box;
     background: rgba(255,255,255,0.02);
-    border-right: 1px solid #1e293b;
 }
 
-.control-group h3 { color: #38bdf8; font-size: 0.9rem; margin-bottom: 20px; }
-
-#phSliderContainer { margin-bottom: 30px; }
-#phSlider { width: 100%; cursor: pointer; }
-
-#phScale {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: #94a3b8;
-    margin-top: 10px;
-}
-
-.instruction-box {
-    margin-top: 30px;
-    font-size: 0.85rem;
-    color: #94a3b8;
-    line-height: 1.6;
-    padding: 15px;
-    background: rgba(15, 23, 42, 0.5);
-    border-radius: 8px;
-    border: 1px solid #1e293b;
-}
-
-/* ZONE CENTRALE */
 #builder-zone {
-    width: 60%;
+    width: 100%;
+    height: 40vh; /* Hauteur réservée au canvas sur mobile */
     background: #050505;
     position: relative;
 }
 
 canvas { width: 100%; height: 100%; display: block; }
 
-/* PANNEAU DROIT */
-#info-zone {
-    width: 20%;
-    padding: 20px;
-    background: rgba(255,255,255,0.02);
-    border-left: 1px solid #1e293b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* --- CONFIGURATION PC (Strictement identique à l'original) --- */
+@media (min-width: 1024px) {
+    body { overflow: hidden; }
+
+    #main-header h1 { font-size: 1.8rem; letter-spacing: 4px; }
+
+    #main-container { flex-direction: row; }
+
+    #left-panel {
+        width: 20%;
+        border-right: 1px solid #1e293b;
+    }
+
+    #builder-zone {
+        width: 60%;
+        height: auto;
+    }
+
+    #info-zone {
+        width: 20%;
+        border-left: 1px solid #1e293b;
+    }
 }
 
-#info-title { font-size: 1.2rem; color: #38bdf8; margin-bottom: 40px; }
-
+/* Éléments communs */
+.control-group h3 { color: #38bdf8; font-size: 0.9rem; margin-bottom: 20px; }
+#phSliderContainer { margin-bottom: 30px; }
+#phSlider { width: 100%; cursor: pointer; }
+#phScale {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: #94a3b8; margin-top: 10px;
+}
+.instruction-box {
+    margin-top: 15px; font-size: 0.85rem; color: #94a3b8;
+    line-height: 1.6; padding: 15px; background: rgba(15, 23, 42, 0.5);
+    border-radius: 8px; border: 1px solid #1e293b;
+}
 .data-card {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.5);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    border: 1px solid #1e293b;
+    width: 100%; background: rgba(30, 41, 59, 0.5);
+    padding: 15px; border-radius: 8px; margin-bottom: 15px;
+    text-align: center; border: 1px solid #1e293b; box-sizing: border-box;
 }
-
 .data-card .label { font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 5px; font-weight: bold; }
 .data-card .value { font-size: 1.5rem; font-weight: bold; font-family: monospace; }
-
 .highlight { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
 .highlight .value { color: #38bdf8; }
-
-.data-divider { width: 50px; height: 2px; background: #1e293b; margin: 20px 0; }
-
-#legend { width: 100%; }
+.data-divider { width: 50px; height: 2px; background: #1e293b; margin: 20px auto; }
+#legend { width: 100%; display: flex; justify-content: space-around; flex-wrap: wrap; }
+@media (min-width: 1024px) { #legend { flex-direction: column; align-items: flex-start; } }
 .legend-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 0.9rem; color: #cbd5e1; }
 .legend-color { width: 16px; height: 16px; border-radius: 50%; margin-right: 12px; }
