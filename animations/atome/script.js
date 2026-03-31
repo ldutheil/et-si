@@ -27,6 +27,7 @@ window.onload = function() {
 
     let nucleons = [], protons = 0, neutrons = 0, electrons = 0, angle = 0, isStable = true;
 
+    // Remplissage petit tableau
     elements.forEach((el, i) => {
         if (i === 0) return;
         const box = document.createElement('div');
@@ -35,14 +36,11 @@ window.onload = function() {
         box.style.gridColumn = el.c > 2 ? el.c + 1 : el.c;
         box.style.gridRow = el.r;
         box.innerHTML = `<span>${el.z}</span><strong>${el.s}</strong>`;
-        box.onclick = () => {
-            protons = el.z; neutrons = el.nz; electrons = el.z;
-            generateMixedNucleus(protons, neutrons);
-            updateUI();
-        };
+        box.onclick = () => { protons = el.z; neutrons = el.nz; electrons = el.z; generateMixedNucleus(protons, neutrons); updateUI(); };
         document.getElementById('periodic-table').appendChild(box);
     });
 
+    // Algorithme de mélange du noyau
     function generateMixedNucleus(pCount, nCount) {
         nucleons = [];
         let pool = [];
@@ -68,49 +66,41 @@ window.onload = function() {
         const el = elements[protons] || { n: "Inconnu", s: protons > 0 ? "?" : "" };
         const charge = protons - electrons;
         isStable = (protons === 0) || (neutrons >= protons - 1 && neutrons <= protons + Math.ceil(protons * 0.2) + 1);
-        const stabDiv = document.getElementById('stability-info');
-        stabDiv.innerText = protons > 0 ? (isStable ? "Noyau Stable" : "Noyau Instable") : "";
-        stabDiv.className = isStable ? "stable" : "instable";
+        document.getElementById('stability-info').innerText = protons > 0 ? (isStable ? "Noyau Stable" : "Noyau Instable") : "";
+        document.getElementById('stability-info').className = isStable ? "stable" : "instable";
         document.getElementById('atom-name-title').innerText = protons === 0 ? "VIDE" : el.n.toUpperCase();
         let cD = "";
         if (charge > 0) cD = charge === 1 ? "+" : charge + "+";
         else if (charge < 0) cD = charge === -1 ? "-" : Math.abs(charge) + "-";
-        document.getElementById('notation-container').innerHTML = `
-            <div class="indices"><span>${protons+neutrons||""}</span><span>${protons||""}</span></div>
-            <div class="symbol">${el.s}</div>
-            <div class="charge-exposant">${cD}</div>`;
+        document.getElementById('notation-container').innerHTML = `<div class="indices"><span>${protons+neutrons||""}</span><span>${protons||""}</span></div><div class="symbol">${el.s}</div><div class="charge-exposant">${cD}</div>`;
         document.querySelectorAll('.element-box').forEach(b => b.classList.remove('active'));
         if(document.getElementById(`box-${protons}`)) document.getElementById(`box-${protons}`).classList.add('active');
     }
 
-    function addNucleon(type) {
-        if (type === 'p' && protons >= 18) return;
-        let dist = 0, pos = null;
-        while (!pos) {
-            for (let a = 0; a < Math.PI * 2; a += 0.5) {
-                let x = Math.cos(a) * dist, y = Math.sin(a) * dist;
-                if (!nucleons.some(n => Math.hypot(n.x-x, n.y-y) < 18)) { pos = {x,y}; break; }
-            } dist += 1;
-        }
-        nucleons.push({ x: pos.x, y: pos.y, type: type });
-        type === 'p' ? protons++ : neutrons++; updateUI();
-    }
-
-    function removeParticle(type) {
-        if (type === 'e') { if (electrons > 0) electrons--; }
-        else {
-            const idx = nucleons.findLastIndex(n => n.type === type);
-            if (idx !== -1) { nucleons.splice(idx, 1); type === 'p' ? protons-- : neutrons--; }
-        } updateUI();
-    }
-
+    // Contrôles
     const ctrl = document.getElementById('controls');
     [['Protons', '#ef4444', 'p'], ['Neutrons', '#64748b', 'n'], ['Électrons', '#3b82f6', 'e']].forEach(p => {
         const div = document.createElement('div'); div.className = 'control-group';
         div.innerHTML = `<button style="background:#1e293b">−</button><label>${p[0]}</label><button style="background:${p[1]}">+</button>`;
-        div.querySelectorAll('button')[0].onclick = () => removeParticle(p[2]);
+        div.querySelectorAll('button')[0].onclick = () => {
+            if (p[2] === 'e') { if (electrons > 0) electrons--; }
+            else { const idx = nucleons.findLastIndex(n => n.type === p[2]); if (idx !== -1) { nucleons.splice(idx, 1); p[2] === 'p' ? protons-- : neutrons--; } }
+            updateUI();
+        };
         div.querySelectorAll('button')[1].onclick = () => {
-            if(p[2] === 'e') { if(electrons < 36) electrons++; } else addNucleon(p[2]);
+            if(p[2] === 'e') { if(electrons < 36) electrons++; }
+            else {
+                if (p[2] === 'p' && protons >= 18) return;
+                let dist = 0, pos = null;
+                while (!pos) {
+                    for (let a = 0; a < Math.PI * 2; a += 0.5) {
+                        let x = Math.cos(a) * dist, y = Math.sin(a) * dist;
+                        if (!nucleons.some(n => Math.hypot(n.x-x, n.y-y) < 18)) { pos = {x,y}; break; }
+                    } dist += 1;
+                }
+                nucleons.push({ x: pos.x, y: pos.y, type: p[2] });
+                p[2] === 'p' ? protons++ : neutrons++;
+            }
             updateUI();
         };
         ctrl.appendChild(div);
@@ -122,28 +112,11 @@ window.onload = function() {
     resetBtn.onclick = () => { protons = 0; neutrons = 0; electrons = 0; nucleons = []; updateUI(); };
     ctrl.appendChild(resetBtn);
 
-    function drawGauge() {
-        const cx = 110, cy = 130, r = 70;
-        gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-        const grad = gCtx.createLinearGradient(30, 0, 190, 0);
-        grad.addColorStop(0, "#38bdf8"); grad.addColorStop(0.5, "#4ade80"); grad.addColorStop(1, "#ef4444");
-        gCtx.beginPath(); gCtx.arc(cx, cy, r, Math.PI, 2 * Math.PI);
-        gCtx.strokeStyle = grad; gCtx.lineWidth = 10; gCtx.stroke();
-        const charge = protons - electrons;
-        const targetA = Math.PI + (Math.max(-18, Math.min(18, charge)) + 18) * (Math.PI / 36);
-        gCtx.save(); gCtx.translate(cx, cy); gCtx.rotate(targetA);
-        gCtx.beginPath(); gCtx.moveTo(0,0); gCtx.lineTo(r-5, 0);
-        gCtx.strokeStyle = "white"; gCtx.lineWidth = 3; gCtx.stroke(); gCtx.restore();
-        gCtx.fillStyle = "white"; gCtx.font = "bold 14px Arial"; gCtx.textAlign = "center";
-        let txt = protons === 0 ? "" : (charge === 0 ? "NEUTRE" : (charge > 0 ? "CATION" : "ANION")) + " ("+(charge>0?"+":"")+charge+")";
-        gCtx.fillText(txt, cx, cy + 30);
-    }
-
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let cx = 250, cy = 250;
         if (!isStable && protons > 0) { cx += Math.random()*4-2; cy += Math.random()*4-2; }
-        let shells = [110, 160, 210]; if (electrons > 28) shells.push(260);
+        let shells = [110, 160, 210, 260];
         ctx.lineWidth = 2; ctx.strokeStyle = "rgba(255,255,255,0.1)";
         shells.forEach(r => { ctx.beginPath(); ctx.arc(250, 250, r, 0, Math.PI*2); ctx.stroke(); });
         nucleons.forEach(n => {
@@ -157,7 +130,15 @@ window.onload = function() {
             ctx.beginPath(); ctx.arc(250 + Math.cos(speed)*orbit, 250 + Math.sin(speed)*orbit, 7, 0, Math.PI*2);
             ctx.fillStyle = "#3b82f6"; ctx.fill();
         }
-        drawGauge(); requestAnimationFrame(draw);
+        // Jauge de charge
+        gCtx.clearRect(0,0,220,180);
+        const grad = gCtx.createLinearGradient(30,0,190,0); grad.addColorStop(0,"#38bdf8"); grad.addColorStop(0.5,"#4ade80"); grad.addColorStop(1,"#ef4444");
+        gCtx.beginPath(); gCtx.arc(110,130,70,Math.PI,2*Math.PI); gCtx.strokeStyle=grad; gCtx.lineWidth=10; gCtx.stroke();
+        const charge = protons - electrons; const targetA = Math.PI + (Math.max(-18,Math.min(18,charge))+18)*(Math.PI/36);
+        gCtx.save(); gCtx.translate(110,130); gCtx.rotate(targetA); gCtx.beginPath(); gCtx.moveTo(0,0); gCtx.lineTo(65,0); gCtx.strokeStyle="white"; gCtx.lineWidth=3; gCtx.stroke(); gCtx.restore();
+        gCtx.fillStyle="white"; gCtx.textAlign="center"; gCtx.font="bold 14px Arial";
+        if(protons>0) gCtx.fillText((charge===0?"NEUTRE":charge>0?"CATION":"ANION")+" ("+(charge>0?"+":"")+charge+")", 110, 160);
+        requestAnimationFrame(draw);
     }
 
     const fullData = [
