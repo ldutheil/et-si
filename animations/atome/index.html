@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Construction d'atomes</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="../../favicon.png">
 </head>
 <body>
     <div id="app-scaler">
@@ -14,7 +13,12 @@
         </header>
 
         <div id="main-container">
-            <div id="periodic-table"></div>
+            <div id="left-sidebar" style="width: 32%; display: flex; flex-direction: column; align-items: center; padding: 10px;">
+                <div id="periodic-table" style="width: 100%;"></div>
+                <button id="btn-full-table" style="margin-top: 20px; padding: 15px; background: #334155; color: white; border: 1px solid #475569; border-radius: 8px; cursor: pointer; width: 95%; font-weight: bold; font-size: 1rem;">
+                    CLIQUER POUR LE TABLEAU PÉRIODIQUE COMPLET
+                </button>
+            </div>
 
             <div id="builder-zone">
                 <canvas id="atomCanvas" width="500" height="500"></canvas>
@@ -23,11 +27,21 @@
 
             <div id="info-zone">
                 <h1 id="atom-name-title">VIDE</h1>
+                <div id="stability-info"></div>
                 <div id="notation-container"></div>
                 <canvas id="gauge-canvas" width="220" height="180"></canvas>
             </div>
         </div>
     </div>
+
+    <div id="modal-table" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center;">
+        <div style="position: relative; width: 98%; max-width: 1250px; background: #0f172a; padding: 15px; border-radius: 12px; border: 2px solid #38bdf8;">
+            <span id="close-modal" style="position: absolute; top: 5px; right: 20px; color: white; font-size: 40px; cursor: pointer; font-weight: bold;">&times;</span>
+            <h2 style="text-align: center; color: #38bdf8; margin-bottom: 10px; font-size: 1.4rem; text-transform: uppercase;">Classification Périodique</h2>
+            <div id="full-table-grid"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
