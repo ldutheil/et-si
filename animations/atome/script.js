@@ -3,6 +3,18 @@ window.onload = function() {
     const ctx = canvas.getContext('2d');
     const gCanvas = document.getElementById('gauge-canvas');
     const gCtx = gCanvas.getContext('2d');
+    const scaler = document.getElementById('app-scaler');
+
+    // --- FONCTION DE MISE À L'ÉCHELLE ---
+    function handleResize() {
+        const baseWidth = 1280;
+        const baseHeight = 720;
+        const scale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
+        scaler.style.transform = `scale(${scale})`;
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Appel initial
+    // ------------------------------------
 
     const elements = [
         { z: 0, n: "Vide", s: "" },

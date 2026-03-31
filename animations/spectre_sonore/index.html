@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio-Scope - Explorateur Sonore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <h1>Explorateur de Fréquences Sonores</h1>
+    </header>
+
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>CONTRÔLE DE FRÉQUENCE</h3>
+                <div id="audioSliderContainer">
+                    <input type="range" id="freqSlider" min="5" max="25000" value="440" step="5">
+                    <div id="audioScale">
+                        <span>5 Hz (Basses)</span>
+                        <span>25 kHz (Hautes)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="instruction-box">
+                <strong>Attention :</strong> L'audio est généré en temps réel. Par défaut, il est en pause. <br><br>
+                <button id="toggleAudio" class="usage-btn">▶ JOUER LE SON</button>
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <canvas id="soundCanvas"></canvas>
+        </div>
+
+        <div id="info-zone">
+            <h1 id="info-title">MONITORING</h1>
+            
+            <div class="data-card highlight">
+                <span class="label">CATÉGORIE</span>
+                <span class="value" id="categoryValue">Son Audible</span>
+            </div>
+
+            <div class="data-card">
+                <span class="label">FRÉQUENCE ACTUELLE</span>
+                <span class="value" id="exampleValue" style="color: #38bdf8;">440 Hz (La 4)</span>
+            </div>
+
+            <div class="data-divider"></div>
+
+            <div id="legend">
+                <button id="usageTableBtn" class="usage-btn">📊 Voir le tableau des fréquences</button>
+            </div>
+
+            <div id="usageModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>Utilisations des Fréquences Sonores</h2>
+                    <table id="usageTable">
+                        <thead>
+                            <tr>
+                                <th>Domaine</th>
+                                <th>Fréquence (Hz)</th>
+                                <th>Exemples & Usages</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acousti-Sync - Compact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <h1>Analyse Harmonique Comparée</h1>
+    </header>
+
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>NOTE</h3>
+                <div class="btn-group">
+                    <button class="note-btn active" data-freq="440">LA (440Hz)</button>
+                    <button class="note-btn" data-freq="293.66">RÉ (293Hz)</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>AUDIO</h3>
+                <select id="audioSelect" class="usage-btn" style="background: #1e293b; border: 1px solid #38bdf8; margin-bottom:5px; height: 30px; padding: 0 10px;">
+                    <option value="diapason">Diapason</option>
+                    <option value="piano">Piano</option>
+                    <option value="guitare">Guitare</option>
+                </select>
+                <button id="playBtn" class="usage-btn">▶ JOUER</button>
+            </div>
+
+            <div class="instruction-box">
+                Fenêtre : <strong>10 ms</strong><br>
+                Spectre : <strong>0-3 kHz</strong>
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <div class="instrument-row">
+                <div class="row-label">DIAPASON</div>
+                <div class="canvas-pair">
+                    <div class="canvas-container"><canvas id="time_diapason"></canvas></div>
+                    <div class="canvas-container"><canvas id="freq_diapason"></canvas></div>
+                </div>
+            </div>
+            <div class="instrument-row">
+                <div class="row-label">PIANO</div>
+                <div class="canvas-pair">
+                    <div class="canvas-container"><canvas id="time_piano"></canvas></div>
+                    <div class="canvas-container"><canvas id="freq_piano"></canvas></div>
+                </div>
+            </div>
+            <div class="instrument-row">
+                <div class="row-label">GUITARE</div>
+                <div class="canvas-pair">
+                    <div class="canvas-container"><canvas id="time_guitare"></canvas></div>
+                    <div class="canvas-container"><canvas id="freq_guitare"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="info-zone">
+            <div class="data-card highlight">
+                <span class="label">FRÉQUENCE</span>
+                <span class="value" id="freqValue">440 Hz</span>
+            </div>
+            <div class="legend-item"><div class="legend-color" style="background: #38bdf8;"></div><span>Temps</span></div>
+            <div class="legend-item"><div class="legend-color" style="background: #fbbf24;"></div><span>Spectre</span></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

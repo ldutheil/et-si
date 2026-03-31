@@ -1,0 +1,94 @@
+/* --- STYLES DE BASE (Adaptés de ton design) --- */
+body {
+    background-color: #0a0f1e;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-header {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #38bdf8;
+}
+
+#main-container {
+    display: flex;
+    flex: 1;
+}
+
+#left-panel, #info-zone {
+    width: 20%;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.02);
+    border-right: 1px solid #1e293b;
+}
+
+#info-zone { border-right: none; border-left: 1px solid #1e293b; }
+
+#builder-zone {
+    width: 60%;
+    background: #050505;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas { width: 100%; height: 100%; display: block; }
+
+/* Éléments de contrôle */
+.control-group h3 { color: #38bdf8; font-size: 0.9rem; margin-bottom: 20px; }
+#audioSliderContainer { margin-bottom: 30px; }
+#freqSlider { width: 100%; cursor: pointer; }
+#audioScale {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: #94a3b8; margin-top: 10px;
+}
+.instruction-box {
+    margin-top: 15px; font-size: 0.85rem; color: #94a3b8;
+    line-height: 1.6; padding: 15px; background: rgba(15, 23, 42, 0.5);
+    border-radius: 8px; border: 1px solid #1e293b; text-align: center;
+}
+.data-card {
+    width: 100%; background: rgba(30, 41, 59, 0.5);
+    padding: 15px; border-radius: 8px; margin-bottom: 15px;
+    text-align: center; border: 1px solid #1e293b; box-sizing: border-box;
+}
+.data-card .label { font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 5px; font-weight: bold; }
+.data-card .value { font-size: 1.5rem; font-weight: bold; font-family: monospace; }
+.highlight { border-color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+.highlight .value { color: #38bdf8; }
+.data-divider { width: 50px; height: 2px; background: #1e293b; margin: 20px auto; }
+
+.usage-btn {
+    background: linear-gradient(135deg, #38bdf8, #1e40af);
+    color: white; border: none; padding: 12px 20px; border-radius: 8px;
+    cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.3s ease;
+    width: 100%; margin-top: 10px;
+}
+.usage-btn:hover { background: linear-gradient(135deg, #1e40af, #38bdf8); }
+.usage-btn.playing { background: linear-gradient(135deg, #ff4444, #cc0000); }
+
+/* Styles du Modal */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+.modal-content { background: #0f172a; margin: 10% auto; padding: 20px; border: 1px solid #38bdf8; border-radius: 12px; width: 80%; max-width: 800px; color: white; }
+.close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+.close-btn:hover { color: white; }
+#usageTable { width: 100%; border-collapse: collapse; margin-top: 20px; }
+#usageTable th, #usageTable td { padding: 12px; text-align: left; border-bottom: 1px solid #1e293b; }

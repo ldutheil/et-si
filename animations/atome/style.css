@@ -4,14 +4,27 @@ body {
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    touch-action: none; /* Empêche le zoom/scroll accidentel sur mobile */
+}
+
+/* Ce conteneur simule la taille d'un écran de PC fixe */
+#app-scaler {
+    width: 1280px; 
+    height: 720px;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Empêche tout scroll */
+    transform-origin: center center; /* Centre l'animation lors du scale */
+    flex-shrink: 0;
 }
 
 #main-header {
     width: 100%;
-    padding: 10px 0; /* Réduit pour gagner de la place */
+    padding: 10px 0;
     text-align: center;
     background: rgba(30, 41, 59, 0.5);
     border-bottom: 1px solid #1e293b;
@@ -19,7 +32,7 @@ body {
 
 #main-header h1 {
     margin: 0;
-    font-size: 1.8rem; /* Légèrement plus petit */
+    font-size: 1.8rem;
     letter-spacing: 4px;
     color: #f8fafc;
     text-transform: uppercase;
@@ -30,7 +43,7 @@ body {
     width: 100%;
     flex: 1; 
     align-items: center;
-    min-height: 0; /* Important pour le flexbox */
+    min-height: 0;
 }
 
 #periodic-table {
@@ -70,7 +83,7 @@ body {
 }
 
 #atomCanvas {
-    max-height: 65vh; /* Le secret : le canvas ne dépassera jamais 65% de l'écran */
+    max-height: 65vh;
     max-width: 100%;
     height: auto;
 }
@@ -95,7 +108,7 @@ body {
     display: flex; 
     flex-direction: column; 
     align-items: center;
-    justify-content: space-evenly; /* Répartit l'espace verticalement */
+    justify-content: space-evenly;
     height: 100%;
 }
 

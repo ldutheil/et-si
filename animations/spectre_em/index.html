@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EM-Scope - Spectre Électromagnétique</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <h1>Exploration du Spectre Électromagnétique</h1>
+    </header>
+
+    <div id="main-container">
+        <div id="left-panel">
+            <div class="control-group">
+                <h3>CONTRÔLE DU SPECTRE</h3>
+                <div id="phSliderContainer">
+                    <input type="range" id="freqSlider" min="0" max="1000" value="500" step="1">
+                    <div id="phScale">
+                        <span>Basses Fréq.</span>
+                        <span>Hautes Fréq.</span>
+                    </div>
+                </div>
+                <button id="toggleWavelength" class="usage-btn" style="background: #1e293b; border: 1px solid #38bdf8;">
+                    📏 Afficher les nanomètres (nm)
+                </button>
+            </div>
+            <div class="instruction-box">
+                <strong>Interaction :</strong> Survolez les barres de couleur pour identifier les usages du quotidien. Le panneau de droite affiche les données en temps réel.
+            </div>
+        </div>
+
+        <div id="builder-zone">
+            <canvas id="spectrumCanvas"></canvas>
+        </div>
+
+        <div id="info-zone">
+            <h1 id="info-title">MONITORING</h1>
+            
+            <div class="data-card highlight">
+                <span class="label">CATÉGORIE</span>
+                <span class="value" id="categoryValue">Ondes Radio</span>
+            </div>
+
+            <div class="data-card">
+                <span class="label">EXEMPLE D'USAGE</span>
+                <span class="value" id="exampleValue" style="font-size: 1rem; color: #38bdf8;">Prêt à scanner...</span>
+            </div>
+
+            <div class="data-divider"></div>
+
+            <div id="legend">
+                <button id="usageTableBtn" class="usage-btn">📊 Tableau Récapitulatif</button>
+            </div>
+
+            <div id="usageModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>Détails du Spectre EM</h2>
+                    <table id="usageTable">
+                        <thead>
+                            <tr>
+                                <th>Domaine</th>
+                                <th>Fréquence</th>
+                                <th>Applications</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
