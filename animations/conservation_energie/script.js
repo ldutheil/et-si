@@ -31,13 +31,55 @@ window.onload = function() {
     function dessinerSkier(x, y, a) {
         ctx.save();
         ctx.translate(x, y); ctx.rotate(-a);
-        ctx.strokeStyle = '#333'; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(-20, 2); ctx.lineTo(20, 2); ctx.stroke();
-        ctx.fillStyle = '#3498db'; ctx.fillRect(-7, -26, 14, 14);
-        ctx.strokeStyle = '#2980b9'; ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(-7, -24); ctx.lineTo(-13, -14); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(7, -24); ctx.lineTo(13, -14); ctx.stroke();
-        ctx.fillStyle = '#f3c192'; ctx.beginPath(); ctx.arc(0, -32, 6, 0, 7); ctx.fill();
+        
+        // Snowboard - plus détaillé
+        ctx.fillStyle = '#ff6b35'; ctx.fillRect(-22, 0, 44, 4);
+        ctx.fillStyle = '#ffa500'; ctx.fillRect(-20, 0, 40, 2);
+        // Fixations
+        ctx.fillStyle = '#333'; ctx.fillRect(-10, -1, 5, 6); ctx.fillRect(5, -1, 5, 6);
+        
+        // Pieds
+        ctx.fillStyle = '#1a1a1a'; ctx.fillRect(-12, -6, 8, 5); ctx.fillRect(4, -6, 8, 5);
+        
+        // Jambes
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(-5, -4); ctx.lineTo(-8, -18); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(5, -4); ctx.lineTo(8, -18); ctx.stroke();
+        
+        // Corps (torse)
+        ctx.fillStyle = '#e74c3c'; ctx.fillRect(-6, -26, 12, 10);
+        
+        // Bras gauche
+        ctx.strokeStyle = '#f3c192'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(-6, -22); ctx.lineTo(-18, -20); ctx.stroke();
+        // Main gauche
+        ctx.fillStyle = '#f3c192'; ctx.beginPath(); ctx.arc(-20, -20, 3, 0, 7); ctx.fill();
+        
+        // Bras droit
+        ctx.strokeStyle = '#f3c192'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(6, -22); ctx.lineTo(18, -20); ctx.stroke();
+        // Main droite
+        ctx.fillStyle = '#f3c192'; ctx.beginPath(); ctx.arc(20, -20, 3, 0, 7); ctx.fill();
+        
+        // Cou
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(0, -26); ctx.lineTo(0, -32); ctx.stroke();
+        
+        // Tête
+        ctx.fillStyle = '#f3c192'; ctx.beginPath(); ctx.arc(0, -36, 5, 0, 7); ctx.fill();
+        
+        // Yeux
+        ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(-2, -37, 1, 0, 7); ctx.fill();
+        ctx.beginPath(); ctx.arc(2, -37, 1, 0, 7); ctx.fill();
+        
+        // Bouche
+        ctx.strokeStyle = '#000'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(0, -34, 1.5, 0, Math.PI); ctx.stroke();
+        
+        // Chapeau/bonnet
+        ctx.fillStyle = '#3498db'; ctx.fillRect(-6, -42, 12, 6);
+        ctx.beginPath(); ctx.moveTo(-6, -42); ctx.lineTo(-2, -46); ctx.lineTo(2, -46); ctx.lineTo(6, -42); ctx.fill();
+        
         ctx.restore();
     }
 

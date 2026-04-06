@@ -2,61 +2,64 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mesure de volumes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="main-header">
-        <h1>Et si on mesurait les volumes précisément ?</h1>
-    </header>
+    <div id="app">
+        <header id="main-header">
+            <h1>Et si on calculait le volume d'une couronne ?</h1>
+        </header>
 
-    <div id="main-container">
-        <div id="left-panel">
-            <div class="control-group">
-                <h3>ACTIONS</h3>
-                <button id="add-water-btn">AJOUTER 1 mL D'EAU</button>
-                <button id="reset-btn">RÉINITIALISER</button>
-            </div>
-            <div class="instruction-box">
-                <strong>Méthode du déplacement d'eau :</strong><br><br>
-                1. Note le volume initial <strong>V1</strong>.<br>
-                2. Glisse l'objet dans l'éprouvette.<br>
-                3. Note le nouveau volume <strong>V2</strong>.<br>
-                4. Le volume de l'objet est <strong>V2 - V1</strong>.
-            </div>
-        </div>
-
-        <div id="builder-zone">
-            <div id="figurine"></div>
-            <div class="cylinder-container">
-                <div class="cylinder" id="drop-zone">
-                    <div id="liquid-body"></div>
-                    <div id="meniscus"></div>
-                    <div class="grad-container" id="grad-box"></div>
+        <div id="main-container">
+            <div id="left-panel">
+                <div class="control-group">
+                    <h3>ACTIONS</h3>
+                    <button id="add-water-btn">AJOUTER 1 mL D'EAU</button>
+                    <button id="reset-btn">RÉINITIALISER</button>
                 </div>
-                <div class="base"></div>
-            </div>
-        </div>
-
-        <div id="info-zone">
-            <h1 id="info-title">RÉSULTATS</h1>
-            
-            <div class="data-card">
-                <span class="label">V1 (Initial)</span>
-                <span class="value" id="v1-val">10.0 mL</span>
+                <div class="instruction-box">
+                    <strong>Méthode du déplacement d'eau :</strong><br><br>
+                    1. Note le volume d'eau <strong>V1</strong>.<br>
+                    2. Glisse l'objet dans l'éprouvette.<br>
+                    3. Note le volume total <strong>V2</strong>.<br>
+                    4. Le volume de l'objet est <strong>V2 - V1</strong>.
+                </div>
             </div>
 
-            <div class="data-card">
-                <span class="label">V2 (Final)</span>
-                <span class="value" id="v2-val">10.0 mL</span>
+            <div id="builder-zone">
+                <div id="figurine" class="draggable-item"></div>
+                <div id="dino" class="draggable-item"></div>
+                <div class="cylinder-container">
+                    <div class="cylinder" id="drop-zone">
+                        <div id="liquid-body"></div>
+                        <div id="meniscus"></div>
+                        <div class="grad-container" id="grad-box"></div>
+                    </div>
+                    <div class="base"></div>
+                </div>
             </div>
 
-            <div class="data-divider"></div>
+            <div id="info-zone">
+                <h1 id="info-title">RÉSULTATS</h1>
+                
+                <div class="data-card">
+                    <span class="label">V1 (Volume d'eau initial)</span>
+                    <span class="value" id="v1-val">10.0 mL</span>
+                </div>
 
-            <div class="data-card highlight">
-                <span class="label">V<sub>objet</sub></span>
-                <span class="value" id="vobj-val">0.0 mL</span>
+                <div class="data-card">
+                    <span class="label">V2 (Volume total)</span>
+                    <span class="value" id="v2-val">10.0 mL</span>
+                </div>
+
+                <div class="data-divider"></div>
+
+                <div class="data-card highlight">
+                    <span class="label">V<sub>objet(s)</sub></span>
+                    <span class="value" id="vobj-val">0.0 mL</span>
+                </div>
             </div>
         </div>
     </div>

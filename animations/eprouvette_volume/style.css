@@ -1,12 +1,25 @@
 body {
-    background-color: #0a0f1e;
-    color: #f8fafc;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #000000;
     margin: 0;
     height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: #f8fafc;
+}
+
+#app {
+    width: 100%; /* Utilise toute la largeur disponible */
+    height: 700px; /* Hauteur de référence */
+    background-color: #0a0f1e;
     display: flex;
     flex-direction: column;
+    position: relative;
     overflow: hidden;
+    transform-origin: center center;
 }
 
 #main-header {
@@ -32,59 +45,52 @@ body {
 }
 
 #left-panel {
-    width: 20%;
+    width: 250px; /* Largeur fixe pour les menus */
     padding: 20px;
     background: rgba(255,255,255,0.02);
     border-right: 1px solid #1e293b;
 }
 
-.control-group h3 { color: #38bdf8; font-size: 0.9rem; margin-bottom: 20px; }
-
-button {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    background-color: #38bdf8;
-    color: #0f172a;
-    transition: 0.2s;
-}
-
-button:hover { background-color: #7dd3fc; }
-#reset-btn { background-color: #334155; color: white; }
-
-.instruction-box {
-    margin-top: 30px;
-    font-size: 0.85rem;
-    color: #94a3b8;
-    line-height: 1.6;
-    padding: 15px;
-    background: rgba(15, 23, 42, 0.5);
-    border-radius: 8px;
-    border: 1px solid #1e293b;
-}
-
 #builder-zone {
-    width: 60%;
+    flex: 1; /* Prend tout l'espace central restant */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#figurine {
-    width: 35px; height: 45px;
-    background: linear-gradient(135deg, #fbbf24, #d97706);
-    border: 2px solid #000;
-    border-radius: 4px;
-    cursor: grab;
+#info-zone {
+    width: 250px; /* Largeur fixe pour les résultats */
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border-left: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.draggable-item {
     position: absolute;
-    left: 10%; top: 30%;
     z-index: 10;
+    cursor: grab;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    touch-action: none; 
+}
+
+#figurine {
+    width: 65px; height: 50px;
+    background: linear-gradient(135deg, #fbbf24, #e5a712);
+    border: 2px solid #b8860b;
+    left: 50px; top: 150px;
+    clip-path: polygon(0% 100%, 100% 100%, 100% 78%, 95% 50%, 90% 15%, 85% 50%, 80% 78%, 75% 50%, 70% 5%, 65% 50%, 60% 78%, 55% 30%, 50% 0%, 45% 30%, 40% 78%, 35% 50%, 30% 5%, 25% 50%, 20% 78%, 15% 50%, 10% 15%, 5% 50%, 0% 78%);
+}
+
+#dino {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    border: 2px solid #064e3b;
+    left: 50px; top: 250px;
+    clip-path: polygon(25% 100%, 40% 100%, 42% 80%, 60% 80%, 62% 100%, 75% 100%, 85% 90%, 95% 70%, 100% 50%, 85% 45%, 75% 45%, 65% 10%, 50% 0%, 40% 15%, 35% 40%, 10% 45%, 0% 60%, 15% 70%);
 }
 
 .cylinder-container {
@@ -110,7 +116,6 @@ button:hover { background-color: #7dd3fc; }
     position: absolute; bottom: 0; width: 100%;
     background-color: rgba(56, 189, 248, 0.6);
     transition: height 0.4s ease-out;
-    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
 }
 
 #meniscus {
@@ -125,50 +130,16 @@ button:hover { background-color: #7dd3fc; }
 .grad-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .grad { position: absolute; left: 0; background: #94a3b8; height: 1px; }
 .grad.major { width: 30px; height: 2px; }
+.grad-label { position: absolute; left: 35px; font-weight: bold; font-size: 11px; color: #94a3b8; line-height: 0; }
 
-/* Correction ici : grad-label au lieu de label pour éviter le conflit */
-.grad-label { 
-    position: absolute; 
-    left: 35px; 
-    font-weight: bold; 
-    font-size: 11px; 
-    color: #94a3b8; 
-    line-height: 0; 
+button {
+    width: 100%; padding: 12px; margin-bottom: 10px; border: none; border-radius: 6px;
+    cursor: pointer; font-weight: bold; background-color: #38bdf8; color: #0f172a;
 }
 
-#info-zone {
-    width: 20%;
-    padding: 20px;
-    background: rgba(255,255,255,0.02);
-    border-left: 1px solid #1e293b;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#info-title { font-size: 1.2rem; color: #38bdf8; margin-bottom: 40px; }
-
-.data-card {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.5);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    border: 1px solid #1e293b;
-}
-
-.data-card .label { 
-    font-size: 0.8rem; 
-    color: #94a3b8; 
-    display: block; 
-    margin-bottom: 5px; 
-    font-weight: bold;
-}
-
+.instruction-box { margin-top: 30px; font-size: 0.85rem; color: #94a3b8; padding: 15px; background: rgba(15, 23, 42, 0.5); border-radius: 8px; border: 1px solid #1e293b; }
+.data-card { width: 100%; background: rgba(30, 41, 59, 0.5); padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: center; border: 1px solid #1e293b; }
 .data-card .value { font-size: 1.5rem; font-weight: bold; font-family: monospace; }
-
 .highlight { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
 .highlight .value { color: #fbbf24; }
-
 .data-divider { width: 50px; height: 2px; background: #1e293b; margin: 10px 0 25px 0; }
