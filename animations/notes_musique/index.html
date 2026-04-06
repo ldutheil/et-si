@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acousti-Sync - Compact</title>
+    <title>Notes de musique</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .row-label {
+            font-size: 1.6rem !important;
+            font-weight: 900 !important;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <header id="main-header">
-        <h1>Analyse Harmonique Comparée</h1>
+        <h1>Et si on comparait les notes des instruments de musique? </h1>
     </header>
 
     <div id="main-container">
@@ -28,14 +36,10 @@
                     <option value="piano">Piano</option>
                     <option value="guitare">Guitare</option>
                 </select>
-                <button id="playBtn" class="usage-btn">▶ JOUER</button>
+                <button id="playBtn" class="usage-btn">▶ Jouer le son</button>
             </div>
 
-            <div class="instruction-box">
-                Fenêtre : <strong>10 ms</strong><br>
-                Spectre : <strong>0-3 kHz</strong>
             </div>
-        </div>
 
         <div id="builder-zone">
             <div class="instrument-row">
