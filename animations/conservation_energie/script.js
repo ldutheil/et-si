@@ -3,12 +3,14 @@ window.onload = function() {
     const ctx = canvas.getContext('2d');
     const muRange = document.getElementById('mu-range');
     const muValue = document.getElementById('mu-value');
+    const hRange = document.getElementById('h-range');
+    const hValue = document.getElementById('h-value');
 
     // --- PHYSIQUE (Valeurs issues de ton fichier original) ---
     const m = 1;              
     const g = 9.81;           
     const R_pixels = 250;     
-    const R_metres = 15;       
+    let R_metres = 10;       
     const cx = canvas.width / 2; 
     const cy = 90;
     const dt = 0.016;         
@@ -17,7 +19,7 @@ window.onload = function() {
     let omega = 0;            
     let eth = 0;              
     let enMarche = false;
-    const em_initiale = m * g * R_metres;
+    let em_initiale = m * g * R_metres;
 
     // --- BOUTONS ---
     document.getElementById('btn-start').onclick = () => enMarche = true;
@@ -40,6 +42,10 @@ window.onload = function() {
     }
 
     function boucle() {
+        let R_metres = parseFloat(hRange.value);
+        hValue.innerText = R_metres.toFixed(1);
+        em_initiale = m * g * R_metres;
+
         let mu = parseFloat(muRange.value);
         muValue.innerText = mu.toFixed(3);
 
@@ -84,6 +90,32 @@ window.onload = function() {
         // La piste
         ctx.beginPath(); ctx.arc(cx, cy, R_pixels, Math.PI, 0, true);
         ctx.lineWidth = 10; ctx.strokeStyle = '#bdc3c7'; ctx.stroke();
+
+        // Double arrow for height h
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + R_pixels);
+        ctx.lineTo(cx, cy);
+        ctx.stroke();
+        // arrow at bottom
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + R_pixels);
+        ctx.lineTo(cx - 5, cy + R_pixels - 10);
+        ctx.moveTo(cx, cy + R_pixels);
+        ctx.lineTo(cx + 5, cy + R_pixels - 10);
+        ctx.stroke();
+        // arrow at top
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx - 5, cy + 10);
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + 5, cy + 10);
+        ctx.stroke();
+        // label h
+        ctx.fillStyle = '#000';
+        ctx.font = '16px Arial';
+        ctx.fillText('h', cx + 10, cy + R_pixels / 2);
 
         // Le skieur
         let sx = cx + R_pixels * Math.sin(theta);

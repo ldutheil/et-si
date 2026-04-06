@@ -132,3 +132,39 @@ input[type=range] { width: 100%; accent-color: #38bdf8; margin: 10px 0; }
 
 .label { font-size: 0.75rem; margin-top: 8px; font-weight: bold; }
 .val { font-size: 0.7rem; color: #94a3b8; font-family: monospace; }
+
+/* Responsive pour mobiles */
+@media (max-width: 768px) {
+    #main-container {
+        flex-direction: column;
+        height: auto;
+    }
+    #left-panel, #builder-zone, #info-zone {
+        width: 100%;
+        height: auto;
+    }
+    #left-panel {
+        order: 1;
+        padding: 10px;
+    }
+    #builder-zone {
+        order: 2;
+        padding: 10px;
+    }
+    #info-zone {
+        order: 3;
+        padding: 10px;
+    }
+    #mainCanvas {
+        max-height: 50vh;
+        width: 100%;
+    }
+    .energy-gauges {
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+    }
+    .gauge-container {
+        width: auto;
+    }
+}

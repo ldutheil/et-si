@@ -8,7 +8,7 @@
 </head>
 <body>
     <header id="main-header">
-        <h1>ET si on étudiait la conservation de l'énergie ?</h1>
+        <h1>ET si on pouvait faire du snowboard sans frottements ?</h1>
     </header>
 
     <div id="main-container">
@@ -17,11 +17,19 @@
                 <h3>PARAMÈTRES</h3>
                 <label>Coefficient de Frottement</label>
                 <input type="range" id="mu-range" min="0" max="0.1" step="0.005" value="0">
-                <div id="mu-value">0.000</div>
+                <div id="mu-value">0.000</div><br>
+                <label>Hauteur h (m)</label>
+                <input type="range" id="h-range" min="2" max="10" step="0.5" value="10">
+                <div id="h-value">10.0</div>
             </div>
             <div class="instruction-box">
-                L'énergie mécanique E<sub>m</sub> se conserve si les frottements sont nuls.
+                E<sub>m</sub> = E<sub>c</sub> + E<sub>p</sub><br> (sa valeur initiale dépend de la hauteur de départ)<br><br>
+                E<sub>c</sub> = ½ m v²<br>
+                E<sub>p</sub> = m g h <br><br>
+                L'énergie mécanique E<sub>m</sub> se conserve si les frottements sont nuls.<br><br>
+                Avec des frottements, l'E<sub>m</sub> est perdue sous forme d'énergie thermique E<sub>th</sub>.
             </div>
+            
         </div>
 
         <div id="builder-zone">
