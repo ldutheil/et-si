@@ -5,6 +5,7 @@ window.onload = function() {
 
     let audioCtx = null, oscillator = null, gainNode = null, isPlaying = false;
     let currentFreq = 440;
+    let hoveredCanvas = null, hoverX = 0;
 
     const profiles = {
         diapason: { coeffs: [0, 1], color: "#38bdf8" },
@@ -32,13 +33,43 @@ window.onload = function() {
     }
     window.addEventListener('resize', resize);
 
+    // Gestion du curseur interactif sur les graphiques (temporels et fréquentiels)
+    Object.keys(canvasMap).forEach(inst => {
+        [canvasMap[inst].t.canvas, canvasMap[inst].f.canvas].forEach(c => {
+            c.onmousemove = (e) => {
+                const rect = c.getBoundingClientRect();
+                // Calcul de la position X relative au canvas
+                hoverX = (e.clientX - rect.left) * (c.width / rect.width);
+                hoveredCanvas = c;
+                draw();
+            };
+            c.onmouseleave = () => { hoveredCanvas = null; draw(); };
+        });
+    });
+
     function drawAxes(ctx, w, h, xMax, xUnit, yLabel, xStep, yAxisPos) {
         const yBase = yAxisPos !== undefined ? yAxisPos : (h - PAD_Y);
+        const arrowSize = 8; // Taille des pointes de flèche, légèrement augmentée pour la visibilité
+
         ctx.strokeStyle = "#000000"; ctx.lineWidth = 2; ctx.fillStyle = "#000000";
         // Axes
         ctx.beginPath();
-        ctx.moveTo(PAD_X, 5); ctx.lineTo(PAD_X, h - PAD_Y);
-        ctx.moveTo(PAD_X, yBase); ctx.lineTo(w - PAD_R, yBase);
+        // Axe vertical
+        const yAxisEnd = 10; // On s'arrête un peu avant le haut du canvas
+        ctx.moveTo(PAD_X, h - PAD_Y); ctx.lineTo(PAD_X, yAxisEnd);
+        // Flèche haut
+        ctx.lineTo(PAD_X - arrowSize / 2, yAxisEnd + arrowSize);
+        ctx.moveTo(PAD_X, yAxisEnd);
+        ctx.lineTo(PAD_X + arrowSize / 2, yAxisEnd + arrowSize);
+
+        // Axe horizontal
+        const xAxisEnd = w - PAD_R + 25; // Étend l'axe de 25px après la dernière graduation
+        ctx.moveTo(PAD_X, yBase); ctx.lineTo(xAxisEnd, yBase);
+        // Flèche droite
+        ctx.lineTo(xAxisEnd - arrowSize, yBase - arrowSize / 2);
+        ctx.moveTo(xAxisEnd, yBase);
+        ctx.lineTo(xAxisEnd - arrowSize, yBase + arrowSize / 2);
+
         ctx.stroke();
 
         ctx.font = "bold 9px Arial"; let count = 0;
@@ -49,15 +80,13 @@ window.onload = function() {
                 ctx.moveTo(x, yBase - 5); ctx.lineTo(x, yBase + 5);
                 ctx.stroke();
 
-                // On n'affiche qu'une valeur sur deux pour le spectre
-                // Et on masque la graduation juste avant la fin (2.8) pour laisser de la place à "3kHz"
+                // On n'affiche qu'une valeur sur deux pour le spectre (tous les 200 Hz)
                 const isLast = Math.abs(v - xMax) < 0.001;
-                if (yAxisPos === undefined && !isLast && (count % 2 !== 0 || v > xMax - xStep * 2.5)) { count++; continue; }
+                if (yAxisPos === undefined && !isLast && (count % 2 !== 0)) { count++; continue; }
 
                 let label = v.toFixed(v % 1 === 0 ? 0 : 1);
-                if (isLast) { label += xUnit; ctx.textAlign = "right"; }
-                else if (v === 0) { ctx.textAlign = "left"; }
-                else { ctx.textAlign = "center"; }
+                if (isLast) label += xUnit;
+                ctx.textAlign = (v === 0) ? "left" : "center";
                 
                 // Position : juste sous l'axe pour le temporel (yBase), ou en bas du canvas pour le spectre
                 ctx.fillText(label, x, yAxisPos !== undefined ? yBase + 14 : h - 5);
@@ -98,6 +127,17 @@ window.onload = function() {
             }
             t.stroke();
 
+            // --- CURSEUR INTERACTIF (Uniquement au survol) ---
+            if (hoveredCanvas === t.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {
+                t.setLineDash([5, 5]); t.strokeStyle = "rgba(0,0,0,0.4)"; t.lineWidth = 1;
+                t.beginPath(); t.moveTo(hoverX, 5); t.lineTo(hoverX, h - PAD_Y); t.stroke();
+                t.setLineDash([]);
+                
+                const timeMs = ((hoverX - PAD_X) / drawW) * 10;
+                t.fillStyle = "#000"; t.font = "bold 10px Arial"; t.textAlign = "center";
+                t.fillText(timeMs.toFixed(2) + " ms", hoverX, 15);
+            }
+
             // --- SPECTRE ---
             drawAxes(f, w, h, 3, "kHz", "Intensité", 0.1);
             f.fillStyle = "#fbbf24";
@@ -109,6 +149,17 @@ window.onload = function() {
                 const barH = amp * (h - PAD_Y - 10) * 0.8;
                 f.fillRect(xPos - 1, h - PAD_Y - barH, 2, barH);
             });
+
+            // --- CURSEUR INTERACTIF SPECTRE ---
+            if (hoveredCanvas === f.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {
+                f.setLineDash([5, 5]); f.strokeStyle = "rgba(0,0,0,0.4)"; f.lineWidth = 1;
+                f.beginPath(); f.moveTo(hoverX, 5); f.lineTo(hoverX, h - PAD_Y); f.stroke();
+                f.setLineDash([]);
+                
+                const freqKHz = ((hoverX - PAD_X) / drawW) * 3;
+                f.fillStyle = "#000"; f.font = "bold 10px Arial"; f.textAlign = "center";
+                f.fillText(freqKHz.toFixed(2) + " kHz", hoverX, 15);
+            }
         });
     }
 

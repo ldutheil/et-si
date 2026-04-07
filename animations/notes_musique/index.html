@@ -22,16 +22,25 @@
     <div id="main-container">
         <div id="left-panel">
             <div class="control-group">
-                <h3>NOTE</h3>
+                <h3>CHOIX NOTE</h3>
                 <div class="btn-group">
-                    <button class="note-btn active" data-freq="440">LA (440Hz)</button>
-                    <button class="note-btn" data-freq="293.66">RÉ (293Hz)</button>
+                    <button class="note-btn" data-freq="261.63">DO</button>
+                    <button class="note-btn" data-freq="293.66">RÉ</button>
+                    <button class="note-btn" data-freq="329.63">MI</button>
+                    <button class="note-btn" data-freq="349.23">FA</button>
+                    <button class="note-btn" data-freq="392.00">SOL</button>
+                    <button class="note-btn active" data-freq="440">LA</button>
+                    <button class="note-btn" data-freq="493.88">SI</button>
                 </div>
+                <br>
+                <span id="freqValue" style="color: #38bdf8; font-weight: bold;">440 Hz</span>
+            <br>
+
             </div>
 
             <div class="control-group">
-                <h3>AUDIO</h3>
-                <select id="audioSelect" class="usage-btn" style="background: #1e293b; border: 1px solid #38bdf8; margin-bottom:5px; height: 30px; padding: 0 10px;">
+                <h3>ECOUTER LE SON</h3>
+                <select id="audioSelect" class="usage-btn" style="background: #ffffff; border: 1px solid #38bdf8; margin-bottom:5px; height: 30px; padding: 0 10px;">
                     <option value="diapason">Diapason</option>
                     <option value="piano">Piano</option>
                     <option value="guitare">Guitare</option>
@@ -66,12 +75,14 @@
         </div>
 
         <div id="info-zone">
-            <div class="data-card highlight">
-                <span class="label">FRÉQUENCE</span>
-                <span class="value" id="freqValue">440 Hz</span>
+            <div class="instruction-box">
+                 <strong>Interprétation des graphiques :</strong><br><br>
+                 - Graphiques de gauche : signal sonore temporel <br>
+                 - Graphiques de droite : spectre de fréquences <br><br>
+                 En comparant les graphiques, on peut voir que le diapason produit un signal très pur (une seule fréquence), tandis que le piano et la guitare produisent des signaux plus complexes avec plusieurs fréquences (harmoniques), ce qui leur donne leur timbre caractéristique.
+                
             </div>
-            <div class="legend-item"><div class="legend-color" style="background: #38bdf8;"></div><span>Temps</span></div>
-            <div class="legend-item"><div class="legend-color" style="background: #fbbf24;"></div><span>Spectre</span></div>
+            
         </div>
     </div>
     <script src="script.js"></script>

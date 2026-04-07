@@ -19,6 +19,7 @@ window.onload = function() {
             appScale = 1;
         }
         app.style.transform = `scale(${appScale})`;
+        app.style.width = (100 / appScale) + '%';
     }
 
     window.addEventListener('resize', resizeApp);
