@@ -3,7 +3,65 @@
   <url>
     <loc>https://et-si.eu/</loc>
     <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://et-si.eu/animations/saisons/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/systeme_solaire/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/taille_planetes/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://et-si.eu/animations/ondes_sonores/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/spectre_em/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/spectre_sonore/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/notes_musique/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://et-si.eu/animations/eprouvette_volume/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/ph/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/atome/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://et-si.eu/animations/conservation_energie/index.html</loc>
+    <lastmod>2026-04-10</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
