@@ -333,10 +333,10 @@
             <a href="animations/conservation_energie/index.html">Voir l'animation</a>
         </div>
 
-        <div class="thumbnail-card active" data-category="tierces,all">
+        <div class="thumbnail-card" data-category="tierces">
             <div class="thumbnail-preview">🔗</div>
-            <div class="thumbnail-title">Blabla</div>
-            <div class="thumbnail-description">Blabla</div>
+            <div class="thumbnail-title">Ma super animation tierce</div>
+            <div class="thumbnail-description">Description de mon site favori</div>
             <a href="https://example.com" target="_blank">Visiter le site</a>
         </div>
     </div>
@@ -359,7 +359,6 @@
                 const cardCategories = card.getAttribute('data-category').split(',');
                 if (cardCategories.includes(category)) {
                     card.style.display = 'block';
-                    // Petite animation
                     card.style.animation = 'fadeIn 0.3s ease-in';
                 } else {
                     card.style.display = 'none';
