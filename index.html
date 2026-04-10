@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Et si ... - Animations Interactives</title>
+    <title>ET SI ...</title>
     
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link rel="apple-touch-icon" href="favicon.png?v=2">
 
     <style>
-        /* Base sombre Lab Pro */
+        /* Base sombre */
         body { 
             font-family: 'Segoe UI', 'Quicksand', sans-serif; 
             margin: 0; 
             background: #0a0f1e; 
             color: #f8fafc; 
             min-height: 100vh;
+        }
+
+        /* Style pour le fond étoilé */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #0a0f1e;
         }
 
         header { 
@@ -237,14 +248,13 @@
 </head>
 <body>
 
+<canvas id="starfield"></canvas>
+
 <header>
     <h1>ET SI...</h1>
-    <p>Explorez les phénomènes physiques avec des animations interactives.</p>
+    <p>Explorez les phénomènes physiques et chimiques avec des animations interactives.</p>
 </header>
 
-
-
-<!-- Section Onglets avec Miniatures -->
 <section class="tabs-section">
     <div class="tabs-header">
         <h3>Explorez les animations</h3>
@@ -256,10 +266,10 @@
         <button class="tab-button" data-category="signaux">Signaux</button>
         <button class="tab-button" data-category="matiere">Matière</button>
         <button class="tab-button" data-category="energie">Énergie</button>
+        <button class="tab-button" data-category="tierces">Animations tierces</button>
     </div>
 
     <div class="thumbnails-grid">
-        <!-- SYSTÈME SOLAIRE -->
         <div class="thumbnail-card active" data-category="systeme-solaire,all">
             <div class="thumbnail-preview">🌍</div>
             <div class="thumbnail-title">Origine des saisons</div>
@@ -281,7 +291,6 @@
             <a href="animations/taille_planetes/index.html">Voir l'animation</a>
         </div>
 
-        <!-- SIGNAUX -->
         <div class="thumbnail-card active" data-category="signaux,all">
             <div class="thumbnail-preview">〰️</div>
             <div class="thumbnail-title">Ondes Sonores</div>
@@ -296,7 +305,6 @@
             <a href="animations/notes_musique/index.html">Voir l'animation</a>
         </div>
 
-        <!-- MATIÈRE -->
         <div class="thumbnail-card active" data-category="matiere,all">
             <div class="thumbnail-preview">📏</div>
             <div class="thumbnail-title">Mesure d'un volume</div>
@@ -318,12 +326,18 @@
             <a href="animations/atome/index.html">Voir l'animation</a>
         </div>
 
-        <!-- ÉNERGIE -->
         <div class="thumbnail-card active" data-category="energie,all">
             <div class="thumbnail-preview">⚡</div>
             <div class="thumbnail-title">Conservation de l'énergie</div>
             <div class="thumbnail-description">Visualisez la transformation d'énergie</div>
             <a href="animations/conservation_energie/index.html">Voir l'animation</a>
+        </div>
+
+        <div class="thumbnail-card active" data-category="tierces,all">
+            <div class="thumbnail-preview">🔗</div>
+            <div class="thumbnail-title">Blabla</div>
+            <div class="thumbnail-description">Blabla</div>
+            <a href="https://example.com" target="_blank">Visiter le site</a>
         </div>
     </div>
 </section>
@@ -363,6 +377,54 @@
         }
     `;
     document.head.appendChild(style);
+
+    // --- Animation du ciel étoilé ---
+    const starCanvas = document.getElementById('starfield');
+    const starCtx = starCanvas.getContext('2d');
+    let stars = [];
+
+    function resizeStarfield() {
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
+        createStars();
+    }
+
+    function createStars() {
+        stars = [];
+        const starCount = Math.floor((starCanvas.width * starCanvas.height) / 8000);
+        const maxDist = Math.sqrt(Math.pow(starCanvas.width, 2) + Math.pow(starCanvas.height, 2));
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                distance: Math.random() * maxDist,
+                angle: Math.random() * Math.PI * 2,
+                size: Math.random() * 2.2 + 0.5,
+                speed: (Math.random() * 0.0008 + 0.0004),
+                opacity: Math.random() * 0.7 + 0.3
+            });
+        }
+    }
+
+    function animateStars() {
+        starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+        const centerX = starCanvas.width / 2 +400;
+        const centerY = starCanvas.height / 2;
+        
+        stars.forEach(star => {
+            star.angle += star.speed;
+            const x = centerX + Math.cos(star.angle) * star.distance;
+            const y = centerY + Math.sin(star.angle) * star.distance;
+            
+            starCtx.fillStyle = `rgba(248, 250, 252, ${star.opacity})`;
+            starCtx.beginPath();
+            starCtx.arc(x, y, star.size, 0, Math.PI * 2);
+            starCtx.fill();
+        });
+        requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeStarfield);
+    resizeStarfield();
+    animateStars();
 </script>
 
 </body>

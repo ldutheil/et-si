@@ -4,15 +4,16 @@ window.onload = function() {
     const slider = document.getElementById('phSlider');
     const phValue = document.getElementById('phValue');
     const solutionExample = document.getElementById('solutionExample');
+    const ratioValue = document.getElementById('ratioValue');
 
     let ions = [];
     let animationId = null;
 
     const phExamples = {
-        0: "Acide chlorhydrique", 1: "Acide de batterie", 2: "Jus de citron",
-        3: "Vinaigre", 4: "Tomate", 5: "Café noir", 6: "Lait",
-        7: "Eau pure", 8: "Œuf cru", 9: "Bicarbonate", 10: "Savon",
-        11: "Ammoniaque", 12: "Eau de Javel", 13: "Décapant four", 14: "Soude"
+        0: "Acide chlorhydrique / Acide sulfurique", 1: "Acide de batterie / Estomac humain", 2: "Jus de citron / Soda",
+        3: "Vinaigre / Jus d'orange", 4: "Tomate / Bière", 5: "Café noir / Banane", 6: "Lait / Salive",
+        7: "Eau pure / Sang humain", 8: "Œuf cru / Eau de mer", 9: "Bicarbonate / Dentifrice", 10: "Savon",
+        11: "Ammoniaque / Nettoyant vitres", 12: "Eau de Javel / Eau de chaux", 13: "Décapant four / Déboucheur liquide", 14: "Soude / Nettoyant industriel"
     };
 
     function resize() {
@@ -105,11 +106,23 @@ window.onload = function() {
         animationId = requestAnimationFrame(animate);
     }
 
+    function updateRatio(pH) {
+        // Le rapport [HO-]/[H+] est 10^(2*pH - 14)
+        const exponent = 2 * pH - 14;
+        if (exponent === 0) {
+            ratioValue.innerText = "1";
+        } else {
+            // Formatage en puissance de 10 pour la lisibilité scientifique
+            ratioValue.innerHTML = `10<sup>${exponent}</sup>`;
+        }
+    }
+
     slider.addEventListener('input', () => {
         const pH = parseInt(slider.value);
         phValue.innerText = pH;
         solutionExample.innerText = phExamples[pH];
         initIons(pH);
+        updateRatio(pH);
     });
 
     resize();

@@ -3,12 +3,15 @@ window.onload = function() {
     const ctx = canvas.getContext('2d');
     const freqInput = document.getElementById('freqRange');
     const freqVal = document.getElementById('freq-val');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const impulseBtn = document.getElementById('impulseBtn');
 
     let waves = [];
     let particles = [];
     let greenParticle; 
     let frameCount = 0;
     let waveCounter = 0;
+    let isRunning = true;
 
     const config = {
         waveSpeed: 2.5,
@@ -90,11 +93,7 @@ window.onload = function() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, config.particleSize, 0, Math.PI * 2);
-            if (this.isRed) {
-                ctx.fillStyle = this.active ? "#ff8888" : "#ef4444";
-            } else {
-                ctx.fillStyle = this.active ? "#a0d8f0" : "rgba(148, 163, 184, 0.4)";
-            }
+            ctx.fillStyle = this.isRed ? "#ef4444" : "rgba(148, 163, 184, 0.4)";
             ctx.fill();
         }
     }
@@ -102,7 +101,7 @@ window.onload = function() {
     class SpecialParticle extends Particle {
         constructor() {
             // Placée à 120px du HP, pile en face du centre
-            super(speaker.x + 120, speaker.y); 
+            super(speaker.x + 300, speaker.y); 
             this.size = config.particleSize * 2;
         }
 
@@ -204,22 +203,47 @@ window.onload = function() {
 
     resize();
 
+    function triggerWave() {
+        waves.push(new Wave(waveCounter++));
+        speaker.isVibrating = true;
+        // On arrête la vibration visuelle de la membrane après 12 frames
+        setTimeout(() => { speaker.isVibrating = false; }, 200);
+    }
+
+    playPauseBtn.onclick = () => {
+        isRunning = !isRunning;
+        playPauseBtn.innerText = isRunning ? "■ PAUSE" : "▶ REPRENDRE";
+        playPauseBtn.style.background = isRunning ? "#38bdf8" : "#22c55e";
+    };
+
+    impulseBtn.onclick = () => {
+        triggerWave();
+    };
+
     function animate() {
+        if (!isRunning) {
+            requestAnimationFrame(animate);
+            return;
+        }
+
         ctx.fillStyle = '#050505';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const interval = parseInt(freqInput.value);
-        if (freqVal) freqVal.innerText = interval + " ms";
+        const freq = parseFloat(freqInput.value);
+        if (freqVal) freqVal.innerText = freq.toFixed(1) + " Hz";
+
+        // Calcul de l'intervalle en frames (basé sur 60 FPS)
+        const framesPerWave = Math.round(60 / freq);
 
         particles.forEach(p => { p.update(); p.draw(); });
         greenParticle.update();
         greenParticle.draw();
 
-        if (frameCount % interval === 0) {
+        if (frameCount % framesPerWave === 0) {
             waves.push(new Wave(waveCounter++));
             speaker.isVibrating = true;
-        } 
-        if (frameCount % interval === 12) {
+        }
+        if (frameCount % framesPerWave === 12) {
             speaker.isVibrating = false;
         }
 

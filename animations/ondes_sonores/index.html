@@ -14,16 +14,18 @@
     <div id="main-container">
         <div id="left-panel">
             <div class="control-group">
-                <h3>FRÉQUENCE SONORE</h3>
+                <h3>CONTRÔLES</h3>
                 <div class="slider-wrapper">
                     <span class="freq-label">Basse</span>
-                    <input type="range" id="freqRange" min="20" max="140" value="80" step="1" style="direction: rtl;">
+                    <input type="range" id="freqRange" min="0.1" max="3" class="freq-slider" value="0,1" step="0.05">
                     <span class="freq-label">Haute</span>
                 </div>
+                <div class="btn-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                    <button id="playPauseBtn" class="usage-btn" style="background: #38bdf8; color: #0a0f1e; border: none; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer;">■ PAUSE</button>
+                    <button id="impulseBtn" class="usage-btn" style="background: #ef4444; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; cursor: pointer;">⚡ IMPULSION UNIQUE</button>
+                </div>
             </div>
-            <div class="instruction-box">
-                Le son est une onde mécanique. Les molécules d'air ne se déplacent pas avec l'onde, elles <bold>vibrent</bold> autour de leur position d'équilibre en créant des zones de compression et de dilatation.
-            </div>
+            
         </div>
 
         <div id="builder-zone">
@@ -31,13 +33,18 @@
         </div>
 
         <div id="info-zone">
-            <h1 id="info-title">Etat de la membrane</h1>
+            <div class="data-card">
+                <span class="label">Vitesse de l'onde</span>
+                <span class="value" id="speed-val">340 m/s</span>
+            </div>
             
             <div class="data-card">
-                <span class="label">Intervalle entre deux vibrations</span>
-                <span class="value" id="freq-val">80 ms</span>
+                <span class="label">Fréquence de vibration</span>
+                <span class="value" id="freq-val">2.0 Hz</span>
             </div>
-        
+            <div class="instruction-box">
+                Le son est une onde mécanique. Les molécules d'air ne se déplacent pas avec l'onde, elles <bold>vibrent</bold> autour de leur position d'équilibre en créant des zones de compression et de dilatation. Les molécules reviennent à la position initiale après passage onde.<br><br>
+            </div>
             <div class="data-divider"></div>
 
         </div>

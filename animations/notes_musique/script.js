@@ -6,6 +6,7 @@ window.onload = function() {
     let audioCtx = null, oscillator = null, gainNode = null, isPlaying = false;
     let currentFreq = 440;
     let hoveredCanvas = null, hoverX = 0;
+    let measureAnchor = null;
 
     const profiles = {
         diapason: { coeffs: [0, 1], color: "#38bdf8" },
@@ -44,6 +45,17 @@ window.onload = function() {
                 draw();
             };
             c.onmouseleave = () => { hoveredCanvas = null; draw(); };
+            c.onclick = () => {
+                if (measureAnchor) {
+                    measureAnchor = null;
+                } else if (hoverX >= PAD_X && hoverX <= c.width - PAD_R) {
+                    const isTime = c.id.startsWith('time');
+                    const drawW = c.width - PAD_X - PAD_R;
+                    const val = ((hoverX - PAD_X) / drawW) * (isTime ? 10 : 3);
+                    measureAnchor = { canvas: c, x: hoverX, val: val, isTime: isTime };
+                }
+                draw();
+            };
         });
     });
 
@@ -127,6 +139,19 @@ window.onload = function() {
             }
             t.stroke();
 
+            // --- MESURE DELTA T ---
+            if (measureAnchor && measureAnchor.canvas === t.canvas) {
+                t.strokeStyle = "#ef4444"; t.lineWidth = 2;
+                t.beginPath(); t.moveTo(measureAnchor.x, 5); t.lineTo(measureAnchor.x, h - PAD_Y); t.stroke();
+                if (hoveredCanvas === t.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {
+                    const delta = Math.abs(((hoverX - PAD_X) / drawW) * 10 - measureAnchor.val);
+                    t.fillStyle = "rgba(239, 68, 68, 0.15)";
+                    t.fillRect(measureAnchor.x, 5, hoverX - measureAnchor.x, h - PAD_Y - 5);
+                    t.fillStyle = "#ef4444"; t.font = "bold 11px Arial"; t.textAlign = "center";
+                    t.fillText("Δt = " + delta.toFixed(2) + " ms", (measureAnchor.x + hoverX) / 2, h - 5);
+                }
+            }
+
             // --- CURSEUR INTERACTIF (Uniquement au survol) ---
             if (hoveredCanvas === t.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {
                 t.setLineDash([5, 5]); t.strokeStyle = "rgba(0,0,0,0.4)"; t.lineWidth = 1;
@@ -149,6 +174,19 @@ window.onload = function() {
                 const barH = amp * (h - PAD_Y - 10) * 0.8;
                 f.fillRect(xPos - 1, h - PAD_Y - barH, 2, barH);
             });
+
+            // --- MESURE DELTA F ---
+            if (measureAnchor && measureAnchor.canvas === f.canvas) {
+                f.strokeStyle = "#ef4444"; f.lineWidth = 2;
+                f.beginPath(); f.moveTo(measureAnchor.x, 5); f.lineTo(measureAnchor.x, h - PAD_Y); f.stroke();
+                if (hoveredCanvas === f.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {
+                    const delta = Math.abs(((hoverX - PAD_X) / drawW) * 3 - measureAnchor.val);
+                    f.fillStyle = "rgba(239, 68, 68, 0.15)";
+                    f.fillRect(measureAnchor.x, 5, hoverX - measureAnchor.x, h - PAD_Y - 5);
+                    f.fillStyle = "#ef4444"; f.font = "bold 11px Arial"; f.textAlign = "center";
+                    f.fillText("Δf = " + delta.toFixed(2) + " kHz", (measureAnchor.x + hoverX) / 2, h - 5);
+                }
+            }
 
             // --- CURSEUR INTERACTIF SPECTRE ---
             if (hoveredCanvas === f.canvas && hoverX >= PAD_X && hoverX <= w - PAD_R) {

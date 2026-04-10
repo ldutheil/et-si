@@ -8,7 +8,7 @@
 </head>
 <body>
     <header id="main-header">
-        <h1>Et si on visualisait le pH au niveau moléculaire ?</h1>
+        <h1>Et si on modifiait le pH ?</h1>
     </header>
 
     <div id="main-container">
@@ -16,17 +16,19 @@
             <div class="control-group">
                 <h3>RÉGLAGE DU pH</h3>
                 <div id="phSliderContainer">
-                    <input type="range" id="phSlider" min="0" max="14" value="7" step="1">
                     <div id="phScale">
                         <span>0 (Acide)</span>
                         <span>7</span>
                         <span>14 (Basique)</span>
                     </div>
+                    <input type="range" id="phSlider" min="0" max="14" value="7" step="1">
                 </div>
             </div>
             <div class="instruction-box">
-                <strong>Le saviez-vous ?</strong><br><br>
-                Le pH mesure la concentration en ions H<sup>+</sup>. Dans une solution neutre, il y a autant d'ions H<sup>+</sup> que d'ions HO<sup>-</sup>. Plus le pH diminue, plus la concentration en H<sup>+</sup> augmente.
+                Le pH mesure la concentration en ions H<sup>+</sup>.<br><br>
+                Dans une solution neutre, il y a autant d'ions H<sup>+</sup> que d'ions HO<sup>-</sup>. <br><br>
+                - Plus le pH diminue, plus la concentration en H<sup>+</sup> augmente.<br>
+                - Plus le pH augmente, plus la concentration en HO<sup>-</sup> augmente.<br><br>
             </div>
         </div>
 
@@ -35,7 +37,7 @@
         </div>
 
         <div id="info-zone">
-            <h1 id="info-title">MONITORING</h1>
+            <h1 id="info-title">INFORMATIONS</h1>
             
             <div class="data-card highlight">
                 <span class="label">VALEUR DU pH</span>
@@ -43,8 +45,13 @@
             </div>
 
             <div class="data-card">
-                <span class="label">EXEMPLE</span>
-                <span class="value" id="solutionExample" style="font-size: 1rem; color: #38bdf8;">Eau pure</span>
+                <span class="label">EXEMPLES</span>
+                <span class="value" id="solutionExample" style="font-size: 1rem; color: #38bdf8;">Eau pure / Sang</span>
+            </div>
+
+            <div class="data-card">
+                <span class="label">RAPPORT [HO⁻] / [H⁺]</span>
+                <span class="value" id="ratioValue" style="font-size: 1.2rem; color: #fbbf24;">1</span>
             </div>
 
             <div class="data-divider"></div>
