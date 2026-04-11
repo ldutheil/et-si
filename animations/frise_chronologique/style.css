@@ -1,0 +1,90 @@
+body {
+    background-color: #0a0f1e;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-header {
+    height: 15vh; /* Titre dans le même design */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 41, 59, 0.3);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #38bdf8; /* Couleur accentuée */
+}
+
+/* Zone de la frise : 66.6% de la hauteur */
+#timeline-viewport {
+    height: 66.6vh; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+}
+
+#timeline-belt {
+    position: relative;
+    width: 100%;
+    height: 120px; /* Épaisseur réactive accrue pour la flèche */
+}
+
+/* L'axe central est une flèche épaisse */
+.main-axis-arrow {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: calc(100%-30px); /* Laisse de la place pour la pointe */
+    height: 250px; /* Flèche épaisse */
+    background: #1e293b;
+    border-radius: 6px;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+
+
+#marks-container {
+    position: relative;
+    width: calc(100% - 30px); /* Alignement avec le corps de la flèche */
+    height: 100%;
+    z-index: 2;
+}
+
+.century-mark {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Tiret vertical */
+.tick {
+    width: 2px;
+    height: 25px; /* Graduations légèrement plus longues */
+    background: #334155;
+    border-radius: 1px;
+}
+
+/* Label du siècle */
+.century-label {
+    position: absolute;
+    top: 30px;
+    font-size: 0.75rem;
+    color: #475569;
+    font-weight: bold;
+}
