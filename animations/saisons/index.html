@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cycle des Saisons</title>
+    <title>Cycle des Saisons - Simulation 3D</title>
     <link rel="stylesheet" href="style.css">
     <script type="importmap">
         { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
@@ -11,7 +11,7 @@
 </head>
 <body>
     <header id="main-header">
-        <h1>Et si on pouvait visualiser le cycle des saisons avec l'orbite terrestre ?</h1>
+        <h1>VISUALISATION DU CYCLE DES SAISONS</h1>
     </header>
 
     <div id="main-container">
@@ -21,49 +21,54 @@
                 <button id="pauseBtn">PAUSE / LECTURE</button>
                 <button id="addHourBtn">+1 HEURE</button>
                 <button id="addDayBtn">+1 JOUR</button>
+                <button id="addMonthBtn">+1 MOIS</button>
             </div>
             
             <div class="control-group">
-                <h3>POINTS CLÉS</h3>
+                <h3>POINTS CLÉS DE L'ORBITE</h3>
                 <button id="winterBtn" class="jump-btn">SOLSTICE D'HIVER</button>
                 <button id="summerBtn" class="jump-btn">SOLSTICE D'ÉTÉ</button>
             </div>
-
-            <div class="instruction-box">
-                L'inclinaison de l'axe de la Terre (23,4°) est la cause des saisons, et non la distance au Soleil.
+            <br><br>
+            <div class="legend-item">
+                    <span>Le Soleil et la Terre ne sont pas à l'échelle.</span>
             </div>
+
+            
         </div>
 
         <div id="builder-zone">
-            </div>
+            <div id="label-winter" class="scene-label">Solstice d'hiver</div>
+            <div id="label-summer" class="scene-label">Solstice d'été</div>
+        </div>
 
         <div id="info-zone">
-            <h1 id="info-title">INFORMATIONS</h1>
+            <h1 id="info-title">INDICATIONS</h1>
             
             <div class="data-card highlight">
-                <span class="label">SAISON ACTUELLE</span>
+                <span class="label">SAISON (Hém. Nord)</span>
                 <span class="value" id="currentSeason">Hiver</span>
             </div>
 
-            <div class="data-card">
-                <span class="label">INCLINAISON DE L'AXE DE ROTATION TERRESTRE</span>
+            <div class="data-card highlight">
+                <span class="label">Inclinaison de l'axe de rotation de la Terre</span>
                 <span class="value" style="color: #38bdf8;">23.4°</span>
             </div>
 
             <div class="data-divider"></div>
 
             <div id="legend">
+                
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #ffcc00; box-shadow: 0 0 10px #ffcc00;"></div>
-                    <span>Soleil </span>
+                    <span>L'axe de rotation de la Terre reste incliné dans la même direction, ce qui crée les saisons.</span>
                 </div>
+                <br>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #00ffff; border: 1px solid rgba(255,255,255,0.3);"></div>
-                    <span>Orbite terrestre</span>
+                    <span>Au solstice d'été, les rayons du Soleil sont presque verticaux en France, et le jour dure longtemps.</span>
                 </div>
+                <br>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #ff0000;"></div>
-                    <span>Position : France</span>
+                    <span>Au solstice d'hiver, les rayons du Soleil sont presque horizontaux en France, et le jour dure moins longtemps</span>
                 </div>
             </div>
         </div>
