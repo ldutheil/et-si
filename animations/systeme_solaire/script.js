@@ -14,16 +14,22 @@ window.addEventListener('resize', resize);
 resize();
 
 const planets = [
-    { name: "Soleil", dist: 0, color: "#FFD700", size: 18 },
-    { name: "Mercure", dist: 0.39, color: "#A5A5A5", size: 4 },
-    { name: "Vénus", dist: 0.72, color: "#E3BB76", size: 6 },
-    { name: "Terre", dist: 1.00, color: "#2271B3", size: 6 },
-    { name: "Mars", dist: 1.52, color: "#E27B58", size: 5 },
-    { name: "Jupiter", dist: 5.20, color: "#D39C7E", size: 14 },
-    { name: "Saturne", dist: 9.54, color: "#C5AB6E", size: 12 },
-    { name: "Uranus", dist: 19.22, color: "#BBE1E4", size: 9 },
-    { name: "Neptune", dist: 30.06, color: "#6081FF", size: 9 }
+    { name: "SOLEIL", dist: 0, color: "#FFD700", size: 18 },
+    { name: "MERCURE", dist: 0.39, color: "#A5A5A5", size: 4 },
+    { name: "VÉNUS", dist: 0.72, color: "#E3BB76", size: 6 },
+    { name: "TERRE", dist: 1.00, color: "#2271B3", size: 6 },
+    { name: "MARS", dist: 1.52, color: "#E27B58", size: 5 },
+    { name: "JUPITER", dist: 5.20, color: "#D39C7E", size: 14 },
+    { name: "SATURNE", dist: 9.54, color: "#C5AB6E", size: 12 },
+    { name: "URANUS", dist: 19.22, color: "#BBE1E4", size: 9 },
+    { name: "NEPTUNE", dist: 30.06, color: "#6081FF", size: 9 }
 ];
+
+const kuiperAsteroids = Array.from({ length: 5000 }, () => ({
+    dist: 30 + Math.random() * 20, // Entre 30 et 50 UA
+    angle: Math.random() * Math.PI * 2,
+    size: Math.random() * 1.2 + 0.3
+}));
 
 let pixelsPerAU = 100;
 
@@ -76,7 +82,7 @@ function drawScaleBar() {
     const y = canvas.height - 40;
 
     ctx.strokeStyle = "rgba(255,255,255,0.5)";
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(x, y - 5);
     ctx.lineTo(x, y);
@@ -92,8 +98,28 @@ function drawScaleBar() {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const centerX = canvas.width / 2;
+    const centerX = 100;
     const centerY = canvas.height / 2;
+
+    // Dessin de la ceinture de Kuiper (Astéroïdes marrons)
+    ctx.fillStyle = "rgba(139, 69, 19, 0.7)";
+    kuiperAsteroids.forEach(asteroid => {
+        const r = asteroid.dist * pixelsPerAU;
+        const x = centerX + Math.cos(asteroid.angle) * r;
+        const y = centerY + Math.sin(asteroid.angle) * r;
+        ctx.beginPath();
+        ctx.arc(x, y, asteroid.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Label pour la ceinture de Kuiper
+    const beltLabelX = centerX + (40 * pixelsPerAU);
+    if (40 * pixelsPerAU > 100) {
+        ctx.fillStyle = "rgba(139, 69, 19, 0.9)";
+        ctx.font = "bold 13px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("CEINTURE DE KUIPER", beltLabelX, centerY + 80);
+    }
 
     planets.forEach(planet => {
         const xPos = centerX + (planet.dist * pixelsPerAU);
@@ -101,7 +127,8 @@ function draw() {
         if (planet.dist > 0) {
             ctx.beginPath();
             ctx.arc(centerX, centerY, planet.dist * pixelsPerAU, 0, Math.PI * 2);
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+            ctx.lineWidth = 1.5;
             ctx.stroke();
         }
 
@@ -116,6 +143,8 @@ function draw() {
             ctx.shadowBlur = 0;
         }
         ctx.fill();
+
+
 
         if (planet.dist === 0 || (planet.dist * pixelsPerAU > 30)) {
             ctx.fillStyle = "rgba(255,255,255,0.6)";

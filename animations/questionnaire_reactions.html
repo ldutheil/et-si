@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révisions Chimie - La Formule Chimique</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f0f4f8; }
+        .section { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 10px solid #3498db; }
+        h2 { color: #2c3e50; text-align: center; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #ecf0f1; padding-bottom: 15px; }
+        
+        /* --- LE CANVA H2O (Positionnement local) --- */
+        .canva-container {
+            background: #ffffff;
+            border: 3px dashed #bdc3c7;
+            border-radius: 15px;
+            padding: 120px 20px; /* Espace pour les légendes en haut et en bas */
+            margin: 40px 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .molecule {
+            display: inline-flex;
+            align-items: baseline;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+        }
+
+        /* Chaque partie de la formule sert de point d'ancrage (relative) */
+        .atom, .indice {
+            position: relative;
+            line-height: 1;
+        }
+
+        .atom { font-size: 100px; color: #2c3e50; z-index: 2; }
+        .indice { font-size: 55px; color: #e67e22; z-index: 2; }
+
+        /* Styles des légendes */
+        .annotation {
+            position: absolute;
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        /* Placement précis des légendes */
+        .ann-h { top: -120px; left: -160px; border: 2px solid #3498db; color: #2980b9; }
+        .ann-2 { bottom: -120px; left: -85px; border: 2px solid #e67e22; color: #d35400; }
+        .ann-o { top: -120px; right: -160px; border: 2px solid #2ecc71; color: #27ae60; }
+
+        /* Configuration des flèches SVG */
+        .arrow {
+            position: absolute;
+            pointer-events: none;
+            overflow: visible; /* Permet de dessiner en dehors du cadre SVG */
+            z-index: 1;
+        }
+        
+        .arr-h { top: -40px; left: -20px; width: 50px; height: 50px; }
+        .arr-2 { bottom: -45px; left: 15px; width: 20px; height: 40px; }
+        .arr-o { top: -40px; right: -20px; width: 50px; height: 50px; }
+
+        /* --- STYLES QUIZ --- */
+        .quiz-box { background: #e9ecef; padding: 25px; border-radius: 12px; margin-top: 30px; }
+        .q-row { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 16px; }
+        input { padding: 8px; border: 2px solid #ced4da; border-radius: 6px; width: 100px; text-align: center; font-weight: bold; }
+        .correct { border-color: #28a745 !important; background-color: #d4edda; }
+        .incorrect { border-color: #dc3545 !important; background-color: #f8d7da; }
+        button { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+        button:hover { background: #2980b9; }
+    </style>
+</head>
+<body>
+
+<svg width="0" height="0">
+    <defs>
+        <marker id="m-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
+        </marker>
+        <marker id="m-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#e67e22" />
+        </marker>
+        <marker id="m-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2ecc71" />
+        </marker>
+    </defs>
+</svg>
+
+<div class="section">
+    <h2>1. Analyse d'une Formule Chimique</h2>
+    
+    <p>Pour comprendre la composition d'une molécule, il faut savoir lire sa formule. Observez l'exemple de la molécule d'eau ci-dessous :</p>
+
+    <div class="canva-container">
+        
+        <div class="molecule">
+            
+            <div class="atom">H
+                <div class="annotation ann-h"><strong>Le Symbole :</strong><br>Atome d'HYDROGÈNE</div>
+                <svg class="arrow arr-h">
+                    <line x1="-30" y1="-20" x2="30" y2="20" stroke="#3498db" stroke-width="3.5" marker-end="url(#m-blue)"/>
+                </svg>
+            </div>
+
+            <div class="indice">2
+                <div class="annotation ann-2"><strong>L'Indice :</strong><br>Il y a 2 atomes d'Hydrogène dans cette molécule.</div>
+                <svg class="arrow arr-2">
+                    <line x1="0" y1="40" x2="0" y2="-5" stroke="#e67e22" stroke-width="3.5" marker-end="url(#m-orange)"/>
+                </svg>
+            </div>
+
+            <div class="atom">O
+                <div class="annotation ann-o"><strong>Le Symbole :</strong><br>Atome d'OXYGÈNE</div>
+                <svg class="arrow arr-o">
+                    <line x1="80" y1="-20" x2="20" y2="20" stroke="#2ecc71" stroke-width="3.5" marker-end="url(#m-green)"/>
+                </svg>
+            </div>
+
+        </div>
+    </div>
+
+    <p style="text-align: center; font-style: italic; background: #eef7ff; padding: 10px; border-radius: 5px;">
+        💡 <strong>Règle d'or :</strong> S'il n'y a pas de chiffre après un symbole (comme pour le <strong>O</strong> ici), cela signifie qu'il y a <strong>1 seul atome</strong> de ce type.
+    </p>
+
+    
+
+[Image of H2O water molecule structure showing covalent bonds]
+
+
+    <div class="quiz-box">
+        <h3 style="margin-top: 0; color: #2c3e50;">Vérifie si tu as compris</h3>
+        
+        <div class="q-row">
+            <span>1. Dans <strong>CO₂</strong>, combien y a-t-il d'atomes d'Oxygène ?</span>
+            <input type="number" id="q1"> <button onclick="check(1, 2)">Vérifier</button>
+        </div>
+
+        <div class="q-row">
+            <span>2. Quel est le symbole de l'atome de Carbone ?</span>
+            <input type="text" id="q2"> <button onclick="check(2, 'C')">Vérifier</button>
+        </div>
+
+        <div class="q-row">
+            <span>3. Dans le Méthane <strong>CH₄</strong>, combien y a-t-il d'atomes de Carbone ?</span>
+            <input type="number" id="q3"> <button onclick="check(3, 1)">Vérifier</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function check(qNum, answer) {
+        let input = document.getElementById('q' + qNum);
+        let val = input.value.trim().toUpperCase();
+        if (val == answer.toString().toUpperCase()) {
+            input.className = "correct";
+        } else {
+            input.className = "incorrect";
+        }
+    }
+</script>
+
+</body>
+</html>
