@@ -3,31 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EM-Scope - Spectre Électromagnétique</title>
+    <title>Spectre Électromagnétique</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header id="main-header">
-        <h1>Exploration du Spectre Électromagnétique</h1>
+        <h1>Et si on explorait le spectre électromagnétique ?</h1>
     </header>
 
     <div id="main-container">
         <div id="left-panel">
             <div class="control-group">
-                <h3>CONTRÔLE DU SPECTRE</h3>
-                <div id="phSliderContainer">
-                    <input type="range" id="freqSlider" min="0" max="1000" value="500" step="1">
-                    <div id="phScale">
-                        <span>Basses Fréq.</span>
-                        <span>Hautes Fréq.</span>
-                    </div>
-                </div>
+                
                 <button id="toggleWavelength" class="usage-btn" style="background: #1e293b; border: 1px solid #38bdf8;">
-                    📏 Afficher les nanomètres (nm)
+                    Afficher les fréquences (en TeraHertz)
                 </button>
+                <br><br>
             </div>
             <div class="instruction-box">
-                <strong>Interaction :</strong> Survolez les barres de couleur pour identifier les usages du quotidien. Le panneau de droite affiche les données en temps réel.
+                <strong>Survolez le spectre pour identifier les usages du quotidien ou les phénomènes physiques impliqués. Le panneau de droite affiche les données en temps réel.</strong>
             </div>
         </div>
 
@@ -36,7 +30,7 @@
         </div>
 
         <div id="info-zone">
-            <h1 id="info-title">MONITORING</h1>
+            <h1 id="info-title">INFORMATIONS</h1>
             
             <div class="data-card highlight">
                 <span class="label">CATÉGORIE</span>
@@ -57,12 +51,11 @@
             <div id="usageModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
-                    <h2>Détails du Spectre EM</h2>
+                    <h2>Détails du Spectre Électromagnétique</h2>
                     <table id="usageTable">
                         <thead>
                             <tr>
                                 <th>Domaine</th>
-                                <th>Fréquence</th>
                                 <th>Applications</th>
                             </tr>
                         </thead>

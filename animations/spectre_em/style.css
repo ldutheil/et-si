@@ -82,4 +82,4 @@ canvas { width: 100%; height: 100%; display: block; cursor: crosshair; }
 .modal-content { background: #0f172a; margin: 5% auto; padding: 20px; border: 1px solid #38bdf8; border-radius: 12px; width: 80%; max-width: 800px; color: white; }
 .close-btn { float: right; cursor: pointer; font-size: 24px; }
 #usageTable { width: 100%; border-collapse: collapse; margin-top: 20px; }
-#usageTable th, #usageTable td { padding: 10px; border-bottom: 1px solid #1e293b; text-align: left; }
+#usageTable th, #usageTable td { padding: 8px; border-bottom: 1px solid #1e293b; text-align: left; font-size: 0.8rem; }

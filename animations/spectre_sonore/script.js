@@ -4,6 +4,7 @@ window.onload = function() {
     const categoryValue = document.getElementById('categoryValue');
     const exampleValue = document.getElementById('exampleValue');
     const freqSlider = document.getElementById('freqSlider');
+    const freqManual = document.getElementById('freqManual');
     const toggleAudioBtn = document.getElementById('toggleAudio');
 
     let time = 0;
@@ -14,12 +15,12 @@ window.onload = function() {
     // --- BASE DE DONNÉES DES EXEMPLES (50 items) ---
     // Ces exemples s'affichent dynamiquement quand on bouge le curseur.
     const soundData = [
-        { start: 5, end: 20, name: "Infrasons", examples: "Vibrations terrestres (Séismes)", desc: "Pas audible pour l'homme, ressenti comme vibration physique." },
-        { start: 20, end: 100, name: "Son Audible (Graves)", examples: "Moteur de camion, Grosse caisse (20Hz-60Hz)", desc: "Zone la plus 'physique' du son audible." },
-        { start: 100, end: 500, name: "Son Audible (Standard)", examples: "La 4 (440Hz), Voix humaine (Baryton, Soprano)", desc: "Spectre principal du langage et de la musique." },
-        { start: 500, end: 2000, name: "Son Audible (Médiums)", examples: "Téléphone (1kHz), Tambourin, Sirène", desc: "Zone de meilleure sensibilité de l'oreille humaine." },
-        { start: 2000, end: 20000, name: "Son Audible (Aigus)", examples: "Cymbales (12kHz), Sifflet, moustique (16kHz)", desc: "Proche de la limite supérieure de l'audition." },
-        { start: 20000, end: 25000, name: "Ultrasons", examples: "Dauphins (Imagerie), Souris (Communication)", desc: "Utilisé en imagerie médicale (échographie) et détection." }
+        { start: 5, end: 20, name: "Infrasons", examples: "Séismes, Éléphants", desc: "Pas audible, ressenti comme vibration." },
+        { start: 20, end: 100, name: "Audible (Graves)", examples: "Contrebasse, Moteur", desc: "Sensibilité basse de l'oreille." },
+        { start: 100, end: 500, name: "Audible (Médiums)", examples: "Voix humaine, Piano", desc: "Spectre principal de la musique." },
+        { start: 500, end: 2000, name: "Audible (Médiums)", examples: "Téléphone, Sirène", desc: "Fréquences où l'oreille entend le mieux" },
+        { start: 2000, end: 20000, name: "Audible (Aigus)", examples: "Sifflets", desc: "Sons très aigus." },
+        { start: 20000, end: 25000, name: "Ultrasons", examples: "Chauve-souris, Dauphins", desc: "Au-delà de l'audition humaine, utilisé en échographie." }
     ];
 
     function resize() {
@@ -28,7 +29,20 @@ window.onload = function() {
     }
 
     window.addEventListener('resize', resize);
-    freqSlider.addEventListener('input', updateUI);
+
+    freqSlider.addEventListener('input', () => {
+        freqManual.value = freqSlider.value;
+        updateUI();
+    });
+
+    freqManual.addEventListener('input', () => {
+        const val = parseInt(freqManual.value);
+        if (!isNaN(val) && val >= 5 && val <= 25000) {
+            freqSlider.value = val;
+            updateUI();
+        }
+    });
+
     toggleAudioBtn.addEventListener('click', toggleAudio);
 
     function updateUI() {
@@ -37,7 +51,8 @@ window.onload = function() {
         
         if (zone) {
             categoryValue.innerText = zone.name;
-            exampleValue.innerText = `${freq} Hz (${zone.examples})`;
+            // On affiche la fréquence, les exemples ET la description
+            exampleValue.innerText = `${freq} Hz\n${zone.examples}\n(${zone.desc})`;
         }
 
         // Mettre à jour l'oscillateur réel s'il est actif
@@ -92,12 +107,17 @@ window.onload = function() {
     // --- ANIMATION CANVAS (Onde Visuelle) ---
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        time += 0.05;
+
+        // Ajout de la légende en haut au centre
+        ctx.fillStyle = "rgba(148, 163, 184, 0.6)";
+        ctx.font = "italic 13px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Représentation temporelle du son pur (à la fréquence choisie)", canvas.width / 2, 40);
 
         // Paramètres de l'onde visuelle basés sur le curseur
-        const freqInput = parseInt(freqSlider.value);
-        // On convertit la fréquence audio en une fréquence visuelle qui a du sens
-        const visualFreq = 0.005 + (freqInput / 1000) * 0.1;
+        // On plafonne la fréquence visuelle à 6600 Hz pour garder une onde lisible
+        const freqInput = Math.min(parseInt(freqSlider.value), 6600);
+        const visualScale = 0.0002; // Facteur d'échelle pour la fréquence réelle
         const amplitude = 50;
 
         ctx.beginPath();
@@ -105,8 +125,8 @@ window.onload = function() {
         ctx.lineWidth = 3;
         
         for (let x = 0; x < canvas.width; x++) {
-            // Équation de l'onde sinusoïdale dynamique
-            const y = canvas.height / 2 + Math.sin(x * visualFreq - time) * amplitude;
+            // Représentation temporelle : y = sin(2 * PI * f * t)
+            const y = canvas.height / 2 + Math.sin(x * freqInput * visualScale) * amplitude;
             if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         

@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio-Scope - Explorateur Sonore</title>
+    <title>Spectre sonore</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header id="main-header">
-        <h1>Explorateur de Fréquences Sonores</h1>
+        <h1>Et si on explorait les fréquences sonores ?</h1>
     </header>
 
     <div id="main-container">
         <div id="left-panel">
             <div class="control-group">
-                <h3>CONTRÔLE DE FRÉQUENCE</h3>
-                <div id="audioSliderContainer">
-                    <input type="range" id="freqSlider" min="5" max="25000" value="440" step="5">
-                    <div id="audioScale">
-                        <span>5 Hz (Basses)</span>
-                        <span>25 kHz (Hautes)</span>
-                    </div>
+                <h3>CONTRÔLE DE LA FRÉQUENCE</h3>
+                <div style="margin-bottom: 10px; text-align: center;">
+                    <input type="number" id="freqManual" min="5" max="25000" value="440" 
+                           style="background: #1e293b; color: #38bdf8; border: 1px solid #334155; padding: 5px; border-radius: 4px; width: 90px; text-align: center; font-family: monospace; font-size: 1rem;">
+                    <span style="color: #94a3b8; font-size: 0.8rem;">Hz</span>
+                </div>
+                <div id="audioSliderContainer" style="display: flex; flex-direction: column; align-items: center; height: 200px; justify-content: center;">
+                    <input type="range" id="freqSlider" min="5" max="25000" value="440" step="5" orient="vertical" style="flex: 1; cursor: pointer; height: 100%;">
                 </div>
             </div>
             <div class="instruction-box">
-                <strong>Attention :</strong> L'audio est généré en temps réel. Par défaut, il est en pause. <br><br>
                 <button id="toggleAudio" class="usage-btn">▶ JOUER LE SON</button>
             </div>
         </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div id="info-zone">
-            <h1 id="info-title">MONITORING</h1>
+            <h1 id="info-title">INFORMATIONS</h1>
             
             <div class="data-card highlight">
                 <span class="label">CATÉGORIE</span>
