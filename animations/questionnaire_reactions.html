@@ -3,168 +3,512 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Révisions Chimie - La Formule Chimique</title>
+    <title>Super-Fiche de Révision Physique-Chimie 3ème</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f0f4f8; }
-        .section { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 10px solid #3498db; }
-        h2 { color: #2c3e50; text-align: center; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #ecf0f1; padding-bottom: 15px; }
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e67e22;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #f9f9f9;
+        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #ecf0f1; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1100px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 30px; }
         
-        /* --- LE CANVA H2O (Positionnement local) --- */
-        .canva-container {
-            background: #ffffff;
-            border: 3px dashed #bdc3c7;
-            border-radius: 15px;
-            padding: 120px 20px; /* Espace pour les légendes en haut et en bas */
-            margin: 40px 0;
-            text-align: center;
-            overflow: hidden;
-        }
+        h1 { text-align: center; color: var(--primary); border-bottom: 3px solid var(--secondary); padding-bottom: 10px; margin-bottom: 30px; }
+        h2 { color: var(--secondary); border-left: 5px solid var(--secondary); padding-left: 15px; margin-top: 30px; }
+        h3 { color: var(--primary); font-size: 1.2em; margin-top: 20px; }
 
-        .molecule {
-            display: inline-flex;
-            align-items: baseline;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-        }
+        /* Progress Bar */
+        .sticky-header { position: sticky; top: 0; background: #fff; z-index: 100; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .progress-container { width: 100%; background-color: #ddd; border-radius: 20px; margin: 15px 0; height: 30px; position: relative; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #2ecc71, #27ae60); width: 0%; border-radius: 20px; transition: width 0.5s ease; }
+        .progress-text { position: absolute; width: 100%; text-align: center; top: 5px; font-weight: bold; color: #2c3e50; text-shadow: 0 0 2px #fff; }
 
-        /* Chaque partie de la formule sert de point d'ancrage (relative) */
-        .atom, .indice {
-            position: relative;
-            line-height: 1;
-        }
+        /* Tabs Navigation */
+        .tabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 30px; }
+        .tab-btn { background: #cbd5e0; border: none; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: 600; transition: all 0.3s; font-size: 0.9em; }
+        .tab-btn:hover { background: #a0aec0; }
+        .tab-btn.active { background: var(--secondary); color: white; transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 
-        .atom { font-size: 100px; color: #2c3e50; z-index: 2; }
-        .indice { font-size: 55px; color: #e67e22; z-index: 2; }
+        /* Content Sections */
+        .tab-content { display: none; animation: slideIn 0.4s ease-out; }
+        .tab-content.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Styles des légendes */
-        .annotation {
-            position: absolute;
-            background: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            width: 200px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-
-        /* Placement précis des légendes */
-        .ann-h { top: -120px; left: -160px; border: 2px solid #3498db; color: #2980b9; }
-        .ann-2 { bottom: -120px; left: -85px; border: 2px solid #e67e22; color: #d35400; }
-        .ann-o { top: -120px; right: -160px; border: 2px solid #2ecc71; color: #27ae60; }
-
-        /* Configuration des flèches SVG */
-        .arrow {
-            position: absolute;
-            pointer-events: none;
-            overflow: visible; /* Permet de dessiner en dehors du cadre SVG */
-            z-index: 1;
-        }
+        .concept-box { background: #f8fafd; border: 1px solid #d1d9e6; border-radius: 8px; padding: 20px; margin: 15px 0; }
+        .formula { background: #fff; padding: 15px; border-radius: 6px; text-align: center; font-size: 1.2em; border: 1px dashed var(--secondary); margin: 10px 0; }
         
-        .arr-h { top: -40px; left: -20px; width: 50px; height: 50px; }
-        .arr-2 { bottom: -45px; left: 15px; width: 20px; height: 40px; }
-        .arr-o { top: -40px; right: -20px; width: 50px; height: 50px; }
+        /* Interactive Quiz */
+        .quiz-card { background: #fff; border: 2px solid #edf2f7; border-radius: 10px; padding: 20px; margin-top: 40px; }
+        .question { margin-bottom: 20px; padding: 15px; border-radius: 8px; background: #fff; transition: background 0.3s; }
+        .label-q { display: block; font-weight: bold; margin-bottom: 8px; color: var(--primary); }
+        input[type="text"], select { width: 100%; max-width: 400px; padding: 10px; border: 2px solid #cbd5e0; border-radius: 6px; outline: none; transition: border-color 0.3s; }
+        input[type="text"]:focus { border-color: var(--secondary); }
+        
+        .verify-btn { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1em; margin-top: 10px; display: block; }
+        .verify-btn:hover { background: #d35400; transform: scale(1.02); }
 
-        /* --- STYLES QUIZ --- */
-        .quiz-box { background: #e9ecef; padding: 25px; border-radius: 12px; margin-top: 30px; }
-        .q-row { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 16px; }
-        input { padding: 8px; border: 2px solid #ced4da; border-radius: 6px; width: 100px; text-align: center; font-weight: bold; }
-        .correct { border-color: #28a745 !important; background-color: #d4edda; }
-        .incorrect { border-color: #dc3545 !important; background-color: #f8d7da; }
-        button { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s;}
-        button:hover { background: #2980b9; }
+        .feedback { display: none; margin-top: 10px; font-weight: bold; padding: 8px; border-radius: 4px; }
+        .correct { border-color: var(--success) !important; background-color: #e8f5e9 !important; }
+        .incorrect { border-color: var(--danger) !important; background-color: #ffebee !important; }
+
+        canvas { display: block; margin: 20px auto; background: white; border: 1px solid #ddd; border-radius: 8px; }
+        .note { font-style: italic; color: #666; font-size: 0.9em; }
     </style>
+    
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-<svg width="0" height="0">
-    <defs>
-        <marker id="m-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" />
-        </marker>
-        <marker id="m-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#e67e22" />
-        </marker>
-        <marker id="m-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2ecc71" />
-        </marker>
-    </defs>
-</svg>
-
-<div class="section">
-    <h2>1. Analyse d'une Formule Chimique</h2>
-    
-    <p>Pour comprendre la composition d'une molécule, il faut savoir lire sa formule. Observez l'exemple de la molécule d'eau ci-dessous :</p>
-
-    <div class="canva-container">
-        
-        <div class="molecule">
-            
-            <div class="atom">H
-                <div class="annotation ann-h"><strong>Le Symbole :</strong><br>Atome d'HYDROGÈNE</div>
-                <svg class="arrow arr-h">
-                    <line x1="-30" y1="-20" x2="30" y2="20" stroke="#3498db" stroke-width="3.5" marker-end="url(#m-blue)"/>
-                </svg>
-            </div>
-
-            <div class="indice">2
-                <div class="annotation ann-2"><strong>L'Indice :</strong><br>Il y a 2 atomes d'Hydrogène dans cette molécule.</div>
-                <svg class="arrow arr-2">
-                    <line x1="0" y1="40" x2="0" y2="-5" stroke="#e67e22" stroke-width="3.5" marker-end="url(#m-orange)"/>
-                </svg>
-            </div>
-
-            <div class="atom">O
-                <div class="annotation ann-o"><strong>Le Symbole :</strong><br>Atome d'OXYGÈNE</div>
-                <svg class="arrow arr-o">
-                    <line x1="80" y1="-20" x2="20" y2="20" stroke="#2ecc71" stroke-width="3.5" marker-end="url(#m-green)"/>
-                </svg>
-            </div>
-
+<div class="container">
+    <div class="sticky-header">
+        <h1>Physique-Chimie 3ème : Le Guide Complet</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+            <div class="progress-text" id="progress-text">0 / 30 questions validées</div>
         </div>
     </div>
 
-    <p style="text-align: center; font-style: italic; background: #eef7ff; padding: 10px; border-radius: 5px;">
-        💡 <strong>Règle d'or :</strong> S'il n'y a pas de chiffre après un symbole (comme pour le <strong>O</strong> ici), cela signifie qu'il y a <strong>1 seul atome</strong> de ce type.
-    </p>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('t1', this)">1. Atomes & Réactions</button>
+        <button class="tab-btn" onclick="openTab('t2', this)">2. Masse Volumique</button>
+        <button class="tab-btn" onclick="openTab('t3', this)">3. Univers & Espace</button>
+        <button class="tab-btn" onclick="openTab('t4', this)">4. Les Forces</button>
+        <button class="tab-btn" onclick="openTab('t5', this)">5. Gravitation & Poids</button>
+        <button class="tab-btn" onclick="openTab('t6', this)">6. Structure Atome</button>
+        <button class="tab-btn" onclick="openTab('t7', this)">7. Ions & pH</button>
+        <button class="tab-btn" onclick="openTab('t8', this)">8. Signaux & Ondes</button>
+        <button class="tab-btn" onclick="openTab('t9', this)">9. Énergie Mécanique</button>
+        <button class="tab-btn" onclick="openTab('t10', this)">10. Puissance Élec.</button>
+    </div>
 
-    
-
-[Image of H2O water molecule structure showing covalent bonds]
-
-
-    <div class="quiz-box">
-        <h3 style="margin-top: 0; color: #2c3e50;">Vérifie si tu as compris</h3>
-        
-        <div class="q-row">
-            <span>1. Dans <strong>CO₂</strong>, combien y a-t-il d'atomes d'Oxygène ?</span>
-            <input type="number" id="q1"> <button onclick="check(1, 2)">Vérifier</button>
+    <div id="t1" class="tab-content active">
+        <h2>Chapitre 1 : Rappels sur les atomes et les réactions</h2>
+        <div class="concept-box">
+            <h3>Constitution de la matière</h3>
+            <p>La matière est formée d'<b>atomes</b>, particules élémentaires insécables (compris par Avogadro en 1811). Un assemblage d'atomes forme une <b>molécule</b>. On répertorie 118 types d'atomes classés dans le <b>tableau périodique</b> par leur numéro atomique $Z$.</p>
+            <h3>Les Transformations Chimiques</h3>
+            <p>Lors d'une réaction (ex: combustion), les molécules des réactifs se brisent et les atomes se réarrangent pour former de nouvelles molécules (les produits). 
+            <strong>Règle d'or :</strong> Rien ne se perd, rien ne se crée, tout se transforme. Le nombre de chaque type d'atome doit être identique avant et après.</p>
+            <div class="formula">Exemple : $CH_4 + 2 O_2 \rightarrow CO_2 + 2 H_2O$</div>
+            <p>Ici, on a bien 1 Carbone, 4 Hydrogènes et 4 Oxygènes de chaque côté.</p>
         </div>
 
-        <div class="q-row">
-            <span>2. Quel est le symbole de l'atome de Carbone ?</span>
-            <input type="text" id="q2"> <button onclick="check(2, 'C')">Vérifier</button>
-        </div>
-
-        <div class="q-row">
-            <span>3. Dans le Méthane <strong>CH₄</strong>, combien y a-t-il d'atomes de Carbone ?</span>
-            <input type="number" id="q3"> <button onclick="check(3, 1)">Vérifier</button>
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Comment appelle-t-on les substances présentes AVANT la transformation ?</span>
+                <input type="text" class="q-input" data-answer="reactifs">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Équilibrez : $C_3H_8 + ... O_2 \rightarrow 3 CO_2 + 4 H_2O$. Quel chiffre manque devant $O_2$ ?</span>
+                <select class="q-input" data-answer="5">
+                    <option value="">--Choisir--</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div class="question">
+                <span class="label-q">3. Vrai ou Faux : La masse totale change lors d'une réaction chimique ?</span>
+                <input type="text" class="q-input" data-answer="faux">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t1')">Vérifier mes réponses</button>
         </div>
     </div>
+
+    <div id="t2" class="tab-content">
+        <h2>Chapitre 2 : La Masse Volumique ($\rho$)</h2>
+        <div class="concept-box">
+            <p>La masse volumique est une grandeur caractéristique qui permet d'identifier une substance. Elle représente la masse contenue dans une unité de volume donnée.</p>
+            <div class="formula">
+                $\rho = \frac{m}{V}$ &nbsp; | &nbsp; $m = \rho \times V$ &nbsp; | &nbsp; $V = \frac{m}{\rho}$
+            </div>
+            <h3>Unités et Mesures</h3>
+            <ul>
+                <li><b>Unités SI :</b> $kg/m^3$</li>
+                <li><b>Unités usuelles :</b> $g/cm^3$ (ou $g/mL$) et $g/L$.</li>
+                <li><b>L'eau :</b> Sa masse volumique est de $1000 kg/m^3$ ou $1 g/cm^3$. Un corps flotte si sa masse volumique est inférieure à celle du liquide.</li>
+            </ul>
+            <p>Pour mesurer $\rho$ d'un solide irrégulier : on mesure sa masse à la balance, puis son volume par déplacement d'eau dans une éprouvette graduée.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Un objet de 200g occupe 40 cm³. Quelle est sa masse volumique ($g/cm^3$) ?</span>
+                <input type="text" class="q-input" data-answer="5">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Quelle est la masse de 2 Litres d'huile si $\rho_{huile} = 0,9 kg/L$ ?</span>
+                <input type="text" class="q-input" data-answer="1.8">
+            </div>
+            <div class="question">
+                <span class="label-q">3. L'unité de masse dans le système international (SI) est le...</span>
+                <input type="text" class="q-input" data-answer="kilogramme">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t2')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t3" class="tab-content">
+        <h2>Chapitre 3 : Structure de l'Univers</h2>
+        <div class="concept-box">
+            <h3>Formation et Composition</h3>
+            <p>L'Univers est né il y a environ 13,8 milliards d'années (Big Bang). Le Système Solaire s'est formé il y a <b>4,6 milliards d'années</b> à partir d'une nébuleuse de gaz (hydrogène) et de poussières (débris d'étoiles mortes).</p>
+            <h3>Mesures des distances colossales</h3>
+            <ul>
+                <li><b>Unité Astronomique (UA) :</b> Distance Terre-Soleil $\approx 1,5 \times 10^8$ km. Utilisée pour le système solaire.</li>
+                <li><b>Année-Lumière (al) :</b> Distance parcourue par la lumière en un an $\approx 9,5 \times 10^{12}$ km. Utilisée pour les étoiles et galaxies.</li>
+            </ul>
+            <p>La lumière voyage à $c \approx 300~000$ km/s. Voir un objet lointain, c'est voir dans le passé car la lumière met du temps à nous parvenir.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Quel âge a le système solaire (en milliards d'années) ?</span>
+                <input type="text" class="q-input" data-answer="4.6">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Laquelle est la plus grande distance ?</span>
+                <select class="q-input" data-answer="al">
+                    <option value="ua">1 Unité Astronomique</option>
+                    <option value="al">1 Année-Lumière</option>
+                    <option value="km">1 Milliard de km</option>
+                </select>
+            </div>
+            <div class="question">
+                <span class="label-q">3. Quels sont les deux éléments apparus juste après le Big Bang ?</span>
+                <input type="text" class="q-input" data-answer="hydrogene et helium">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t3')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t4" class="tab-content">
+        <h2>Chapitre 4 : Modélisation des Actions Mécaniques</h2>
+        <div class="concept-box">
+            <p>Une action mécanique s'exerce entre un <b>auteur</b> et un <b>receveur</b>. On les classe en :</p>
+            <ul>
+                <li><b>Actions de contact :</b> La main qui pousse, le pied qui frappe un ballon.</li>
+                <li><b>Actions à distance :</b> Attraction magnétique, gravitation.</li>
+            </ul>
+            <h3>Le Vecteur Force $\vec{F}$</h3>
+            <p>On représente une force par une flèche ayant 4 caractéristiques :</p>
+            <ol>
+                <li><b>Point d'application :</b> Où la force s'exerce.</li>
+                <li><b>Direction :</b> Droite d'action (horizontale, verticale...).</li>
+                <li><b>Sens :</b> Vers où (haut, bas, gauche, droite).</li>
+                <li><b>Intensité :</b> En <b>Newton (N)</b>, mesurée avec un <b>dynamomètre</b>.</li>
+            </ol>
+            <canvas id="forceCanvas" width="300" height="150"></canvas>
+            <p class="note" style="text-align:center;">Schéma : Un vecteur force (flèche) appliqué sur un centre de gravité.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Quel appareil mesure la valeur d'une force ?</span>
+                <input type="text" class="q-input" data-answer="dynamometre">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Si un objet est immobile sous l'action de deux forces, on dit qu'elles se...</span>
+                <input type="text" class="q-input" data-answer="compensent">
+            </div>
+            <div class="question">
+                <span class="label-q">3. L'unité d'intensité de force est le :</span>
+                <select class="q-input" data-answer="newton">
+                    <option value="joule">Joule</option>
+                    <option value="newton">Newton</option>
+                    <option value="watt">Watt</option>
+                </select>
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t4')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t5" class="tab-content">
+        <h2>Chapitre 5 : Gravitation et Poids</h2>
+        <div class="concept-box">
+            <h3>Loi de la Gravitation Universelle</h3>
+            <p>Découverte par Newton, elle stipule que deux corps massifs s'attirent proportionnellement à leurs masses et inversement au carré de la distance.</p>
+            <div class="formula">$F = G \times \frac{m_A \times m_B}{d^2}$</div>
+            <h3>Poids vs Masse</h3>
+            <ul>
+                <li><b>Masse ($m$) :</b> Quantité de matière. Elle ne change jamais, que l'on soit sur Terre ou sur la Lune. Unité : <b>kg</b>.</li>
+                <li><b>Poids ($P$) :</b> Force d'attraction exercée par un astre. Il change selon le lieu. Unité : <b>N</b>.</li>
+            </ul>
+            <div class="formula">$P = m \times g$</div>
+            <p>Sur Terre, $g \approx 9,81$ N/kg. Sur la Lune, $g \approx 1,6$ N/kg.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Calculez le poids sur Terre d'un objet de 50 kg ($g=10$ N/kg).</span>
+                <input type="text" class="q-input" data-answer="500">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Laquelle de ces grandeurs est invariable partout dans l'Univers ?</span>
+                <select class="q-input" data-answer="masse">
+                    <option value="poids">Le Poids</option>
+                    <option value="masse">La Masse</option>
+                </select>
+            </div>
+            <div class="question">
+                <span class="label-q">3. Qui a compris la gravitation au 17ème siècle ?</span>
+                <input type="text" class="q-input" data-answer="newton">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t5')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t6" class="tab-content">
+        <h2>Chapitre 6 : Structure de l'Atome</h2>
+        <div class="concept-box">
+            <p>L'atome est constitué d'un <b>noyau central</b> chargé positivement et d'<b>électrons</b> (négatifs) gravitant autour.</p>
+            <ul>
+                <li><b>Le Noyau :</b> Contient des <b>nucléons</b> : les protons (+) et les neutrons (neutres).</li>
+                <li><b>Notation :</b> ${}_Z^A X$ &rarr; $A$ = nombre de nucléons, $Z$ = protons (numéro atomique).</li>
+                <li><b>Neutralité :</b> Un atome a autant de protons que d'électrons.</li>
+            </ul>
+            <h3>Dimensions et Vide</h3>
+            <p>L'atome est 100 000 fois plus grand que son noyau ($10^{-10}$m vs $10^{-15}$m). On dit qu'il a une <b>structure lacunaire</b> (essentiellement constitué de vide).</p>
+            <canvas id="atomCanvas" width="200" height="200"></canvas>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Comment calcule-t-on le nombre de NEUTRONS d'un atome ?</span>
+                <select class="q-input" data-answer="a-z">
+                    <option value="a+z">A + Z</option>
+                    <option value="a-z">A - Z</option>
+                    <option value="z">Z uniquement</option>
+                </select>
+            </div>
+            <div class="question">
+                <span class="label-q">2. Quelle est la charge électrique globale d'un atome ?</span>
+                <input type="text" class="q-input" data-answer="nulle">
+            </div>
+            <div class="question">
+                <span class="label-q">3. Un atome qui a $Z=6$ possède combien d'électrons ?</span>
+                <input type="text" class="q-input" data-answer="6">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t6')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t7" class="tab-content">
+        <h2>Chapitre 7 : Les Ions et l'Acidité</h2>
+        <div class="concept-box">
+            <h3>Les Ions</h3>
+            <p>Un ion est un atome qui a perdu ou gagné des électrons.</p>
+            <ul>
+                <li><b>Cation (+) :</b> Perte d'électrons (ex: $Na^+$, $Cu^{2+}$).</li>
+                <li><b>Anion (-) :</b> Gain d'électrons (ex: $Cl^-$, $OH^-$).</li>
+            </ul>
+            <h3>Le pH (Potentiel Hydrogène)</h3>
+            <p>Mesuré de 0 à 14 avec papier pH ou pH-mètre :</p>
+            <ul>
+                <li>$pH < 7$ : <b>Acide</b> (excès d'ions $H^+$).</li>
+                <li>$pH = 7$ : <b>Neutre</b>.</li>
+                <li>$pH > 7$ : <b>Basique</b> (excès d'ions $HO^-$).</li>
+            </ul>
+            <p><b>Sécurité :</b> Les acides et bases concentrés sont corrosifs. Il faut les diluer et porter des protections.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Quel ion caractérise une solution basique ?</span>
+                <input type="text" class="q-input" data-answer="ho-">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Comment appelle-t-on un ion chargé positivement ?</span>
+                <input type="text" class="q-input" data-answer="cation">
+            </div>
+            <div class="question">
+                <span class="label-q">3. Si on ajoute de l'eau à un acide, son pH va...</span>
+                <select class="q-input" data-answer="augmenter">
+                    <option value="diminuer">Diminuer (devenir plus acide)</option>
+                    <option value="augmenter">Augmenter (se rapprocher de 7)</option>
+                </select>
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t7')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t8" class="tab-content">
+        <h2>Chapitre 8 : Signaux et Communications</h2>
+        <div class="concept-box">
+            <h3>Fréquence et Période</h3>
+            <p>Un signal périodique se répète identique à lui-même. La <b>période $T$</b> est la durée d'un motif (en secondes). La <b>fréquence $f$</b> est le nombre de motifs par seconde.</p>
+            <div class="formula">$f = \frac{1}{T}$ (f en Hertz Hz)</div>
+            <h3>Sons vs Lumière</h3>
+            <ul>
+                <li><b>Le Son :</b> Onde mécanique. Nécessite un milieu (air, eau). Vitesse $\approx 340$ m/s.</li>
+                <li><b>La Lumière :</b> Onde électromagnétique. Voyage dans le vide. Vitesse $\approx 300~000$ km/s.</li>
+            </ul>
+            <p><b>Distance :</b> $d = v \times t$. (Pour un écho, on divise par 2 car le signal fait l'aller-retour).</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Quelle est l'unité de la fréquence ?</span>
+                <input type="text" class="q-input" data-answer="hertz">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Si un signal a une période $T = 0,1$ s, quelle est sa fréquence ?</span>
+                <input type="text" class="q-input" data-answer="10">
+            </div>
+            <div class="question">
+                <span class="label-q">3. Peut-on entendre un son dans le vide de l'espace ?</span>
+                <input type="text" class="q-input" data-answer="non">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t8')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t9" class="tab-content">
+        <h2>Chapitre 9 : Énergie Mécanique et Conversion</h2>
+        <div class="concept-box">
+            <p>L'énergie mécanique $E_m$ d'un objet est la somme de deux énergies :</p>
+            <ul>
+                <li><b>Énergie Cinétique $E_c$ :</b> Énergie du mouvement. $E_c = \frac{1}{2} m v^2$.</li>
+                <li><b>Énergie Potentielle $E_{pp}$ :</b> Énergie de position (hauteur). $E_{pp} = m \times g \times h$.</li>
+            </ul>
+            <p>En l'absence de frottements, l'énergie mécanique <b>se conserve</b> : quand un objet tombe, $E_{pp}$ diminue mais se transforme intégralement en $E_c$.</p>
+            <h3>Conversion</h3>
+            <p>Dans un barrage, l'<b>alternateur</b> transforme l'énergie mécanique de l'eau en énergie électrique.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Si la vitesse d'une voiture est doublée, son énergie cinétique est multipliée par...</span>
+                <select class="q-input" data-answer="4">
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+            <div class="question">
+                <span class="label-q">2. Unité de l'énergie dans le système international ?</span>
+                <input type="text" class="q-input" data-answer="joule">
+            </div>
+            <div class="question">
+                <span class="label-q">3. Comment appelle-t-on l'énergie liée à l'altitude d'un objet ?</span>
+                <input type="text" class="q-input" data-answer="potentielle">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t9')">Vérifier</button>
+        </div>
+    </div>
+
+    <div id="t10" class="tab-content">
+        <h2>Chapitre 10 : Puissance et Énergie Électrique</h2>
+        <div class="concept-box">
+            <h3>Loi d'Ohm (Rappel)</h3>
+            <div class="formula">$U = R \times I$</div>
+            <p>Relie la tension $U$ (V), la résistance $R$ ($\Omega$) et l'intensité $I$ (A).</p>
+            <h3>Puissance et Énergie</h3>
+            <ul>
+                <li><b>Puissance ($P$) :</b> Grandeur qui indique la performance d'un appareil. $P = U \times I$. Unité : <b>Watt (W)</b>.</li>
+                <li><b>Énergie ($E$) :</b> Consommation sur une durée $t$. $E = P \times t$.</li>
+            </ul>
+            <p><b>L'Effet Joule :</b> Transformation de l'énergie électrique en énergie thermique (chaleur). Utile pour un four, indésirable pour un téléphone.</p>
+        </div>
+
+        <div class="quiz-card">
+            <div class="question">
+                <span class="label-q">1. Quelle est la puissance d'un appareil sous 230V traversé par 10A ?</span>
+                <input type="text" class="q-input" data-answer="2300">
+            </div>
+            <div class="question">
+                <span class="label-q">2. Une lampe de 10W fonctionne 2 heures. Énergie consommée en Wh ?</span>
+                <input type="text" class="q-input" data-answer="20">
+            </div>
+            <div class="question">
+                <span class="label-q">3. Comment appelle-t-on le dégagement de chaleur dans un fil électrique ?</span>
+                <input type="text" class="q-input" data-answer="effet joule">
+            </div>
+            <button class="verify-btn" onclick="checkAnswers('t10')">Vérifier</button>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    function check(qNum, answer) {
-        let input = document.getElementById('q' + qNum);
-        let val = input.value.trim().toUpperCase();
-        if (val == answer.toString().toUpperCase()) {
-            input.className = "correct";
-        } else {
-            input.className = "incorrect";
-        }
+    function openTab(id, btn) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+        if(id === 't6') drawAtom();
+        if(id === 't4') drawForce();
     }
+
+    function checkAnswers(tabId) {
+        const tab = document.getElementById(tabId);
+        const inputs = tab.querySelectorAll('.q-input');
+        
+        inputs.forEach(input => {
+            const userAns = input.value.toLowerCase().trim();
+            const correctAns = input.dataset.answer.toLowerCase();
+            
+            if(userAns === correctAns) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+            } else if(userAns !== "") {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+            }
+        });
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const total = 30;
+        const correct = document.querySelectorAll('.q-input.correct').length;
+        const percent = (correct / total) * 100;
+        document.getElementById('progress-bar').style.width = percent + '%';
+        document.getElementById('progress-text').innerText = `${correct} / ${total} questions validées`;
+    }
+
+    function drawAtom() {
+        const canvas = document.getElementById("atomCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0,0,200,200);
+        // Nucleus
+        ctx.beginPath(); ctx.arc(100, 100, 15, 0, 7); ctx.fillStyle = "#e74c3c"; ctx.fill();
+        // Orbits
+        ctx.strokeStyle = "#ddd"; ctx.lineWidth = 1;
+        for(let i=0; i<3; i++) {
+            ctx.beginPath(); ctx.ellipse(100, 100, 30+i*20, 80, (i*Math.PI)/3, 0, 7); ctx.stroke();
+        }
+        // Electrons
+        ctx.fillStyle = "#3498db";
+        [[60,60], [140,140], [100,25]].forEach(p => {
+            ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, 7); ctx.fill();
+        });
+    }
+
+    function drawForce() {
+        const canvas = document.getElementById("forceCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0,0,300,150);
+        // Object
+        ctx.fillStyle = "#2c3e50"; ctx.fillRect(120, 60, 60, 40);
+        // Force vector
+        ctx.strokeStyle = "#e67e22"; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(150, 80); ctx.lineTo(150, 10); ctx.stroke();
+        // Arrow head
+        ctx.beginPath(); ctx.moveTo(140, 25); ctx.lineTo(150, 5); ctx.lineTo(160, 25); ctx.fill();
+        ctx.fillStyle = "#e67e22"; ctx.fillText("Force F", 165, 30);
+    }
+
+    window.onload = () => {
+        drawForce();
+        drawAtom();
+    };
 </script>
 
 </body>

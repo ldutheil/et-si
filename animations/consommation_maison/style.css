@@ -1,0 +1,251 @@
+body {
+    background-color: #0a0f1e;
+    color: #f8fafc;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-header {
+    padding: 15px;
+    text-align: center;
+    background: rgba(30, 41, 59, 0.5);
+    border-bottom: 1px solid #1e293b;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #051810; /* Jardin de nuit */
+    padding: 0;
+    position: relative;
+    flex: 1;
+}
+
+#roof {
+    width: 0;
+    height: 0;
+    border-left: 425px solid transparent;
+    border-right: 425px solid transparent;
+    border-bottom: 50px solid #1e293b;
+    margin-bottom: -5px;
+    z-index: 2;
+    transition: border-bottom-color 0.5s ease;
+}
+
+#roof.winter {
+    border-bottom-color: #475569; /* Une teinte plus claire et froide pour l'hiver */
+}
+
+#builder-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#house-grid {
+    width: 850px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0;
+    padding: 15px;
+    background: #050505;
+    border: 8px solid #1e293b;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    grid-template-areas: 
+        "ch1 ch2 attic"
+        "gar kit liv";
+}
+
+.room-container {
+    background: #0f172a;
+    border: 2px solid #1e293b;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    min-height: 0; /* Permet la réduction en hauteur */
+    transition: border-color 0.3s;
+}
+
+.room-container:hover {
+    border-color: #38bdf8;
+}
+
+.room-header {
+    color: #38bdf8;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+.room-canvas {
+    background: #010409;
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    border: 1px solid #1e293b;
+    /* Petit effet de grille technique en fond */
+    background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+    background-size: 10px 10px;
+}
+
+.appliance-list {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.7rem;
+}
+
+.appliance-item {
+    color: #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.appliance-item:hover {
+    background: rgba(56, 189, 248, 0.03);
+}
+
+.appliance-item input {
+    width: 45px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #38bdf8;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.room-container.hidden {
+    display: none;
+}
+
+#info-zone, #explanation-zone { 
+    width: 215px; 
+    padding: 20px; 
+    background: rgba(15, 23, 42, 0.8);
+    border-right: 1px solid #1e293b;
+}
+#explanation-zone { border-right: none; border-left: 1px solid #1e293b; }
+
+.data-card { background: rgba(30, 41, 59, 0.3); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #1e293b; }
+.data-card .label { font-size: 0.7rem; color: #94a3b8; display: block; margin-bottom: 10px; }
+.data-card .value { font-size: 1.8rem; font-weight: bold; color: #38bdf8; font-family: monospace; }
+.instruction-box { margin-top: 10px; font-size: 0.75rem; color: #94a3b8; line-height: 1.3; font-style: italic; }
+
+#power-alert {
+    background: #ef4444;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 15px;
+    display: none;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+select {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 5px;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.action-btn {
+    background: #1e293b;
+    color: #38bdf8;
+    border: 1px solid #334155;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+.action-btn:hover {
+    background: #334155;
+    border-color: #38bdf8;
+}
+
+/* Attribution des zones */
+.room-ch1 { grid-area: ch1; }
+.room-ch2 { grid-area: ch2; }
+.room-kit { grid-area: kit; }
+.room-liv { grid-area: liv; }
+.room-gar { grid-area: gar; }
+.room-ch3 { grid-area: attic; }
+
+/* --- EFFET NEIGE --- */
+#snow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    top: -10px;
+    filter: blur(1px);
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* --- EFFET SOLEIL --- */
+#sun-container {
+    position: absolute;
+    top: -40px;
+    left: 300px;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.sun {
+    width: 60px;
+    height: 60px;
+    background: #ffcf33;
+    border-radius: 50%;
+    box-shadow: 0 0 40px #ffcf33, 0 0 80px #ff9900;
+    animation: pulseSun 4s ease-in-out infinite;
+}
+
+@keyframes pulseSun {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+}

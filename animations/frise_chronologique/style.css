@@ -88,3 +88,80 @@ body {
     color: #475569;
     font-weight: bold;
 }
+
+/* Événements */
+.event-marker {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #38bdf8;
+    border: 2px solid #0a0f1e;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.event-marker:hover { transform: translate(-50%, -50%) scale(1.5); background: #f8fafc; }
+
+.event-text {
+    position: absolute;
+    width: 150px;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    pointer-events: none;
+    text-align: center;
+}
+
+/* Ligne de rappel */
+.event-line {
+    position: absolute;
+    width: 1px;
+    background: rgba(56, 189, 248, 0.4);
+    z-index: 5;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* État quand le point est survolé */
+.event-line.active {
+    transform: scaleY(1.2);
+    background: rgba(56, 189, 248, 1);
+}
+
+/* Tooltip Détails */
+.tooltip-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #1e293b;
+    border: 1px solid #38bdf8;
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.tooltip-box h3 { margin: 0 0 10px 0; color: #38bdf8; font-size: 1rem; }
+.tooltip-box p { margin: 0; font-size: 0.85rem; line-height: 1.5; color: #f8fafc; white-space: pre-line; }
+
+/* Bouton Zoom */
+.modern-btn {
+    position: fixed;
+    top: 18vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #38bdf8;
+    color: #0a0f1e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.3s;
+}
+.modern-btn:hover { background: #f8fafc; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }

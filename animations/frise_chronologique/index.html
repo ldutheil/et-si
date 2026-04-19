@@ -7,15 +7,23 @@
 </head>
 <body>
     <header id="main-header">
-        <h1>Chronologie des Sciences</h1>
+        <h1>Et si on faisait un peu d'histoire ? </h1>
     </header>
 
     <main id="timeline-viewport">
         <div id="timeline-belt">
             <div class="main-axis-arrow"></div>
             <div id="marks-container"></div>
+            <div id="events-container"></div>
         </div>
     </main>
+
+    <button id="zoom-toggle" class="modern-btn">Zoomer sur l'époque moderne (1500+)</button>
+
+    <div id="details-tooltip" class="tooltip-box">
+        <h3 id="tooltip-title"></h3>
+        <p id="tooltip-desc"></p>
+    </div>
 
     <script src="script.js"></script>
 </body>

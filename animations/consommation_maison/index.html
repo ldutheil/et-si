@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulateur Consommation Électrique</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="main-header">
+        <h1>Et si on calculait notre consommation électrique ?</h1>
+    </header>
+
+    <main id="main-container">
+        <div id="snow-container"></div>
+        <div id="sun-container"></div>
+        <aside id="info-zone">
+            <h2>RÉCAPITULATIF GLOBAL</h2>
+            <div id="power-alert">⚠️ SURCHARGE > 9 kW</div>
+            <div class="control-group">
+                <label style="color: #94a3b8; font-size: 0.8rem;">Période de calcul :</label>
+                <select id="period-select">
+                    <option value="1">Journée (24h)</option>
+                    <option value="30">Mois (30 jours)</option>
+                    <option value="365">Année (365 jours)</option>
+                </select>
+            </div>
+
+            <div class="control-group" style="margin-top: 15px;">
+                <label style="color: #38bdf8; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="toggle-ch3"> Activer la Chambre 3
+                </label>
+            </div>
+
+            <div class="control-group" style="margin-top: 10px;">
+                <label style="color: #4ade80; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="toggle-eco"> Appareils Basse Conso (LED, appareils basse consommation)
+                </label>
+            </div>
+            
+            <div class="control-group" style="margin-top: 10px;">
+                <button id="winter-btn" class="action-btn">❄️ Activer le Mode Hiver</button>
+            </div>
+            
+            <div class="control-group" style="margin-top: 5px;">
+                <button id="summer-btn" class="action-btn">☀️ Activer le Mode Été</button>
+            </div>
+
+            <div class="control-group" style="margin-top: 5px;">
+                <button id="reset-btn" class="action-btn" style="color: #94a3b8;">🔄 Tout mettre à zéro</button>
+            </div>
+            
+            <div class="data-card highlight">
+                <span class="label" id="total-consumption-label">CONSOMMATION TOTALE</span>
+                <span class="value" id="total-consumption">0.00 kWh</span>
+            </div>
+            <div class="data-card" style="margin-top: 10px;">
+                <span class="label">COÛT ESTIMÉ (0.23 €/kWh)</span>
+                <span class="value" id="total-cost" style="color: #22c55e;">0.00 €</span>
+            </div>
+        </aside>
+
+        <div id="builder-zone">
+            <div id="roof"></div>
+            <div id="house-grid">
+                <!-- Les pièces seront générées ici par le script -->
+            </div>
+        </div>
+
+        <aside id="explanation-zone" class="info-side">
+            <h2>CALCUL ÉNERGÉTIQUE</h2>
+            <div class="data-card">
+                <span class="value" style="font-size: 1.4rem;">E = P × t</span>
+                <p style="font-size: 0.75rem; color: #94a3b8; text-align: left; margin-top: 10px;">
+                    <b>E</b> : Énergie consommée en <b>kWh</b><br>
+                    <b>P</b> : Puissance en <b>kW</b><br>
+                    <b>t</b> : Temps d'utilisation en <b>heures</b>
+                </p>
+            </div>
+            <p class="instruction-box">Indiquez la durée de fonctionnement par jour pour chaque appareil.<br><br>Note : Pour la voiture, on utilise une consommation moyenne de 0.18 kWh par km parcouru.</p>
+        </aside>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
