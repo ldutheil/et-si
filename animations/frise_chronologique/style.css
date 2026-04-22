@@ -46,8 +46,8 @@ body {
     position: absolute;
     top: 50%;
     left: 0;
-    width: calc(100%-30px); /* Laisse de la place pour la pointe */
-    height: 250px; /* Flèche épaisse */
+    width: calc(100% - 30px);
+    height: 4px; /* Réduit pour laisser de la place aux textes */
     background: #1e293b;
     border-radius: 6px;
     transform: translateY(-50%);
@@ -83,7 +83,7 @@ body {
 /* Label du siècle */
 .century-label {
     position: absolute;
-    top: 30px;
+    top: 15px;
     font-size: 0.75rem;
     color: #475569;
     font-weight: bold;
@@ -108,11 +108,13 @@ body {
 
 .event-text {
     position: absolute;
-    width: 150px;
+    width: 140px; /* Légèrement plus étroit */
     font-size: 0.85rem;
     color: #cbd5e1;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
     text-align: center;
+    z-index: 10;
 }
 
 /* Ligne de rappel */
@@ -122,12 +124,20 @@ body {
     background: rgba(56, 189, 248, 0.4);
     z-index: 5;
     transition: transform 0.3s ease, background 0.3s ease;
+    pointer-events: none; /* Ne bloque pas le survol des textes */
 }
 
 /* État quand le point est survolé */
 .event-line.active {
     transform: scaleY(1.2);
     background: rgba(56, 189, 248, 1);
+}
+
+/* Priorité au survol */
+.event-marker:hover, .event-text:hover {
+    z-index: 50;
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
 
 /* Tooltip Détails */
